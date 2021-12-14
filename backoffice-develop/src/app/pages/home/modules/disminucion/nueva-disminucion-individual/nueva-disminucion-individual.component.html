@@ -1,0 +1,95 @@
+<h1>Nueva disminucion individual</h1>
+<div class="section__increment">
+	<div class="section__stepper">
+		<form [formGroup]="myForm" (ngSubmit)="submit()">
+			<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Destinatario</ng-template>
+
+					<mat-form-field appearance="fill">
+						<mat-label>ID usuario</mat-label>
+						<input matInput type="text" placeholder="ID usuario" formControlName="userId" required />
+					</mat-form-field>
+					<br />
+					<mat-dialog-actions>
+						<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+							Verificar
+						</button>
+					</mat-dialog-actions>
+				</mat-step>
+
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Activo y cantidad</ng-template>
+					<mat-form-field appearance="fill">
+						<mat-label>Cantidad</mat-label>
+						<input matInput type="number" formControlName="amount" placeholder="Cantidad de BEN" required />
+					</mat-form-field>
+
+					<mat-form-field appearance="fill" style="margin-left: 15px">
+						<mat-label>Activo</mat-label>
+						<mat-select formControlName="tokenId">
+							<mat-option *ngFor="let activo of activos" [value]="activo">
+								{{ activo.symbol }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<br />
+					<mat-dialog-actions>
+						<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+						<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+							Siguiente
+						</button>
+					</mat-dialog-actions>
+				</mat-step>
+
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Observaciones</ng-template>
+					<mat-form-field appearance="fill">
+						<mat-label>Observaciones</mat-label>
+						<input matInput type="text" formControlName="notes" placeholder="Escribe algo" required />
+					</mat-form-field>
+					<br />
+					<mat-dialog-actions>
+						<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+						<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+							Siguiente
+						</button>
+					</mat-dialog-actions>
+				</mat-step>
+
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Confirmacion</ng-template>
+					<mat-card class="card_content">
+						<div id="div1" style="float: left; width: 33.3%">
+							<ul>
+								<mat-card-title class="title__options">Destinatario</mat-card-title>
+								<mat-card-subtitle class="subtitle__options">{{ myForm.get('userId')?.value }} </mat-card-subtitle>
+							</ul>
+						</div>
+						<div id="div2" style="float: left; width: 25.3%">
+							<ul>
+								<mat-card-title class="title__options">Activos</mat-card-title>
+								<mat-card-subtitle class="subtitle__options">
+									{{ myForm.get('amount')?.value }} {{ (myForm.get('tokenId')?.value).symbol }}
+								</mat-card-subtitle>
+							</ul>
+						</div>
+						<div id="div3" style="float: left; width: 33.3%">
+							<ul>
+								<mat-card-title class="title__options">Observaciones</mat-card-title>
+								<mat-card-subtitle class="subtitle__options">{{ myForm.get('notes')?.value }}</mat-card-subtitle>
+							</ul>
+						</div>
+					</mat-card>
+					<br />
+					<mat-dialog-actions>
+						<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+						<button type="submit" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+							Confirmar
+						</button>
+					</mat-dialog-actions>
+				</mat-step>
+			</mat-stepper>
+		</form>
+	</div>
+</div>

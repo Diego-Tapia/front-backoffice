@@ -1,0 +1,15 @@
+{
+	"userId": "1",
+	"shortName" : "Martin", 
+	"lastName" : "Perez", 
+	"userName" : "mperezarias", 
+	"dni" : 12345678, 
+	"cuil" : 20123456781, 
+	"avatar_url" : "https://www.w3schools.com/howto/img_avatar.png", 
+	"email" : "email", 
+	"phoneNumber" : 123456789, 
+	"rol" : "USER", 
+	"pass" : "pass",
+	"status": "Activo",
+	"createdAt": "2019-04-13T18:25:43-05:00"
+}

@@ -1,0 +1,201 @@
+<h1>Nuevo activo digital</h1>
+<div class="section__stepper">
+	<form [formGroup]="myForm">
+		<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+			<mat-step [stepControl]="myForm">
+				<ng-template matStepLabel>Denominación</ng-template>
+				<br />
+				<div class="form__group">
+					<mat-form-field appareance="fill">
+						<mat-label>Nombre completo</mat-label>
+						<input matInput type="text" placeholder="Nombre completo" formControlName="description" required />
+					</mat-form-field>
+
+					<mat-form-field appareance="fill">
+						<mat-label>Acrónimo</mat-label>
+						<input matInput type="text" placeholder="Acrónimo" formControlName="shortName" required />
+					</mat-form-field>
+
+					<mat-form-field appareance="fill">
+						<mat-label>Sigla</mat-label>
+						<input matInput type="text" placeholder="Sigla" formControlName="symbol" required />
+					</mat-form-field>
+				</div>
+				<br />
+				<mat-dialog-actions>
+					<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+						Siguiente
+					</button>
+				</mat-dialog-actions>
+			</mat-step>
+
+			<mat-step [stepControl]="myForm">
+				<ng-template matStepLabel>Valor y vigencia</ng-template>
+				<br />
+				<div class="form__group" style="width: 60%">
+					<mat-form-field appareance="fill">
+						<mat-label>Cantidad a emitir</mat-label>
+						<input matInput type="number" placeholder="Cantidad a emitir" formControlName="initialAmount" required />
+					</mat-form-field>
+
+					<mat-form-field appearance="fill">
+						<mat-label>Vigencia desde - hasta</mat-label>
+						<mat-date-range-input [rangePicker]="picker">
+							<input matStartDate placeholder="Desde" formControlName="validFrom" />
+							<input matEndDate placeholder="Hasta" formControlName="validTo" />
+						</mat-date-range-input>
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-date-range-picker #picker></mat-date-range-picker>
+					</mat-form-field>
+
+					<mat-checkbox color="primary" style="margin-top: 25px" formControlName="transferible">
+						Transferible
+					</mat-checkbox>
+				</div>
+
+				<mat-form-field style="width: 60%" appearance="fill">
+					<mat-label>Observaciones...</mat-label>
+					<textarea
+						matInput
+						class="textarea__options"
+						formControlName="observations"
+						placeholder="Observaciones..."
+					></textarea>
+				</mat-form-field>
+				<p class="detail__options">(Opcional)</p>
+
+				<br />
+				<mat-dialog-actions>
+					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+					<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+						Siguiente
+					</button>
+				</mat-dialog-actions>
+			</mat-step>
+
+			<mat-step [stepControl]="myForm">
+				<ng-template matStepLabel>Aplicabilidad</ng-template>
+				<br />
+				<mat-form-field style="width: 60%" appearance="fill">
+					<mat-label>Aplicabilidad</mat-label>
+					<mat-chip-list #chipList formControlName="applicabilities">
+						<mat-chip
+							*ngFor="let applicability of applicabilities"
+							[selectable]="selectable"
+							[removable]="removable"
+							(removed)="remove(applicability)"
+						>
+							{{ applicability }}
+							<button type="button" matChipRemove *ngIf="removable">
+								<mat-icon class="button__cancel">cancel</mat-icon>
+							</button>
+						</mat-chip>
+						<input
+							placeholder="Nuevo atributo"
+							#applicabilityInput
+							[formControl]="applicabilityCtrl"
+							[matAutocomplete]="auto"
+							[matChipInputFor]="chipList"
+							[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+							(matChipInputTokenEnd)="add($event)"
+						/>
+					</mat-chip-list>
+					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+						<mat-option *ngFor="let applicability of filteredApplicabilities | async" [value]="applicability">
+							{{ applicability }}
+						</mat-option>
+					</mat-autocomplete>
+				</mat-form-field>
+
+				<br />
+				<mat-dialog-actions>
+					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+					<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+						Siguiente
+					</button>
+				</mat-dialog-actions>
+			</mat-step>
+
+			<mat-step [stepControl]="myForm">
+				<ng-template matStepLabel>Confirmacion</ng-template>
+				<br />
+				<mat-card class="card_content">
+					<div style="float: left; width: 37.5%">
+						<ul>
+							<mat-card-title class="title__options">Nombre completo</mat-card-title>
+							<mat-card-subtitle class="subtitle__options">{{ myForm.get('description')?.value }}</mat-card-subtitle>
+						</ul>
+					</div>
+					<div style="float: left; width: 37.5%">
+						<ul>
+							<mat-card-title class="title__options">Acrónimo</mat-card-title>
+							<mat-card-subtitle class="subtitle__options">{{ myForm.get('shortName')?.value }}</mat-card-subtitle>
+						</ul>
+					</div>
+					<div style="float: left; width: 25%">
+						<ul>
+							<mat-card-title class="title__options">Sigla</mat-card-title>
+							<mat-card-subtitle class="subtitle__options">{{ myForm.get('symbol')?.value }}</mat-card-subtitle>
+						</ul>
+					</div>
+				</mat-card>
+				<br />
+
+				<mat-card class="card_content">
+					<div style="float: left; width: 30%">
+						<ul>
+							<mat-card-title class="title__options">Cantidad a emitir</mat-card-title>
+							<mat-card-subtitle class="subtitle__options">{{ myForm.get('initialAmount')?.value }}</mat-card-subtitle>
+						</ul>
+					</div>
+					<div style="float: left; width: 45%">
+						<ul>
+							<mat-card-title class="title__options">Vigencia</mat-card-title>
+							<mat-card-subtitle class="subtitle__options"
+								>{{ myForm.get('validFrom')?.value | date }} -
+								{{ myForm.get('validTo')?.value | date }}</mat-card-subtitle
+							>
+						</ul>
+					</div>
+					<div style="float: left; width: 25%">
+						<ul>
+							<mat-card-title class="title__options">Condición</mat-card-title>
+							<mat-card-subtitle class="subtitle__options" *ngIf="myForm.get('transferible')?.value">
+								Transferible
+							</mat-card-subtitle>
+							<mat-card-subtitle class="subtitle__options" *ngIf="!myForm.get('transferible')?.value">
+								No transferible
+							</mat-card-subtitle>
+						</ul>
+					</div>
+					<div>
+						<ul>
+							<mat-card-title class="title__options">Observaciones</mat-card-title>
+							<mat-card-subtitle class="subtitle__options">{{ myForm.get('observations')?.value }}</mat-card-subtitle>
+						</ul>
+					</div>
+				</mat-card>
+				<br />
+
+				<mat-card class="card_content">
+					<div style="float: left; width: 33.3%">
+						<ul>
+							<mat-card-title class="title__options">Aplicabilidad</mat-card-title>
+							<mat-card-subtitle class="subtitle__options">{{
+								myForm.get('applicabilities')?.value | json
+							}}</mat-card-subtitle>
+						</ul>
+					</div>
+				</mat-card>
+				<br />
+
+				<mat-dialog-actions>
+					<button mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+					<button mat-stroked-button class="buttons__stepper__primary" matStepperNext (click)="modificarActivo()">
+						Confirmar
+					</button>
+				</mat-dialog-actions>
+			</mat-step>
+		</mat-stepper>
+	</form>
+</div>

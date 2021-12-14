@@ -1,0 +1,40 @@
+[{
+    "id": "dasd1234d1as65d",
+    "shortName": "BENETICKET",
+    "money": "BENE",
+    "symbol": "BNT",
+    "price": 50000,
+    "status": "APPROVED",
+    "createdAt": "2020-09-11T18:25:43-05:00",
+    "emited": true
+},
+{
+    "id": "dasd1as56d112as65d",
+    "shortName": "SOLANA",
+    "money": "SOL",
+    "symbol": "SOL",
+    "price": 600000,
+    "status": "APPROVED",
+    "createdAt": "2019-04-13T18:25:43-05:00",
+    "emited": false
+},
+{
+    "id": "datdfdcs56d1as65d",
+    "shortName": "BITCOIN",
+    "money": "BITC",
+    "symbol": "BTC",
+    "price": 900000,
+    "status": "APPROVED",
+    "createdAt": "2009-03-03T18:25:43-05:00",
+    "emited": false
+},
+{
+    "id": "dasd1as5343cdas65d",
+    "shortName": "POLKADOT",
+    "money": "PDOT",
+    "symbol": "DOT",
+    "price": 100000,
+    "status": "APPROVED",
+    "createdAt": "2018-12-30T18:25:43-05:00",
+    "emited": false
+}]

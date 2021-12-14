@@ -1,0 +1,212 @@
+<h1 *ngIf="isBackoffice">Alta de usuario Back Office</h1>
+<h1 *ngIf="!isBackoffice">Alta de usuario Final</h1>
+<div class="section__stepper">
+	<form [formGroup]="myForm">
+		<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+			<mat-step [stepControl]="myForm">
+				<ng-template matStepLabel>Datos personales</ng-template>
+				<br />
+				<div class="form__group">
+					<mat-form-field appareance="fill">
+						<mat-label>Nombre</mat-label>
+						<input matInput type="text" placeholder="Nombre" formControlName="shortName" required />
+					</mat-form-field>
+
+					<mat-form-field appareance="fill">
+						<mat-label>Apellido</mat-label>
+						<input matInput type="text" placeholder="Apellido" formControlName="lastName" required />
+					</mat-form-field>
+				</div>
+
+				<div class="form__group">
+					<mat-form-field appareance="fill">
+						<mat-label>DNI</mat-label>
+						<input matInput type="number" placeholder="DNI" formControlName="dni" required />
+					</mat-form-field>
+
+					<mat-form-field appareance="fill">
+						<mat-label>CUIL</mat-label>
+						<input matInput type="number" placeholder="CUIL" formControlName="cuil" required />
+					</mat-form-field>
+				</div>
+
+				<br />
+				<mat-dialog-actions>
+					<button mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+						Siguiente
+					</button>
+				</mat-dialog-actions>
+			</mat-step>
+
+			<mat-step [stepControl]="myForm">
+				<ng-template matStepLabel>Credenciales</ng-template>
+				<br />
+				<div class="form__group">
+					<mat-form-field appareance="fill">
+						<mat-label>Usuario</mat-label>
+						<input matInput type="text" placeholder="Usuario" formControlName="userName" required />
+					</mat-form-field>
+
+					<mat-form-field appareance="fill" *ngIf="isBackoffice">
+						<mat-label>Rol</mat-label>
+						<mat-select formControlName="rol">
+							<mat-option *ngFor="let rol of roles" [value]="rol">
+								{{rol}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+
+				<div class="form__group">
+					<mat-form-field appareance="fill">
+						<mat-label>Contraseña</mat-label>
+						<input matInput placeholder="Contraseña" type="password" formControlName="pass" required />
+					</mat-form-field>
+
+					<mat-form-field appareance="fill">
+						<mat-label>Repetir contraseña</mat-label>
+						<input matInput placeholder="Repetir contraseña" type="password" formControlName="repeat_pass" required />
+					</mat-form-field>
+				</div>
+
+				<br />
+				<mat-dialog-actions>
+					<button mat-stroked-button class="buttons__stepper" matStepperPrevious>
+						Anterior
+					</button>
+					<button mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+						Siguiente
+					</button>
+				</mat-dialog-actions>
+			</mat-step>
+
+			<mat-step [stepControl]="myForm">
+				<ng-template matStepLabel>Datos de contacto</ng-template>
+				<br />
+				<div class="form__group">
+					<mat-form-field appareance="fill">
+						<mat-label>E-mail</mat-label>
+						<input matInput placeholder="E-mail" formControlName="email" required />
+					</mat-form-field>
+
+					<mat-form-field appareance="fill">
+						<mat-label>Teléfono</mat-label>
+						<input matInput placeholder="Teléfono" formControlName="phoneNumber" required />
+					</mat-form-field>
+				</div>
+
+				<br />
+				<mat-dialog-actions>
+					<button mat-stroked-button class="buttons__stepper" matStepperPrevious>
+						Anterior
+					</button>
+					<button mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+						Siguiente
+					</button>
+				</mat-dialog-actions>
+			</mat-step>
+
+			<mat-step [stepControl]="myForm">
+				<ng-template matStepLabel>Confirmacion</ng-template>
+				<br />
+
+				<mat-card class="card_content">
+					<div style="float: left; width: 25%">
+						<ul>
+							<mat-card-title class="title__options">Nombre</mat-card-title>
+							<mat-card-subtitle class="subtitle__options">{{myForm.get('shortName')?.value}}</mat-card-subtitle>
+						</ul>
+					</div>
+					<div style="float: left; width: 25%">
+						<ul>
+							<mat-card-title class="title__options">Apellido</mat-card-title>
+							<mat-card-subtitle class="subtitle__options">{{myForm.get('lastName')?.value}}</mat-card-subtitle>
+						</ul>
+					</div>
+					<div style="float: left; width: 25%">
+						<ul>
+							<mat-card-title class="title__options">DNI</mat-card-title>
+							<mat-card-subtitle class="subtitle__options">{{myForm.get('dni')?.value}}</mat-card-subtitle>
+						</ul>
+					</div>
+					<div style="float: left; width: 25%">
+						<ul>
+							<mat-card-title class="title__options">CUIL</mat-card-title>
+							<mat-card-subtitle class="subtitle__options">{{myForm.get('cuil')?.value}}</mat-card-subtitle>
+						</ul>
+					</div>
+				</mat-card>
+
+				<br />
+                
+                <div *ngIf="isBackoffice">
+                    <mat-card class="card_content">
+                        <div style="float: left; width: 50%">
+                            <ul>
+                                <mat-card-title class="title__options">Usuario</mat-card-title>
+                                <mat-card-subtitle class="subtitle__options">{{myForm.get('userName')?.value}}</mat-card-subtitle>
+                            </ul>
+                        </div>
+                        <div style="float: left; width: 50%">
+                            <ul>
+                                <mat-card-title class="title__options">Rol asignado</mat-card-title>
+                                <mat-card-subtitle class="subtitle__options">{{myForm.get('rol')?.value}}</mat-card-subtitle>
+                            </ul>
+                        </div>
+                    </mat-card>
+    
+                    <br />
+    
+                    <mat-card class="card_content">
+                        <div style="float: left; width: 50%">
+                            <ul>
+                                <mat-card-title class="title__options">E-mail</mat-card-title>
+                                <mat-card-subtitle class="subtitle__options">{{myForm.get('email')?.value}}</mat-card-subtitle>
+                            </ul>
+                        </div>
+                        <div style="float: left; width: 50%">
+                            <ul>
+                                <mat-card-title class="title__options">Teléfono</mat-card-title>
+                                <mat-card-subtitle class="subtitle__options">{{myForm.get('phoneNumber')?.value}}</mat-card-subtitle>
+                            </ul>
+                        </div>
+                    </mat-card>
+                    <br />
+                </div>
+
+                <div *ngIf="!isBackoffice">
+                    <mat-card class="card_content">
+                        <div style="float: left; width: 30%">
+                            <ul>
+                                <mat-card-title class="title__options">Usuario</mat-card-title>
+                                <mat-card-subtitle class="subtitle__options">{{myForm.get('userName')?.value}}</mat-card-subtitle>
+                            </ul>
+                        </div>
+                        <div style="float: left; width: 40%">
+                            <ul>
+                                <mat-card-title class="title__options">E-mail</mat-card-title>
+                                <mat-card-subtitle class="subtitle__options">{{myForm.get('email')?.value}}</mat-card-subtitle>
+                            </ul>
+                        </div>
+                        <div style="float: left; width: 30%">
+                            <ul>
+                                <mat-card-title class="title__options">Teléfono</mat-card-title>
+                                <mat-card-subtitle class="subtitle__options">{{myForm.get('phoneNumber')?.value}}</mat-card-subtitle>
+                            </ul>
+                        </div>
+                    </mat-card>
+                    <br />
+                </div>
+
+				<mat-dialog-actions>
+					<button mat-stroked-button class="buttons__stepper" matStepperPrevious>
+						Anterior
+					</button>
+					<button mat-stroked-button class="buttons__stepper__primary" matStepperNext type="button" (click)="submit()">
+						Confirmar
+					</button>
+				</mat-dialog-actions>
+			</mat-step>
+		</mat-stepper>
+	</form>
+</div>

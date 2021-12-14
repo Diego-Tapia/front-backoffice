@@ -1,0 +1,6 @@
+<div class="section__container">
+	<app-title title="Notificaciones masivas" [textButton]="'CREAR NUEVA'" (crearNuevoEvent)="onCrearNuevoEvent($event)"></app-title>
+	<ng-container>
+		<app-tabla-notificaciones *ngIf="notificaciones" [notificaciones]="notificaciones"></app-tabla-notificaciones>
+	</ng-container>
+</div>

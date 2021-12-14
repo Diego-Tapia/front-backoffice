@@ -1,0 +1,31 @@
+<app-header (sideNavToggle)="onSideNavToggle()"></app-header>
+
+<mat-sidenav-container class="container">
+	<mat-sidenav
+		#sidenav
+		mode="side"
+		opened
+		class="sidenav"
+		[fixedInViewport]="false"
+		[fixedTopGap]="0"
+		[fixedBottomGap]="0"
+	>
+		<mat-nav-list class="nav__items__container">
+			<div
+				class="nav__item"
+				mat-list-item
+				routerLink="/home/{{ nav.route }}"
+				routerLinkActive="active"
+				*ngFor="let nav of navItems"
+				[ngClass]="nav.disabled == true ? 'disabled' : ''"
+			>
+				<mat-icon class="material-icons-outlined">{{ nav.icon }}</mat-icon>
+				<p class="title">{{ nav.name }}</p>
+			</div>
+		</mat-nav-list>
+	</mat-sidenav>
+
+	<mat-sidenav-content class="content__container">
+		<router-outlet></router-outlet>
+	</mat-sidenav-content>
+</mat-sidenav-container>

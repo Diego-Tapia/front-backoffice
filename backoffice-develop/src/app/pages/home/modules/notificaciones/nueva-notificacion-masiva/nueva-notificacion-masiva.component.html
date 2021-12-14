@@ -1,0 +1,87 @@
+<h1>Nueva notificación masiva</h1>
+<div class="section__notificacion">
+	<div class="section__stepper">
+		<form [formGroup]="myForm">
+			<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Asunto</ng-template>
+					<br />
+					<mat-form-field appearance="fill">
+						<mat-label>Asunto</mat-label>
+						<input matInput formControlName="asunto" required />
+					</mat-form-field>
+					<br />
+					<mat-dialog-actions>
+						<button mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+							Siguiente
+						</button>
+					</mat-dialog-actions>
+				</mat-step>
+
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Cargar usuarios</ng-template>
+					<br />
+					<mat-form-field appearance="fill">
+						<mat-label><img src="assets/images/arrow_circle_up-24px.svg" />Cargar usuarios</mat-label>
+						<input matInput formControlName="usuarios" required />
+					</mat-form-field>
+					<br />
+					<mat-dialog-actions>
+						<button mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+						<button mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+							Siguiente
+						</button>
+					</mat-dialog-actions>
+				</mat-step>
+
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Notificación</ng-template>
+					<br />
+					<mat-form-field class="example-full-width" appearance="fill">
+						<mat-label>Escribe algo...</mat-label>
+						<textarea matInput formControlName="notificacion"></textarea>
+					</mat-form-field>
+					<br />
+					<mat-dialog-actions>
+						<button mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+						<button mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+							Siguiente
+						</button>
+					</mat-dialog-actions>
+				</mat-step>
+
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Confirmacion</ng-template>
+					<br />
+					<mat-card class="card_content box">
+						<div class="one">
+							<ul>
+								<mat-card-title class="title__options">Asunto</mat-card-title>
+								<mat-card-subtitle class="subtitle__options">{{myForm.get('asunto')?.value}}</mat-card-subtitle>
+							</ul>
+						</div>
+						<div class="two">
+							<ul>
+								<mat-card-title class="title__options">Usuarios</mat-card-title>
+								<mat-card-subtitle class="subtitle__options">{{myForm.get('usuarios')?.value}}</mat-card-subtitle>
+							</ul>
+						</div>
+						<br />
+						<div class="three">
+							<ul>
+								<mat-card-title class="title__options">Notificación</mat-card-title>
+								<mat-card-subtitle class="subtitle__options">{{myForm.get('notificacion')?.value}}
+								</mat-card-subtitle>
+							</ul>
+						</div>
+					</mat-card>
+					<br />
+					<mat-dialog-actions>
+						<button mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+						<button mat-stroked-button class="buttons__stepper__primary" matStepperNext (click)="submitForm()">Confirmar</button>
+					</mat-dialog-actions>
+				</mat-step>
+			</mat-stepper>
+		</form>
+	</div>
+</div>

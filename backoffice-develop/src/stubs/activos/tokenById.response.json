@@ -1,0 +1,14 @@
+{
+    "id": "dasd1234d1as65d",
+    "shortName": "BENETICKET",
+    "money": "BENE",
+    "symbol": "BNT",
+    "price": 50000,
+    "status": "APPROVED",
+    "description": "BENETICKET RESISTENCIA CHACO",
+    "transferible": false,
+    "emited": false,
+    "validFrom": "2021-05-19T18:25:43-05:00",
+    "validTo": "2025-09-19T18:25:43-05:00",
+    "createdAt": "2020-09-11T18:25:43-05:00"
+}

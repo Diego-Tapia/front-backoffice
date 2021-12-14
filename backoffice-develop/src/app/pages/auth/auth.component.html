@@ -1,0 +1,22 @@
+<div class="section">
+	<div class="form__container">
+		<img src="assets/images/logo-interconomy.png" alt="logo-interconomy" />
+		<h1 class="form__title">¡Bienvenido a BackOffice!</h1>
+		<p class="form__description">Accedé con tus credenciales Interconomy</p>
+		<form class="login__form" [formGroup]="loginForm" (ngSubmit)="onLogin()" autocomplete="off">
+			<mat-form-field appearance="fill">
+				<mat-label>Usuario</mat-label>
+				<input matInput formControlName="username" />
+			</mat-form-field>
+			<mat-form-field appearance="fill">
+				<mat-label>Contraseña</mat-label>
+				<input type="password" matInput formControlName="password" />
+			</mat-form-field>
+			<button type="submit" mat-raised-button class="btn__login">INGRESAR</button>
+			<div class="check__container">
+				<mat-checkbox color="primary">Recordar contraseña</mat-checkbox>
+				<p>Olvidé mi contraseña</p>
+			</div>
+		</form>
+	</div>
+</div>

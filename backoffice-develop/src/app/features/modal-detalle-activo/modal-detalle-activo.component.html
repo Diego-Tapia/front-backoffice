@@ -1,0 +1,44 @@
+<div class="section__modal" *ngIf="!isLoading">
+	<div align="end">
+		<img src="../../../assets/images/modal/close_black_24dp.svg" class="btn_close" mat-dialog-close />
+	</div>
+	<div class="title_modal">
+		<h2 class="title">{{ activo.shortName }}</h2>
+	</div>
+	<div>
+		<mat-divider></mat-divider>
+		<div class="flex__list__item">
+			<div>Nombre completo</div>
+			<div>{{ activo.description }}</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="flex__list__item">
+			<div>Acrónimo</div>
+			<div>{{ activo.shortName }}</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="flex__list__item">
+			<div>Sigla</div>
+			<div>{{ activo.symbol }}</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="flex__list__item">
+			<div>Cantidad emitida</div>
+			<div>{{ activo.initialAmount | number }}</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="flex__list__item">
+			<div>Vigencia desde</div>
+			<div>{{ activo.validFrom | date }}</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="flex__list__item">
+			<div>Vigencia hasta</div>
+			<div>{{ activo.validTo | date }}</div>
+		</div>
+		<mat-divider></mat-divider>
+	</div>
+	<div mat-dialog-actions align="end">
+		<button mat-button mat-dialog-close>Cerrar</button>
+	</div>
+</div>

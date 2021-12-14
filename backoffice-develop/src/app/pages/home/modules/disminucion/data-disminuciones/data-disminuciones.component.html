@@ -1,0 +1,19 @@
+<div class="section__container">
+	<app-title
+		title="Disminuciones"
+		[textButton]="'CREAR NUEVO'"
+		(crearNuevoEvent)="onCrearNuevoEvent($event)"
+	></app-title>
+	<mat-tab-group mat-align-tabs="start">
+		<mat-tab label="Masivos">
+			<ng-container *ngIf="incrementsMasive">
+				<app-tabla-masivos [incrementsMasive]="incrementsMasive"></app-tabla-masivos>
+			</ng-container>
+		</mat-tab>
+		<mat-tab label="Individuales">
+			<ng-container *ngIf="incrementsIndividual">
+				<app-tabla-individuales [incrementsIndividual]="incrementsIndividual"></app-tabla-individuales>
+			</ng-container>
+		</mat-tab>
+	</mat-tab-group>
+</div>

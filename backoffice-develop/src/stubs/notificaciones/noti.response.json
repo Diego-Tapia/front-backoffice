@@ -1,0 +1,32 @@
+[
+	{ 
+		"id": "189", 
+		"asunto": "Detalle concepto de notificación masiva 1", 
+		"estado": "En proceso", 
+		"creacion": "05/02/2021" 
+	},
+	{ 
+		"id": "162", 
+		"asunto": "Detalle concepto de notificación masiva 2", 
+		"estado": "Finalizado", 
+		"creacion": "01/02/2021" 
+	},
+	{ 
+		"id": "161", 
+		"asunto": "Detalle concepto de notificación masiva 3", 
+		"estado": "Finalizado", 
+		"creacion": "01/02/2021" 
+	},
+	{ 
+		"id": "141", 
+		"asunto": "Detalle concepto de notificación masiva 4", 
+		"estado": "Finalizado", 
+		"creacion": "01/02/2021" 
+	},
+	{ 
+		"id": "121", 
+		"asunto": "Detalle concepto de notificación masiva 5", 
+		"estado": "Finalizado", 
+		"creacion": "01/02/2021" 
+	}
+]

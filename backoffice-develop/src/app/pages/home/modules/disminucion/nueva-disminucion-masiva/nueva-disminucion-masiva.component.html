@@ -1,0 +1,100 @@
+<h1>Nueva disminucion masiva</h1>
+<div class="section__increment">
+	<div class="section__stepper">
+		<form [formGroup]="myForm" (ngSubmit)="submit()">
+			<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Nombre del incremento</ng-template>
+					<br />
+					<mat-form-field appearance="fill">
+						<mat-label>Nombre</mat-label>
+						<input matInput placeholder="Nombre" formControlName="name" required />
+					</mat-form-field>
+					<br />
+					<mat-dialog-actions>
+						<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+							Siguiente
+						</button>
+					</mat-dialog-actions>
+				</mat-step>
+
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Activos</ng-template>
+					<br />
+					<mat-form-field appearance="fill">
+						<mat-label>Activo</mat-label>
+						<mat-select formControlName="tokenId">
+							<mat-option *ngFor="let activo of activos" [value]="activo">
+								{{ activo.symbol }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<br />
+					<mat-dialog-actions>
+						<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+						<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+							Siguiente
+						</button>
+					</mat-dialog-actions>
+				</mat-step>
+
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Cargar usuarios</ng-template>
+					<br />
+					<mat-form-field appearance="fill">
+						<input
+							type="file"
+							accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+							class="custom__file__input"
+							id="inputGroupFile01"
+							#file
+							(change)="fileSelected($event)"
+						/>
+
+						<mat-label><img src="assets/images/arrow_circle_up-24px.svg" />Cargar usuarios</mat-label>
+						<input matInput formControlName="file" class="disabled__input" [placeholder]="fileName" required />
+					</mat-form-field>
+					<br />
+					<mat-dialog-actions>
+						<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+						<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+							Siguiente
+						</button>
+					</mat-dialog-actions>
+				</mat-step>
+
+				<mat-step [stepControl]="myForm">
+					<ng-template matStepLabel>Confirmacion</ng-template>
+					<br />
+					<mat-card class="card_content">
+						<div id="div1" style="float: left; width: 33.3%">
+							<ul>
+								<mat-card-title class="title__options">Nombre</mat-card-title>
+								<mat-card-subtitle class="subtitle__options">{{ myForm.get('name')?.value }} </mat-card-subtitle>
+							</ul>
+						</div>
+						<div id="div2" style="float: left; width: 25.3%">
+							<ul>
+								<mat-card-title class="title__options">Activos</mat-card-title>
+								<mat-card-subtitle class="subtitle__options">
+									{{ (myForm.get('tokenId')?.value).symbol }}
+								</mat-card-subtitle>
+							</ul>
+						</div>
+						<div id="div3" style="float: left; width: 33.3%">
+							<ul>
+								<mat-card-title class="title__options">Usuarios</mat-card-title>
+								<mat-card-subtitle class="subtitle__options">{{ fileName }} </mat-card-subtitle>
+							</ul>
+						</div>
+					</mat-card>
+					<br />
+					<mat-dialog-actions>
+						<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+						<button type="submit" mat-stroked-button class="buttons__stepper__primary" matStepperNext>Confirmar</button>
+					</mat-dialog-actions>
+				</mat-step>
+			</mat-stepper>
+		</form>
+	</div>
+</div>

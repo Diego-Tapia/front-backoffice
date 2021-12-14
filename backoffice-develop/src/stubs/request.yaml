@@ -1,0 +1,147 @@
+#login
+- request:
+    url: /login
+    method: POST
+  response:
+    status: 201
+    file: auth.response.json
+
+#user
+#get-all
+- request:
+    url: /user$
+    method: GET
+  response:
+    status: 200
+    file: usuarios/users.response.json
+#get-user-by-id
+- request:
+    url: /user/1$
+    method: GET
+  response:
+    status: 200
+    file: usuarios/user.response.json
+#user-register
+- request:
+    url: /user/register$
+    method: POST
+  response:
+    status: 200
+    file: usuarios/user.response.json
+#user-update
+- request:
+    url: /user/1$
+    method: PUT
+  response:
+    status: 201
+    file: usuarios/user.response.json
+
+
+#admin
+#get-all-admin
+- request:
+    url: /admin$
+    method: GET
+  response:
+    status: 200
+    file: usuarios/admins.response.json
+#get-admin-by-id
+- request:
+    url: /admin/1$
+    method: GET
+  response:
+    status: 200
+    file: usuarios/admin.response.json
+#admin-register
+- request:
+    url: /admin/register$
+    method: POST
+  response:
+    status: 200
+    file: usuarios/user.response.json
+#admin-update
+- request:
+    url: /admin/1$
+    method: PUT
+  response:
+    status: 201
+    file: usuarios/user.response.json    
+
+
+
+#notificaciones
+- request:
+    url: /notifications$
+    method: GET
+  response:
+    status: 200
+    file: notificaciones/noti.response.json  
+- request:
+    url: /notifications$
+    method: POST
+  response:
+    status: 200
+    file:
+
+
+
+#activos
+#get-activos
+- request:
+    url: /token$
+    method: GET
+  response:
+    status: 200
+    file: activos/token.response.json 
+#get-activo-by-id
+- request:
+    url: /token/dasd1234d1as65d$
+    method: GET
+  response:
+    status: 200
+    file: activos/tokenById.response.json    
+#create-activo
+- request:
+    url: /token/?
+    method: PUT
+  response:
+    status: 201
+#update-activo
+- request:
+    url: /token/?
+    method: PUT
+  response:
+    status: 201
+
+
+#data-incrementos-individual
+- request:
+    url: /increment/individual
+    method: GET
+  response:
+    status: 200
+    file: incrementos/incremento-individual.json
+
+#data-incrementos-masivos
+- request:
+    url: /increment/masivo
+    method: GET
+  response:
+    status: 200
+    file: incrementos/incremento-masivo.json
+
+#data-disminucion-individual
+- request:
+    url: /disminution/individual
+    method: GET
+  response:
+    status: 200
+    file: disminuciones/disminucion-individual.json
+
+#data-disminucion-masivos
+- request:
+    url: /disminution/masiva
+    method: GET
+  response:
+    status: 200
+    file: disminuciones/disminucion-masivo.json

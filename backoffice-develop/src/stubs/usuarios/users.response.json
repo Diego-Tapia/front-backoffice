@@ -1,0 +1,47 @@
+[
+	{
+		"userId": "1",
+		"shortName" : "Martin", 
+		"lastName" : "Perez", 
+		"userName" : "mperezarias", 
+		"dni" : 12345678, 
+		"cuil" : 20123456781, 
+		"avatar_url" : "avatar_url", 
+		"email" : "email", 
+		"phoneNumber" : 123456789, 
+		"rol" : "USER", 
+		"pass" : "pass",
+		"status": "Activo",
+		"createdAt": "2019-04-13T18:25:43-05:00"
+	},
+	{
+		"userId": "2",
+		"shortName" : "Martin", 
+		"lastName" : "Perez", 
+		"userName" : "mperezarias", 
+		"dni" : 12345678, 
+		"cuil" : 20123456781, 
+		"avatar_url" : "avatar_url", 
+		"email" : "email", 
+		"phoneNumber" : 123456789, 
+		"rol" : "USER",  
+		"pass" : "pass",
+		"status": "Activo",
+		"createdAt": "2019-04-13T18:25:43-05:00"
+	},
+	{
+		"userId": "3",
+		"shortName" : "Martin", 
+		"lastName" : "Perez", 
+		"userName" : "mperezarias", 
+		"dni" : 12345678, 
+		"cuil" : 20123456781, 
+		"avatar_url" : "avatar_url", 
+		"email" : "email", 
+		"phoneNumber" : 123456789, 
+		"rol" : "USER", 
+		"pass" : "pass",
+		"status": "Inactivo",
+		"createdAt": "2019-04-13T18:25:43-05:00"
+	}
+]

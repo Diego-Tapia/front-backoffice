@@ -1,0 +1,42 @@
+@import ../../../assets/style-variables/variables
+
+.container
+  height: 100vh
+.nav__items__container
+  margin-top: 1.5rem
+.sidenav
+  width: 260px
+  box-shadow: 3px 0px 4px -1px rgba(0,0,0,0.3)
+  -webkit-box-shadow: 3px 0px 4px -1px rgba(0,0,0,0.3)
+  -moz-box-shadow: 3px 0px 4px -1px rgba(0,0,0,0.3)
+.nav__item
+  cursor: pointer
+  display: flex
+  align-items: center
+  padding: 15px 25px
+  transition: all .2s
+  color: $grey
+  &:hover
+    color: $primary
+    background-color: rgba($primary, .5 )
+    mat-icon
+    color: $primary
+  &.active
+    color: $primary
+    border-left: 5px solid $primary
+    mat-icon
+    color: $primary
+.disabled
+  color: $light-gray
+  cursor: not-allowed
+  pointer-events: none
+.title
+  font-weight: 500
+  letter-spacing: 0.8px
+  font-size: .9rem
+mat-icon
+  margin-right: 20px
+  color: $grey
+
+.content__container
+  padding: 2rem
