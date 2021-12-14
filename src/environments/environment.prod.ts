@@ -1,5 +1,5 @@
 export const environment = {
 	production: true,
-	apiUrl: 'http://localhost:8882',
+	apiUrl: 'https://backoffice-ms-develop.herokuapp.com/api',
 	apiLogin: 'https://backoffice-ms-develop.herokuapp.com/api/admin/login'
 };
