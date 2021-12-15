@@ -3,8 +3,8 @@ import { IUser } from 'src/app/shared/models/user.interface';
 
 export const setAltaUsuarios = createAction(
 	'[Usuario Component] Set Alta Usuarios',
-	props<{ form: IUser }>()
-	);
+	props<{ form: IUser, userType: string }>()
+);
 
 export const setAltaUsuariosSucces = createAction(
 	'[Usuario Component] Set Alta Usuarios Success',

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { IActivo } from 'src/app/shared/models/activo.interface';
+import { IIncDisIndividualBE } from 'src/app/shared/models/inc-individual.interface';
 
 import { IState } from 'src/app/shared/models/state.interface';
 import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
@@ -21,7 +22,7 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 	activos: IActivo[] = []
 
 	myForm = this.formBuilder.group({
-		userId: ['', [Validators.required]],
+		userName: ['', [Validators.required]],
 		amount: ['', [Validators.required]],
 		tokenId: ['', [Validators.required]],
 		notes: ['']
@@ -53,9 +54,17 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 	}
 
 	submit() {
+
 		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
-		this.myForm.patchValue({ tokenId: this.myForm.value.tokenId.id });
-		return this.store.dispatch(setNuevoIncremento({ form: this.myForm.value }));
+
+		const incrementoIndividual: IIncDisIndividualBE = {
+			userName: this.myForm.value.userName,
+			amount: this.myForm.value.amount,
+			tokenId: this.myForm.value.tokenId.id,
+			notes: this.myForm.value.notes,
+		}
+
+		return this.store.dispatch(setNuevoIncremento({ form: incrementoIndividual }));
 	}
 
 	handleGetActivos(res: IState<any>) {

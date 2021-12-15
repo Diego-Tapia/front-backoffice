@@ -22,8 +22,8 @@ export class UsuariosService {
 		else return this.http.get<any>(`${this.url}/admin/${id}`);
 	}
 
-	altaUsuario(form: IUser): Observable<IUser> {
-		if (!form.rol) return this.http.post<any>(`${this.url}/user/register`, form);
+	altaUsuario(form: IUser, userType: string): Observable<IUser> {
+		if (userType === 'final') return this.http.post<any>(`${this.url}/user/register`, form);
 		else return this.http.post<any>(`${this.url}/admin/register`, form);
 	}
 

@@ -18,14 +18,14 @@ export class DisminucionesService {
 	}
 
 	nuevaDisminucionMasiva(data: any): Observable<any> {
-		return this.http.post<any>(`${this.url}/disminution/masiva`, data);
+		return this.http.post<any>(`${this.url}/decrease/massive`, data);
 	}
 
 	getDisminuciones(): Observable<any> {
-		return this.http.get<any>(`${this.url}/disminution/individual`);
+		return this.http.get<any>(`${this.url}/decrement/individual`);
 	}
 
 	getDisminucionesMasivas(): Observable<any> {
-		return this.http.get<any>(`${this.url}/disminution/masiva`);
+		return this.http.get<any>(`${this.url}/decrease/massive`);
 	}
 }

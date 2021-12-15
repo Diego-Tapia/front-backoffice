@@ -1,4 +1,4 @@
-export interface IIncrementoIndividual {
+export interface IIncDisIndividualBE {
     tokenId: string;
     userName: string;
     amount: number;

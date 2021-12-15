@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { setAuthReducer } from './store/auth.reducer';
 import { AuthEffects } from './store/auth.effects';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
 	declarations: [AuthComponent],
@@ -25,8 +26,9 @@ import { AuthEffects } from './store/auth.effects';
 		MatInputModule,
 		MatButtonModule,
 		MatCheckboxModule,
+		MatIconModule,
 		StoreModule.forFeature('setAuthReducer', setAuthReducer),
 		EffectsModule.forFeature([AuthEffects])
 	]
 })
-export class AuthModule {}
+export class AuthModule { }

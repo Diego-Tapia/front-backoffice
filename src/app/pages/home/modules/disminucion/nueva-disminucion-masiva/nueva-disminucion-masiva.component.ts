@@ -24,8 +24,7 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 	myForm = this._formBuilder.group({
 		name: ['', [Validators.required]],
 		tokenId: ['', [Validators.required]],
-		file: ['', [Validators.required]],
-		action: ['CREAR']
+		excelFile: ['', [Validators.required]],
 	});
 
 	constructor(
@@ -48,7 +47,7 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 			this.file = event.target.files[0];
 			this.fileName = event.target.files[0].name;
 		}
-		this.myForm.patchValue({ file: this.fileName });
+		this.myForm.patchValue({ excelFile: this.fileName });
 	}
 
 	handleGetActivos(res: IState<any>) {
@@ -65,12 +64,15 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 		if (!this.myForm.valid) {
 			return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
 		}
-		this.myForm.patchValue({
-			file: this.file,
-			tokenId: this.myForm.value.tokenId.id
-		});
+		this.myForm.patchValue({ excelFile: this.file });
 
-		return this.store.dispatch(setNuevaDisminucionMasiva({ form: this.myForm.value }));
+		const formData = new FormData();
+		formData.append('excelFile', this.myForm.value.excelFile)
+		formData.append('name', this.myForm.value.name)
+		formData.append('tokenId', this.myForm.value.tokenId.id)
+		formData.append('action', 'CREAR')
+		//CREAR PROCESAR CANCELAR
+		return this.store.dispatch(setNuevaDisminucionMasiva({ form: formData }));
 	}
 
 	ngOnInit(): void {

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IIncrementoIndividual } from 'src/app/shared/models/incremento-individual.interface';
+import { IIncrementoIndividual } from 'src/app/shared/models/incremento-individual-tabla.interface';
 
 @Component({
 	selector: 'app-tabla-individuales',
@@ -14,7 +14,7 @@ export class TablaIndividualesComponent implements OnInit {
 
 	public dataSource: IIncrementoIndividual[] = [];
 
-	constructor(private router: Router) {}
+	constructor(private router: Router) { }
 
 	ngOnInit(): void {
 		this.dataSource = this.incrementsIndividual;

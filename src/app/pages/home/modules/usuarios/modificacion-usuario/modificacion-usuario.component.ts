@@ -94,7 +94,7 @@ export class ModificacionUsuarioComponent implements OnInit {
 			rol: '',
 			pass: '',
 			repeat_pass: '',
-			userName: usuario.userName,
+			username: usuario.username,
 			email: usuario.email,
 			phoneNumber: usuario.phoneNumber
 		});
