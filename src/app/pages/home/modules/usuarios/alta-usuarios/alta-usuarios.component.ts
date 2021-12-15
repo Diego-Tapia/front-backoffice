@@ -18,25 +18,27 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
   isBackoffice!: boolean;
-
+  userType!: string;
   isLinear = false;
 
   roles: string[] = ['ADMIN', 'MANAGER', 'VIEWER'];
 
   myForm = this.formBuilder.group({
-		shortName: ['', [Validators.maxLength(15) ,Validators.required]],
-		lastName: ['', [Validators.maxLength(15) ,Validators.required]],
-		dni: ['', [Validators.min(1) ,Validators.required]],
-		cuil: ['', [Validators.min(1) ,Validators.required]],
-		userName: ['', [Validators.maxLength(15), Validators.required]],
-		rol: [''],
-		pass: ['', [Validators.maxLength(6), Validators.maxLength(14), Validators.required]],
-		repeat_pass: ['', [Validators.maxLength(6), Validators.maxLength(14), Validators.required]],
-		email: ['', [Validators.email, Validators.required]],
-		phoneNumber: ['', [Validators.min(1) ,Validators.required]]
+    shortName: ['', [Validators.maxLength(15), Validators.required]],
+    lastName: ['', [Validators.maxLength(15), Validators.required]],
+    dni: ['', [Validators.min(1), Validators.required]],
+    cuil: ['', [Validators.min(1), Validators.required]],
+    username: ['', [Validators.required]],
+    password: ['', [Validators.required]],
+    repeat_pass: ['', [Validators.required]],
+    email: ['', [Validators.email, Validators.required]],
+    phoneNumber: ['', [Validators.min(1), Validators.required]],
+    avatarUrl: ['www.google.com'],
+    customId: ['61b22f8f7793c500fc435705'],
+    clientId: ['61b22f8f7793c500fc435705']
   })
 
-  constructor (
+  constructor(
     public route: ActivatedRoute,
     public router: Router,
     public formBuilder: FormBuilder,
@@ -47,15 +49,16 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
         this.handleAltaUsuarios(res);
       }),
       this.route.params.subscribe(params => {
-        if(params.type === 'final') return this.isBackoffice = false
-        if(params.type === 'backoffice') return this.isBackoffice = true
+        this.userType = params.type
+        if (params.type === 'final') return this.isBackoffice = false
+        if (params.type === 'backoffice') return this.isBackoffice = true
         else return this.router.navigate(['home/usuarios/finales']);
       })
     )
   }
 
 
-  ngOnInit(): void {  }
+  ngOnInit(): void { }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subs) => subs.unsubscribe());
@@ -63,20 +66,24 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
   }
 
   handleAltaUsuarios(res: IState<IUser>): void {
-		if (res.error) this.noti.error('Error', 'Se produjo un error al crear el usuario')
-		if (res.success) {
+    if (res.error) this.noti.error('Error', 'Se produjo un error al crear el usuario')
+    if (res.success) {
       this.noti.success('Éxito', 'Usuario creado con éxito')
-      if(this.isBackoffice) this.router.navigate(['home/usuarios/backoffice']);
+      if (this.isBackoffice) this.router.navigate(['home/usuarios/backoffice']);
       else this.router.navigate(['home/usuarios/finales']);
-    } 
-	}
+    }
+  }
 
-  submit(){    
-    const { pass, repeat_pass } = this.myForm.value
+  submit() {
+    console.log(this.myForm.value);
 
-    if(!this.myForm.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de registro');
-    if(pass !== repeat_pass) return this.noti.error('Error', 'Las contraseñas no coinciden');
-      
-    return this.store.dispatch(setAltaUsuarios({ form: this.myForm.value }))
+    const formCopy = this.myForm.value
+
+    if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de registro');
+    if (formCopy.password !== formCopy.repeat_pass) return this.noti.error('Error', 'Las contraseñas no coinciden');
+
+    const { repeat_pass, ...resto } = this.myForm.value
+
+    return this.store.dispatch(setAltaUsuarios({ form: resto, userType: this.userType }))
   }
 }

@@ -12,6 +12,6 @@ export class AplicabilidadesService {
   constructor(private http: HttpClient) { }
 
   getAplicabilidades(): Observable<IAplicabilidad[]> {
-    return this.http.get<IAplicabilidad[]>(`${this.url}/applicability`)
+    return this.http.get<IAplicabilidad[]>(`${this.url}/applicabilities`)
   }
 }

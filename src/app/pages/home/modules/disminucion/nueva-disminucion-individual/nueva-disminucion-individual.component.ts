@@ -8,6 +8,7 @@ import { IState } from '../../../../../shared/models/state.interface';
 import { NotificationsService } from 'angular2-notifications';
 import { IActivo } from 'src/app/shared/models/activo.interface';
 import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
+import { IIncDisIndividualBE } from 'src/app/shared/models/inc-individual.interface';
 
 @Component({
 	selector: 'app-nueva-disminucion-individual',
@@ -21,7 +22,7 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 
 
 	myForm = this.formBuilder.group({
-		userId: ['', [Validators.required]],
+		userName: ['', [Validators.required]],
 		amount: ['', [Validators.required]],
 		tokenId: ['', [Validators.required]],
 		notes: ['']
@@ -53,8 +54,15 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 
 	submit() {
 		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
-		this.myForm.patchValue({ tokenId: this.myForm.value.tokenId.id });
-		return this.store.dispatch(setNuevaDisminucion({ form: this.myForm.value }));
+
+		const incrementoIndividual: IIncDisIndividualBE = {
+			userName: this.myForm.value.userName,
+			amount: this.myForm.value.amount,
+			tokenId: this.myForm.value.tokenId.id,
+			notes: this.myForm.value.notes,
+		}
+
+		return this.store.dispatch(setNuevaDisminucion({ form: incrementoIndividual }));
 	}
 
 	ngOnInit(): void {

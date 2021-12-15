@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { IIncrementoIndividual } from '../../models/incremento-individual.interface';
+import { IIncrementoIndividual } from '../../models/incremento-individual-tabla.interface';
 import { ITransaccion } from '../../models/transaccion.interface';
 
 @Injectable({

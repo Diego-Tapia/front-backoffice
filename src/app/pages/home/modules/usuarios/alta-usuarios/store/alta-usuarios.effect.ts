@@ -7,13 +7,13 @@ import { UsuariosService } from 'src/app/shared/services/usuarios/usuarios.servi
 
 @Injectable()
 export class AltaUsuariosEffects {
-	constructor(private actions$: Actions, private usuariosService: UsuariosService) {}
+	constructor(private actions$: Actions, private usuariosService: UsuariosService) { }
 
 	setAltaUsuarios$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(setAltaUsuarios),
 			mergeMap((props) =>
-				this.usuariosService.altaUsuario(props.form).pipe(
+				this.usuariosService.altaUsuario(props.form, props.userType).pipe(
 					map((usuario) => setAltaUsuariosSucces({ payload: usuario })),
 					catchError((err) => of(setAltaUsuariosError({ payload: err })))
 				)

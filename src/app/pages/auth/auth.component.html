@@ -10,7 +10,14 @@
 			</mat-form-field>
 			<mat-form-field appearance="fill">
 				<mat-label>Contraseña</mat-label>
-				<input type="password" matInput formControlName="password" />
+				<input
+					matInput
+					[type]="hide ? 'password' : 'text'"
+					placeholder="Contraseña"
+					formControlName="password"
+					required
+				/>
+				<mat-icon matSuffix (click)="hide = !hide">{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
 			</mat-form-field>
 			<button type="submit" mat-raised-button class="btn__login">INGRESAR</button>
 			<div class="check__container">

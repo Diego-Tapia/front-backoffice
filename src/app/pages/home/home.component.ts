@@ -18,8 +18,8 @@ export class HomeComponent implements OnInit {
 		{ name: 'GESTIÓN DE USUARIOS', route: 'usuarios/finales', icon: 'group', disabled: false },
 		{ name: 'INCREMENTAR', route: 'incremento', icon: 'trending_up', disabled: false },
 		{ name: 'DISMINUIR', route: 'disminucion', icon: 'trending_down', disabled: false },
-		{ name: 'NOTIFICACIONES', route: 'notificaciones', icon: 'notifications', disabled: false },
-		{ name: 'REPORTES', route: 'reportes', icon: 'summarize', disabled: false }
+		{ name: 'NOTIFICACIONES', route: 'notificaciones', icon: 'notifications', disabled: true },
+		{ name: 'REPORTES', route: 'reportes', icon: 'summarize', disabled: true }
 	];
 	ngOnInit(): void {
 		//	this.noti.success('Error', 'Error al crear activo');

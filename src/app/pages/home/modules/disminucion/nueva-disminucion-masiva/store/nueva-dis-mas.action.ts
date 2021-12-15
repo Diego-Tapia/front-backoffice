@@ -1,9 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { IIncrementoIndividual } from 'src/app/shared/models/incremento-individual.interface';
 
 export const setNuevaDisminucionMasiva = createAction(
 	'[Nueva Disminucion Masiva Component] Set Nueva Disminucion Masiva',
-	props<{ form: IIncrementoIndividual }>()
+	props<{ form: FormData }>()
 );
 
 export const setNuevaDisminucionMasivaSucces = createAction(

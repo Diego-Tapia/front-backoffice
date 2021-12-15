@@ -9,15 +9,15 @@ import { IUser } from 'src/app/shared/models/user.interface';
 	styleUrls: ['./tabla-usuarios-finales.component.sass']
 })
 export class TablaUsuariosFinalesComponent implements OnInit {
-	
-	@Input() usuarios!:IUser[]
-	
-	displayedColumns: string[] = ['dni', 'userName', 'createdAt', 'status', 'star'];
-	
+
+	@Input() usuarios!: IUser[]
+
+	displayedColumns: string[] = ['dni', 'username', 'createdAt', 'status', 'star'];
+
 	public dataSource: IUser[] = [];
-	
-	
-	constructor(private router: Router) {}
+
+
+	constructor(private router: Router) { }
 
 	ngOnInit(): void {
 		this.dataSource = this.usuarios
@@ -28,6 +28,6 @@ export class TablaUsuariosFinalesComponent implements OnInit {
 	}
 
 	modificar(id: string) {
-		this.router.navigate(['/home/usuarios/modificar/final', id], {state: {data: false}});
+		this.router.navigate(['/home/usuarios/modificar/final', id], { state: { data: false } });
 	}
 }

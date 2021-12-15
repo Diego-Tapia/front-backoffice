@@ -8,7 +8,7 @@
 
 					<mat-form-field appearance="fill">
 						<mat-label>ID usuario</mat-label>
-						<input matInput type="text" placeholder="ID usuario" formControlName="userId" required />
+						<input matInput type="text" placeholder="ID usuario" formControlName="userName" required />
 					</mat-form-field>
 					<br />
 					<mat-dialog-actions>
@@ -46,7 +46,7 @@
 					<ng-template matStepLabel>Observaciones</ng-template>
 					<mat-form-field appearance="fill">
 						<mat-label>Observaciones</mat-label>
-						<input matInput type="text" formControlName="notes" placeholder="Escribe algo" required />
+						<input matInput type="text" formControlName="notes" placeholder="Escribe algo" />
 					</mat-form-field>
 					<br />
 					<mat-dialog-actions>
@@ -63,7 +63,7 @@
 						<div id="div1" style="float: left; width: 33.3%">
 							<ul>
 								<mat-card-title class="title__options">Destinatario</mat-card-title>
-								<mat-card-subtitle class="subtitle__options">{{ myForm.get('userId')?.value }} </mat-card-subtitle>
+								<mat-card-subtitle class="subtitle__options">{{ myForm.get('userName')?.value }} </mat-card-subtitle>
 							</ul>
 						</div>
 						<div id="div2" style="float: left; width: 25.3%">

@@ -85,7 +85,7 @@
 							[removable]="removable"
 							(removed)="remove(applicability)"
 						>
-							{{ applicability }}
+							{{ applicability.name }}
 							<button type="button" matChipRemove *ngIf="removable">
 								<mat-icon class="button__cancel">cancel</mat-icon>
 							</button>
@@ -101,7 +101,7 @@
 						/>
 					</mat-chip-list>
 					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-						<mat-option *ngFor="let applicability of filteredApplicabilities | async" [value]="applicability.id">
+						<mat-option *ngFor="let applicability of filteredApplicabilities | async" [value]="applicability">
 							{{ applicability.name }}
 						</mat-option>
 					</mat-autocomplete>
@@ -181,9 +181,9 @@
 					<div>
 						<ul>
 							<mat-card-title class="title__options">Aplicabilidad</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{
-								myForm.get('applicabilities')?.value | json
-							}}</mat-card-subtitle>
+							<mat-card-subtitle class="subtitle__options">
+								{{ applicabilitiesResume.join(', ') }}
+							</mat-card-subtitle>
 						</ul>
 					</div>
 				</mat-card>

@@ -14,6 +14,7 @@ import { setAuth, setAuthClear } from './store/auth.actions';
 	styleUrls: ['./auth.component.sass']
 })
 export class AuthComponent implements OnInit, OnDestroy {
+	public hide: boolean = true;
 	loginForm = new FormBuilder().group({
 		username: ['', [Validators.required]],
 		password: ['', Validators.required]
@@ -31,7 +32,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 
 	ngOnDestroy(): void {
 		this.store.dispatch(setAuthClear());

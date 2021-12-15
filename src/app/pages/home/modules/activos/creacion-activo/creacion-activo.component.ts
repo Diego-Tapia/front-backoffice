@@ -32,7 +32,8 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 	removable = true;
 	separatorKeysCodes: number[] = [ENTER, COMMA];
 	filteredApplicabilities!: Observable<IAplicabilidad[]>;
-	applicabilities: string[] = [];
+	applicabilities: any[] = [];
+	applicabilitiesResume: string[] = []
 	applicabilityCtrl = new FormControl();
 	allApplicabilities: IAplicabilidad[] = [];
 
@@ -51,7 +52,8 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 		validFrom: [''],
 		validTo: [''],
 		transferible: [false],
-		observations: ['']
+		observations: [''],
+		clientId: ['61b22f8f7793c500fc435705']
 	});
 
 	constructor(
@@ -88,11 +90,19 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 
 	crearActivo() {
 		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de creación de activos');
+		const applicabilities_form: IAplicabilidad[] = this.myForm.value.applicabilities
+		const applicabilities_id: string[] = []
+
+		applicabilities_form.forEach(app => applicabilities_id.push(app.id));
+
+		this.myForm.patchValue({ applicabilities: applicabilities_id })
+
+		console.log(this.myForm.value)
 		return this.store.dispatch(setNuevoActivo({ form: this.myForm.value }));
 	}
 
 	handleGetAplicabilidades(res: IState<IAplicabilidad[]>): void {
-		if (res.error) this.noti.error('Error', 'Ocurrió un problema creando el activo');
+		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las aplicabilidades');
 		if (res.success) {
 			this.allApplicabilities = res.response
 		}
@@ -118,17 +128,27 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 
 	remove(applicability: string): void {
 		const index = this.applicabilities.indexOf(applicability);
-		if (index >= 0) this.applicabilities.splice(index, 1);
+		if (index >= 0) {
+			this.applicabilities.splice(index, 1);
+			this.applicabilitiesResume.splice(index, 1);
+		}
 	}
 
 	selected(event: MatAutocompleteSelectedEvent): void {
-		this.applicabilities.push(event.option.viewValue);
+
+		if (!this.applicabilities.find(app => app.id === event.option.value.id)) {
+			this.applicabilitiesResume.push(event.option.value.name)
+			this.applicabilities.push(event.option.value);
+		}
+
 		this.applicabilityInput.nativeElement.value = '';
 		this.applicabilityCtrl.setValue(null);
 	}
 
-	private _filter(value: string): IAplicabilidad[] {
-		const filterValue = value.toLowerCase();
-		return this.allApplicabilities.filter((applicability) => applicability.name.toLowerCase().includes(filterValue));
+	private _filter(value: string): any {
+		if (typeof (value) === 'string') {
+			const filterValue = value.toLowerCase();
+			return this.allApplicabilities.filter((applicability) => applicability.name.toLowerCase().includes(filterValue));
+		}
 	}
 }
