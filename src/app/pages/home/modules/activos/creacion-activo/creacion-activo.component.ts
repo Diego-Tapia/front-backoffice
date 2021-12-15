@@ -119,6 +119,9 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 
 	//Filtro aplicabilidad
 	add(event: MatChipInputEvent): void {
+
+		console.log(event.value);
+
 		const value = (event.value || '').trim();
 
 		if (value) this.applicabilities.push(value);

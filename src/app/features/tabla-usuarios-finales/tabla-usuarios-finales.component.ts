@@ -12,7 +12,7 @@ export class TablaUsuariosFinalesComponent implements OnInit {
 
 	@Input() usuarios!: IUser[]
 
-	displayedColumns: string[] = ['dni', 'username', 'createdAt', 'status', 'star'];
+	displayedColumns: string[] = ['customId', 'username', 'createdAt', 'status', 'star'];
 
 	public dataSource: IUser[] = [];
 
