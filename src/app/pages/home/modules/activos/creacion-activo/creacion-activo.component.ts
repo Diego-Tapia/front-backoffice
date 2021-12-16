@@ -103,14 +103,11 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 
 	handleGetAplicabilidades(res: IState<IAplicabilidad[]>): void {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las aplicabilidades');
-		if (res.success) {
-			this.allApplicabilities = res.response
-		}
-
+		if (res.success && res.response) this.allApplicabilities = res.response
 	}
 
 	handleNuevoActivo(res: IState<IActivo>): void {
-		if (res.error) this.noti.error('Error', 'Ocurrió un problema creando el activo');
+		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Se ha creado el activo con éxito');
 			this.router.navigateByUrl('home/activos');

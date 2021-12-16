@@ -45,7 +45,7 @@ export class ModalReemisionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	handleReemitirActivo(res: IState<ITransaccion>): void {
-		if (res.error) this.noti.error('Error', 'Ocurrió un problema reemitiendo este activo');
+		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Se ha reemitido el activo con éxito');
 			this.router.navigate(['home/activos']);

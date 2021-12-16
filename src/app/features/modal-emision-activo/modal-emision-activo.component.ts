@@ -1,6 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
@@ -20,8 +19,8 @@ export class ModalEmisionActivoComponent implements OnInit, OnDestroy {
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: IActivo,
-		private router: Router,
 		private noti: NotificationsService,
+		private dialogRef: MatDialogRef<ModalEmisionActivoComponent>,
 		private store: Store<{ featuresRedecuersMap: IFeaturesReducersMap }>
 	) {
 		this.subscriptions.push(
@@ -36,17 +35,22 @@ export class ModalEmisionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	handleEmitirActivo(res: IState<ITransaccion>): void {
-		if (res.error) this.noti.error('Error', 'Ocurrió un problema emitiendo este activo');
+		if (res.error) {
+			this.noti.error('Error', res.error.error.message);
+			this.dialogRef.close();
+		}
 		if (res.success) {
 			this.noti.success('Éxito', 'Se ha emitido el activo con éxito');
-			this.router.navigate(['home/activos']);
+			this.dialogRef.close();
 		}
 	}
 
-	ngOnInit(): void { }
+	ngOnInit(): void {
+
+	}
 
 	ngOnDestroy(): void {
-		this.subscriptions.forEach((subs) => subs.unsubscribe());
 		this.store.dispatch(setEmitirActivosClear());
+		this.subscriptions.forEach((subs) => subs.unsubscribe());
 	}
 }

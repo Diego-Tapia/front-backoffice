@@ -26,7 +26,7 @@ export class DataDisminucionesComponent implements OnInit {
 	) {
 		this.subscriptions.push(
 			this.store.select('disminucionRedecuersMap', 'getDisminuciones').subscribe((res) => {
-				if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las disminiciones individuales');
+				if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las disminuciones individuales');
 				if (res.success && res.response) {
 					this.incrementsIndividual = res.response;
 				}
@@ -34,7 +34,7 @@ export class DataDisminucionesComponent implements OnInit {
 		);
 		this.subscriptions.push(
 			this.store.select('disminucionRedecuersMap', 'getDisminucionesMasivas').subscribe((resM) => {
-				if (resM.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las disminiciones masivas');
+				if (resM.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las disminuciones masivas');
 				if (resM.success && resM.response) {
 					this.incrementsMasive = resM.response;
 				}
@@ -42,7 +42,7 @@ export class DataDisminucionesComponent implements OnInit {
 		);
 	}
 	ngOnInit(): void {
-		this.store.dispatch(setGetDisminuciones());
+		// this.store.dispatch(setGetDisminuciones());
 		this.store.dispatch(setGetDisminucionesMasivas());
 	}
 

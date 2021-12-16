@@ -29,6 +29,10 @@ export class ActivosService {
 		return this.http.put<IActivo>(`${this.url}/token/${id}`, activo);
 	}
 
+	changeStatus(id: string, status: object): Observable<IActivo> {
+		return this.http.put<IActivo>(`${this.url}/token/${id}`, status);
+	}
+
 	emitirActivo(id: string): Observable<ITransaccion> {
 		return this.http.post<ITransaccion>(`${this.url}/token/${id}/emit`, {});
 	}

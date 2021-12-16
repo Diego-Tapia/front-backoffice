@@ -4,6 +4,7 @@ import { SetAltaUsuariosReducer } from './alta-usuarios/store/alta-usuarios.redu
 import { setGetUsuariosReducer } from './data-usuarios/store/get-usuarios.reducer';
 import { setGetUsuarioByIdReducer } from './data-usuarios/store/get-usuarios-by-id.reducer';
 import { SetModificacionUsuariosReducer } from './modificacion-usuario/store/modificacion-usuarios.reducer';
+import { SetGetRolesReducer } from './alta-usuarios/store/get-roles.reducer';
 
 
 export interface IUsuariosReducersMap {
@@ -11,13 +12,13 @@ export interface IUsuariosReducersMap {
 	getUsuarioById: IState<any>;
 	altaUsuarios: IState<any>;
 	modificacionUsuario: IState<any>;
-	
-
+	getRoles: IState<any>;
 }
 
 export const usuariosRedecuersMap: ActionReducerMap<IUsuariosReducersMap> = {
 	getUsuarios: setGetUsuariosReducer,
 	getUsuarioById: setGetUsuarioByIdReducer,
 	altaUsuarios: SetAltaUsuariosReducer,
-	modificacionUsuario: SetModificacionUsuariosReducer
+	modificacionUsuario: SetModificacionUsuariosReducer,
+	getRoles: SetGetRolesReducer
 };

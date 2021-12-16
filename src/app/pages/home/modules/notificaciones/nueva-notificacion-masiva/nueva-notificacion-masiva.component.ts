@@ -37,7 +37,7 @@ export class NuevaNotificacionMasivaComponent implements OnInit {
 		notificacion: ['', [Validators.required]]
 	});
 
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 
 	ngOnDestroy(): void {
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
@@ -51,7 +51,7 @@ export class NuevaNotificacionMasivaComponent implements OnInit {
 	}
 
 	handleNuevaNotificacion(res: IState<INotificacion>): void {
-		if (res.error) this.noti.error('Error', 'Error creando la notificacion masiva');
+		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Se ha creado la notificacion masiva corretamente');
 			this.router.navigateByUrl('home/notificaciones');

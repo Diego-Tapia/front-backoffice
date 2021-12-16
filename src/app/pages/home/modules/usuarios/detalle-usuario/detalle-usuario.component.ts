@@ -46,6 +46,8 @@ export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 	}
 
 	handleGetUsuarioById(res: IState<IUser>): void {
+		console.log(res.response);
+
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo el usuario');
 		if (res.success && res.response) this.usuario = res.response;
 	}

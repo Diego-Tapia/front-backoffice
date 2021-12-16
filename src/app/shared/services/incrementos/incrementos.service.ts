@@ -26,6 +26,6 @@ export class IncrementosService {
 	}
 
 	getIncrementosMasivos(): Observable<any> {
-		return this.http.get<any>(`${this.url}/increase/massive`);
+		return this.http.get<any>(`${this.url}/increase/massive/by-client-id`);
 	}
 }

@@ -23,6 +23,7 @@ import { AltaUsuariosEffects } from './alta-usuarios/store/alta-usuarios.effect'
 import { GetUsuariosEffects } from './data-usuarios/store/get-usuarios.effect';
 import { GetUsuarioByIdEffects } from './data-usuarios/store/get-usuarios-by-id.effect';
 import { ModificacionUsuariosEffects } from './modificacion-usuario/store/modificacion-usuarios.effect';
+import { GetRolesEffects } from './alta-usuarios/store/get-roles.effect';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { ModificacionUsuariosEffects } from './modificacion-usuario/store/modifi
     MatOptionModule,
     MatSelectModule,
     StoreModule.forFeature('usuariosRedecuersMap', usuariosRedecuersMap),
-		EffectsModule.forFeature([GetUsuariosEffects, GetUsuarioByIdEffects, AltaUsuariosEffects, ModificacionUsuariosEffects])
+    EffectsModule.forFeature([GetUsuariosEffects, GetUsuarioByIdEffects, AltaUsuariosEffects, ModificacionUsuariosEffects, GetRolesEffects])
   ]
 })
 export class UsuariosModule { }

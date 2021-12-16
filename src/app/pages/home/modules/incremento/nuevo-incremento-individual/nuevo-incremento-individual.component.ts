@@ -57,12 +57,8 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 
 		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
 
-		const incrementoIndividual: IIncDisIndividualBE = {
-			userName: this.myForm.value.userName,
-			amount: this.myForm.value.amount,
-			tokenId: this.myForm.value.tokenId.id,
-			notes: this.myForm.value.notes,
-		}
+		const incrementoIndividual = this.myForm.value
+		incrementoIndividual.tokenId = this.myForm.value.tokenId.id
 
 		return this.store.dispatch(setNuevoIncremento({ form: incrementoIndividual }));
 	}
@@ -73,7 +69,7 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 	}
 
 	handleNuevoIncremento(res: IState<any>) {
-		if (res.error) this.noti.error('Error', 'Ocurrió un problema creando la disminución individual');
+		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');
 	}
 }

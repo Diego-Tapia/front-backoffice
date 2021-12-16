@@ -10,7 +10,7 @@
 				<app-tabla-masivos [incrementsMasive]="incrementsMasive"></app-tabla-masivos>
 			</ng-container>
 		</mat-tab>
-		<mat-tab label="Individuales">
+		<mat-tab label="Individuales" [disabled]="true">
 			<ng-container *ngIf="incrementsIndividual">
 				<app-tabla-individuales [incrementsIndividual]="incrementsIndividual"></app-tabla-individuales>
 			</ng-container>
