@@ -37,6 +37,7 @@ import { ModalDetalleActivoComponent } from './modal-detalle-activo/modal-detall
 import { featuresRedecuersMap } from './features.reducers.map';
 import { GetActivosByIdEffects } from '../pages/home/modules/activos/data-activos/store/activos-by-id.effects';
 import { MatDividerModule } from '@angular/material/divider';
+import { PutActivoEffects } from './tabla-activos/store/put-activo.effects';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -57,7 +58,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
 		ModalAltaUsuarioComponent,
 		ModalEmisionActivoComponent,
 		ModalReemisionActivoComponent,
-  		ModalDetalleActivoComponent
+		ModalDetalleActivoComponent
 	],
 	imports: [
 		CommonModule,
@@ -75,7 +76,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
 		MatInputModule,
 		ReactiveFormsModule,
 		StoreModule.forFeature('featuresRedecuersMap', featuresRedecuersMap),
-		EffectsModule.forFeature([EmitirActivosEffects, ReemitirActivosEffects, GetActivosByIdEffects])
+		EffectsModule.forFeature([EmitirActivosEffects, ReemitirActivosEffects, GetActivosByIdEffects, PutActivoEffects])
 	],
 	providers: [
 		{ provide: LOCALE_ID, useValue: 'es-Ar' }
@@ -94,4 +95,4 @@ registerLocaleData(localeEsAr, 'es-Ar');
 		TablaUsuariosBackofficeComponent
 	]
 })
-export class FeaturesModule {}
+export class FeaturesModule { }

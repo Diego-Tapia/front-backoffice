@@ -20,23 +20,23 @@ export class DataNotificacionesComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   notificaciones!: INotificacion[];
-	
+
   constructor(
-    public dialog: MatDialog, 
+    public dialog: MatDialog,
     private router: Router,
     private noti: NotificationsService,
     private store: Store<{ notificacionesRedecuersMap: INotificacionesReducersMap }>
   ) {
     this.subscriptions.push(
-      this.store.select('notificacionesRedecuersMap', 'getNotificaciones').subscribe((res: IState<INotificacion[]>) => {      
+      this.store.select('notificacionesRedecuersMap', 'getNotificaciones').subscribe((res: IState<INotificacion[]>) => {
         this.handleGetNotificaciones(res)
       })
     );
   }
 
-	onCrearNuevoEvent(e: any): void {
-		this.router.navigateByUrl('home/notificaciones/nueva-notificacion');
-	}
+  onCrearNuevoEvent(e: any): void {
+    this.router.navigateByUrl('home/notificaciones/nueva-notificacion');
+  }
 
   ngOnInit(): void {
     this.store.dispatch(setGetNotificaciones())
@@ -46,8 +46,8 @@ export class DataNotificacionesComponent implements OnInit, OnDestroy {
   }
 
   handleGetNotificaciones(res: IState<INotificacion[]>): void {
-    if(res.error) this.noti.error('Error', 'Error obteniendo las notificaciones')
-    if(res.success && res.response) this.notificaciones = res.response
+    if (res.error) this.noti.error('Error', 'Error obteniendo las notificaciones')
+    if (res.success && res.response) this.notificaciones = res.response
   }
 
 }

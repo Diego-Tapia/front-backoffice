@@ -4,11 +4,13 @@ export interface IUser {
 	username: string;
 	dni: number;
 	cuil: number;
-	pass: string;
+	password: string;
 	email: string;
 	phoneNumber: number;
+	customId: string;
+	clientId: string;
 	rol?: string;
 	avatar_url?: string;
-	userId?: string;
 	createdAt?: Date;
+	_id?: string;
 }

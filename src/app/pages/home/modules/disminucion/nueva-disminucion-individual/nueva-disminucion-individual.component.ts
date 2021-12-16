@@ -48,21 +48,17 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 	}
 
 	handleNuevaDisminucion(res: IState<any>) {
-		if (res.error) this.noti.error('Error', 'Ocurrió un problema creando la disminución individual');
+		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');
 	}
 
 	submit() {
 		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
 
-		const incrementoIndividual: IIncDisIndividualBE = {
-			userName: this.myForm.value.userName,
-			amount: this.myForm.value.amount,
-			tokenId: this.myForm.value.tokenId.id,
-			notes: this.myForm.value.notes,
-		}
+		const disminucionIndividual = this.myForm.value
+		disminucionIndividual.tokenId = this.myForm.value.tokenId.id
 
-		return this.store.dispatch(setNuevaDisminucion({ form: incrementoIndividual }));
+		return this.store.dispatch(setNuevaDisminucion({ form: disminucionIndividual }));
 	}
 
 	ngOnInit(): void {

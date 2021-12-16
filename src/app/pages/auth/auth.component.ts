@@ -56,7 +56,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 		if (res.success && res.response) {
 			this.authService.setUser(res.response.token, res.response.refreshToken, res.response.user);
 		} else if (res.error) {
-			this.noti.error('Error login', res.error.error?.message || '');
+			this.noti.error('Error login', res.error?.message || '');
 		}
 	}
 }

@@ -8,22 +8,15 @@
 		</div>
 		<div>
 			<span>
-				Usted está a punto de emitir <strong> {{data.price | number}} {{data.symbol}}</strong>
-			</span> 
+				Usted está a punto de emitir <strong> {{ data.initialAmount | number }} {{ data.symbol }}</strong>
+			</span>
 		</div>
 	</div>
 </div>
 
 <mat-dialog-actions class="button__align">
 	<button mat-stroked-button color="primary" mat-dialog-close class="buttons__modal">Cancelar</button>
-	<button
-		mat-raised-button
-		color="primary"
-		[mat-dialog-close]="true"
-		cdkFocusInitial
-		(click)="emitirActivo()"
-		class="buttons__modal"
-	>
+	<button mat-raised-button color="primary" cdkFocusInitial (click)="emitirActivo()" class="buttons__modal">
 		Emitir
 	</button>
 </mat-dialog-actions>

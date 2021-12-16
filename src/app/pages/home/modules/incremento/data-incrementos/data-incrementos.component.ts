@@ -44,7 +44,7 @@ export class DataIncrementosComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.store.dispatch(setGetIncrementos());
+		// this.store.dispatch(setGetIncrementos());
 		this.store.dispatch(setGetIncrementosMasivos());
 	}
 

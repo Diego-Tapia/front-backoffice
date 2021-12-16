@@ -49,7 +49,7 @@
 						<mat-label>Rol</mat-label>
 						<mat-select formControlName="rol">
 							<mat-option *ngFor="let rol of roles" [value]="rol">
-								{{ rol }}
+								{{ rol.rol }}
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
@@ -140,7 +140,7 @@
 						<div style="float: left; width: 50%">
 							<ul>
 								<mat-card-title class="title__options">Rol asignado</mat-card-title>
-								<mat-card-subtitle class="subtitle__options">{{ myForm.get('rol')?.value }}</mat-card-subtitle>
+								<mat-card-subtitle class="subtitle__options">{{ (myForm.get('rol')?.value).rol }}</mat-card-subtitle>
 							</ul>
 						</div>
 					</mat-card>

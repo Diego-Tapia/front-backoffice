@@ -39,10 +39,10 @@
 						<mat-icon>more_vert</mat-icon>
 					</button>
 					<mat-menu #menu="matMenu">
-						<button mat-menu-item (click)="verDetalle(element.userId)">
+						<button mat-menu-item (click)="verDetalle(element._id)">
 							<span>Ver detalle</span>
 						</button>
-						<button mat-menu-item (click)="modificar(element.userId)">
+						<button mat-menu-item (click)="modificar(element._id)">
 							<span>Editar</span>
 						</button>
 						<button mat-menu-item>

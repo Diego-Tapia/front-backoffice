@@ -48,7 +48,7 @@
 						<button mat-menu-item (click)="openDetalle(element)">
 							<span>Ver detalle</span>
 						</button>
-						<button mat-menu-item (click)="modificarActivo(element.id)">
+						<button mat-menu-item (click)="modificarActivo(element.id)" disabled>
 							<span>Editar</span>
 						</button>
 						<div *ngIf="!element.emited">
@@ -61,7 +61,7 @@
 								<span> Reemitir </span>
 							</button>
 						</div>
-						<button mat-menu-item>
+						<button mat-menu-item (click)="activarActivo(element)">
 							<span>Activar</span>
 						</button>
 					</mat-menu>

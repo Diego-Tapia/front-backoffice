@@ -181,9 +181,9 @@
 					<div style="float: left; width: 33.3%">
 						<ul>
 							<mat-card-title class="title__options">Aplicabilidad</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{
-								myForm.get('applicabilities')?.value | json
-							}}</mat-card-subtitle>
+							<mat-card-subtitle class="subtitle__options">
+								{{ applicabilitiesResume.join(', ') }}
+							</mat-card-subtitle>
 						</ul>
 					</div>
 				</mat-card>

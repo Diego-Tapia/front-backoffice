@@ -9,6 +9,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { IActivo } from 'src/app/shared/models/activo.interface';
+import { IAplicabilidad } from 'src/app/shared/models/aplicabilidad.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IActivosReducersMap } from '../activos.reducers.map';
 import { setGetActivosById, setGetActivosByIdClear } from '../data-activos/store/activos-by-id.actions';
@@ -21,18 +22,19 @@ import { setModificarActivo, setModificarActivoClear } from './store/modificacio
 })
 export class ModificacionActivoComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
+	isLinear = false;
 	activos!: IActivo;
 	id!: string;
 
 	//FORM DATA
-	isLinear = false;
 	selectable = true;
 	removable = true;
 	separatorKeysCodes: number[] = [ENTER, COMMA];
-	filteredApplicabilities!: Observable<string[]>;
-	applicabilities: string[] = [];
+	filteredApplicabilities!: Observable<IAplicabilidad[]>;
+	applicabilities: any[] = [];
+	applicabilitiesResume: string[] = []
 	applicabilityCtrl = new FormControl();
-	allApplicabilities: string[] = ['A1', 'A2', 'A3', 'B1', 'B2', 'B3'];
+	allApplicabilities: IAplicabilidad[] = [];
 
 	@ViewChild('applicabilityInput') applicabilityInput!: ElementRef<HTMLInputElement>;
 
@@ -62,6 +64,9 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 		this.subscriptions.push(
 			this.store.select('activosRedecuersMap', 'getActivosById').subscribe((res: IState<IActivo>) => {
 				this.handleGetActivosById(res);
+			}),
+			this.store.select('activosRedecuersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[]>) => {
+				// this.handleGetAplicabilidades(res);
 			}),
 			this.store.select('activosRedecuersMap', 'modificarActivo').subscribe((res: IState<IActivo>) => {
 				this.handleModificarActivo(res);
@@ -98,7 +103,7 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	handleModificarActivo(res: IState<IActivo>): void {
-		if (res.error) this.noti.error('Error', 'Ocurrió un problema modificando este activo');
+		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Se ha modificado el activo con éxito');
 			this.router.navigateByUrl('home/activos');
@@ -124,23 +129,41 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	//APPLICABILITY FILTER
+	//Filtro aplicabilidad
 	add(event: MatChipInputEvent): void {
+
+		console.log(event.value);
+
 		const value = (event.value || '').trim();
+
 		if (value) this.applicabilities.push(value);
 		event.chipInput!.clear();
 		this.applicabilityCtrl.setValue(null);
 	}
+
 	remove(applicability: string): void {
 		const index = this.applicabilities.indexOf(applicability);
-		if (index >= 0) this.applicabilities.splice(index, 1);
+		if (index >= 0) {
+			this.applicabilities.splice(index, 1);
+			this.applicabilitiesResume.splice(index, 1);
+		}
 	}
+
 	selected(event: MatAutocompleteSelectedEvent): void {
-		this.applicabilities.push(event.option.viewValue);
+
+		if (!this.applicabilities.find(app => app.id === event.option.value.id)) {
+			this.applicabilitiesResume.push(event.option.value.name)
+			this.applicabilities.push(event.option.value);
+		}
+
 		this.applicabilityInput.nativeElement.value = '';
 		this.applicabilityCtrl.setValue(null);
 	}
-	private _filter(value: string): string[] {
-		const filterValue = value.toLowerCase();
-		return this.allApplicabilities.filter((applicability) => applicability.toLowerCase().includes(filterValue));
+
+	private _filter(value: string): any {
+		if (typeof (value) === 'string') {
+			const filterValue = value.toLowerCase();
+			return this.allApplicabilities.filter((applicability) => applicability.name.toLowerCase().includes(filterValue));
+		}
 	}
 }
