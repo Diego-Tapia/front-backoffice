@@ -58,8 +58,6 @@ export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
 	}
 
 	handleNuevoIncrementoMasivo(res: IState<any>) {
-		console.log(res);
-
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.router.navigate(['home/incremento']);
