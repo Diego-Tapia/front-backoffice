@@ -29,7 +29,7 @@ const mySetNuevoIncrementoMasivoReducer = createReducer(
 		...state,
 		response: props.payload,
 		pending: false,
-		succes: true,
+		success: true,
 		error: null
 	})),
 
@@ -37,7 +37,7 @@ const mySetNuevoIncrementoMasivoReducer = createReducer(
 		...state,
 		response: null,
 		pending: false,
-		succes: false,
+		success: false,
 		error: props.payload
 	})),
 

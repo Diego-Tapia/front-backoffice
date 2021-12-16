@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IIncrementoIndividual } from 'src/app/shared/models/incremento-individual-tabla.interface';
+import { IIncrementoMasivo } from 'src/app/shared/models/incremento-masivo-tabla.interface';
 @Component({
 	selector: 'app-tabla-masivos',
 	templateUrl: './tabla-masivos.component.html',
@@ -8,9 +8,9 @@ import { IIncrementoIndividual } from 'src/app/shared/models/incremento-individu
 export class TablaMasivosComponent implements OnInit {
 	displayedColumns: string[] = ['id', 'tipo', 'concepto', 'estado', 'creacion', 'actualizacion', 'star'];
 
-	@Input() incrementsMasive!: IIncrementoIndividual[];
+	@Input() incrementsMasive!: IIncrementoMasivo[];
 
-	public dataSource: IIncrementoIndividual[] = [];
+	public dataSource: IIncrementoMasivo[] = [];
 	constructor() { }
 
 	ngOnInit(): void {

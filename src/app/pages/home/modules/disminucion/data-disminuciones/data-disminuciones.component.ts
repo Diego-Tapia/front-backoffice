@@ -8,6 +8,7 @@ import { IDisminucionReducersMap } from '../disminuciones.reducers.map';
 import { setGetDisminucionesMasivas, setGetDisminucionesMasivasClear } from './store/get-dis-mas.action';
 import { setGetDisminuciones, setGetDisminucionesClear } from './store/get-dis.action';
 import { NotificationsService } from 'angular2-notifications';
+import { IIncrementoMasivo } from 'src/app/shared/models/incremento-masivo-tabla.interface';
 @Component({
 	selector: 'app-data-disminuciones',
 	templateUrl: './data-disminuciones.component.html',
@@ -17,7 +18,7 @@ export class DataDisminucionesComponent implements OnInit {
 	subscriptions: Subscription[] = [];
 
 	incrementsIndividual!: IIncrementoIndividual[];
-	incrementsMasive!: IIncrementoIndividual[];
+	incrementsMasive!: IIncrementoMasivo[];
 
 	constructor(
 		public dialog: MatDialog,

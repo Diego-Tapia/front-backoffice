@@ -26,6 +26,6 @@ export class DisminucionesService {
 	}
 
 	getDisminucionesMasivas(): Observable<any> {
-		return this.http.get<any>(`${this.url}/decrease/massive`);
+		return this.http.get<any>(`${this.url}/decrease/massive/by-client-id`);
 	}
 }

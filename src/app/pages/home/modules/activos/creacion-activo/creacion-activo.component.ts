@@ -51,7 +51,7 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 		applicabilities: [this.applicabilities],
 		validFrom: [''],
 		validTo: [''],
-		transferible: [false],
+		transferable: [false],
 		observations: [''],
 		clientId: ['61b22f8f7793c500fc435705']
 	});
@@ -97,7 +97,6 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 
 		this.myForm.patchValue({ applicabilities: applicabilities_id })
 
-		console.log(this.myForm.value)
 		return this.store.dispatch(setNuevoActivo({ form: this.myForm.value }));
 	}
 
@@ -116,8 +115,6 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 
 	//Filtro aplicabilidad
 	add(event: MatChipInputEvent): void {
-
-		console.log(event.value);
 
 		const value = (event.value || '').trim();
 

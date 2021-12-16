@@ -48,7 +48,7 @@
 						<mat-date-range-picker #picker></mat-date-range-picker>
 					</mat-form-field>
 
-					<mat-checkbox color="primary" style="margin-top: 25px" formControlName="transferible">
+					<mat-checkbox color="primary" style="margin-top: 25px" formControlName="transferable">
 						Transferible
 					</mat-checkbox>
 				</div>
@@ -160,10 +160,10 @@
 					<div style="float: left; width: 25%">
 						<ul>
 							<mat-card-title class="title__options">Condición</mat-card-title>
-							<mat-card-subtitle class="subtitle__options" *ngIf="myForm.get('transferible')?.value">
+							<mat-card-subtitle class="subtitle__options" *ngIf="myForm.get('transferable')?.value">
 								Transferible
 							</mat-card-subtitle>
-							<mat-card-subtitle class="subtitle__options" *ngIf="!myForm.get('transferible')?.value">
+							<mat-card-subtitle class="subtitle__options" *ngIf="!myForm.get('transferable')?.value">
 								No transferible
 							</mat-card-subtitle>
 						</ul>

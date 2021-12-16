@@ -9,6 +9,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { IActivo } from 'src/app/shared/models/activo.interface';
 import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
 import { IIncDisIndividualBE } from 'src/app/shared/models/inc-individual.interface';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-nueva-disminucion-individual',
@@ -30,6 +31,7 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 	constructor(
 		private formBuilder: FormBuilder,
 		private noti: NotificationsService,
+		private router: Router,
 		private store: Store<{ disminucionRedecuersMap: IDisminucionReducersMap }>
 	) {
 		this.subscriptions.push(
@@ -49,7 +51,10 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 
 	handleNuevaDisminucion(res: IState<any>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
-		if (res.success) this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');
+		if (res.success) {
+			this.router.navigate(['home/disminucion']);
+			this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');
+		}
 	}
 
 	submit() {

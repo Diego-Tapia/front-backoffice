@@ -8,6 +8,7 @@ import { IIncrementoReducersMap } from '../incremento.reducers.map';
 import { setGetIncrementos, setGetIncrementosClear } from './store/get-inc.action';
 import { setGetIncrementosMasivos, setGetIncrementosMasivosClear } from './store/get-inc-mas.action';
 import { NotificationsService } from 'angular2-notifications';
+import { IIncrementoMasivo } from 'src/app/shared/models/incremento-masivo-tabla.interface';
 
 @Component({
 	selector: 'app-data-incrementos',
@@ -18,7 +19,7 @@ export class DataIncrementosComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
 
 	incrementsIndividual!: IIncrementoIndividual[];
-	incrementsMasive!: IIncrementoIndividual[];
+	incrementsMasive!: IIncrementoMasivo[];
 
 	constructor(
 		public dialog: MatDialog,

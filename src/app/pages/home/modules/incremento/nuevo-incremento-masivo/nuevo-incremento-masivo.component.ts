@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
@@ -30,6 +31,7 @@ export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
 	constructor(
 		private _formBuilder: FormBuilder,
 		private noti: NotificationsService,
+		private router: Router,
 		private store: Store<{ incrementoRedecuersMap: IIncrementoReducersMap }>
 	) {
 		this.subscriptions.push(
@@ -57,7 +59,10 @@ export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
 
 	handleNuevoIncrementoMasivo(res: IState<any>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
-		if (res.success) this.noti.success('Éxito', 'El incremento masivo se ha creado con éxito');
+		if (res.success) {
+			this.router.navigate(['home/incremento']);
+			this.noti.success('Éxito', 'El incremento masivo se ha creado con éxito');
+		}
 	}
 
 	submit() {

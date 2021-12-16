@@ -50,7 +50,7 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 		applicabilities: [this.applicabilities],
 		validFrom: [''],
 		validTo: [''],
-		transferible: [''],
+		transferable: [''],
 		observations: ['']
 	});
 
@@ -123,7 +123,7 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 			applicabilities: activo.applicabilities,
 			validFrom: activo.validFrom,
 			validTo: activo.validTo,
-			transferible: activo.transferible,
+			transferable: activo.transferable,
 			observations: activo.observations
 		});
 	}
@@ -131,8 +131,6 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 	//APPLICABILITY FILTER
 	//Filtro aplicabilidad
 	add(event: MatChipInputEvent): void {
-
-		console.log(event.value);
 
 		const value = (event.value || '').trim();
 
