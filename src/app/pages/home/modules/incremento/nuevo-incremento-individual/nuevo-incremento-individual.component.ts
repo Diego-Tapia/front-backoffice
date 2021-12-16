@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
@@ -31,6 +32,7 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 	constructor(
 		private formBuilder: FormBuilder,
 		private noti: NotificationsService,
+		private router: Router,
 		private store: Store<{ incrementoRedecuersMap: IIncrementoReducersMap }>
 	) {
 		this.subscriptions.push(
@@ -70,6 +72,9 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 
 	handleNuevoIncremento(res: IState<any>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
-		if (res.success) this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');
+		if (res.success) {
+			this.router.navigate(['home/incremento']);
+			this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');
+		}
 	}
 }

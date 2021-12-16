@@ -8,7 +8,7 @@ export interface IActivo {
 	status: string;
 	id: string;
 	emited: boolean;
-	transferible: boolean;
+	transferable: boolean;
 	bcItemId?: number;
 	operations?: string[];
 	applicabilities?: string[];

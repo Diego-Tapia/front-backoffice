@@ -8,6 +8,7 @@ import { setNuevaDisminucionMasiva, setNuevaDisminucionMasivaClear } from './sto
 import { NotificationsService } from 'angular2-notifications';
 import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
 import { IActivo } from 'src/app/shared/models/activo.interface';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-nueva-disminucion-masiva',
@@ -30,6 +31,7 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 	constructor(
 		private _formBuilder: FormBuilder,
 		private noti: NotificationsService,
+		private router: Router,
 		private store: Store<{ disminucionRedecuersMap: IDisminucionReducersMap }>
 	) {
 		this.subscriptions.push(
@@ -57,7 +59,10 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 
 	handleNuevaDisminucionMasiva(res: IState<any>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
-		if (res.success) this.noti.success('Éxito', 'La disminución masiva se ha creado con éxito');
+		if (res.success) {
+			this.router.navigate(['home/disminucion']);
+			this.noti.success('Éxito', 'La disminución masiva se ha creado con éxito');
+		}
 	}
 
 	submit() {
@@ -71,7 +76,6 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 		formData.append('name', this.myForm.value.name)
 		formData.append('tokenId', this.myForm.value.tokenId.id)
 		formData.append('action', 'CREAR')
-		//CREAR PROCESAR CANCELAR
 		return this.store.dispatch(setNuevaDisminucionMasiva({ form: formData }));
 	}
 
