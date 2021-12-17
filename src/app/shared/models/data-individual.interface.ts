@@ -1,4 +1,4 @@
-export interface IIncrementoIndividual {
+export interface IDataIndividual {
 	id: string;
 	tipo: string;
 	concepto: string;

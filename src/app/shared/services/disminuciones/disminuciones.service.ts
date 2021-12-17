@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { IDisminucionIndividual } from '../../models/dec-individual.interface';
+import { IFormIndividual } from '../../models/form-individual.interface';
 import { ITransaccion } from '../../models/transaccion.interface';
 
 @Injectable({
@@ -13,11 +13,11 @@ export class DisminucionesService {
 
 	constructor(private http: HttpClient) { }
 
-	nuevaDisminucion(data: IDisminucionIndividual): Observable<ITransaccion> {
+	nuevaDisminucion(data: IFormIndividual): Observable<ITransaccion> {
 		return this.http.post<ITransaccion>(`${this.url}/decrement/individual`, data);
 	}
 
-	nuevaDisminucionMasiva(data: any): Observable<any> {
+	nuevaDisminucionMasiva(data: FormData): Observable<any> {
 		return this.http.post<any>(`${this.url}/decrease/massive`, data);
 	}
 

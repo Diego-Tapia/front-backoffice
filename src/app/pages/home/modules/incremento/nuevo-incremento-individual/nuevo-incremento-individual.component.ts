@@ -4,9 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
-import { IActivo } from 'src/app/shared/models/activo.interface';
-import { IIncDisIndividualBE } from 'src/app/shared/models/inc-individual.interface';
-
+import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
 import { IIncrementoReducersMap } from '../incremento.reducers.map';

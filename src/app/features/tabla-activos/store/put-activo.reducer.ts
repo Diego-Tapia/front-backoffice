@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { IActivo } from 'src/app/shared/models/activo.interface';
+import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import {
 	setPutActivo,

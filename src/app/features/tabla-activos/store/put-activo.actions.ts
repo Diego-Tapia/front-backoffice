@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IActivo } from 'src/app/shared/models/activo.interface';
+import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 
 export const setPutActivo = createAction(
 	'[Activos Component] Set Put Activo',

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { IIncrementoIndividual } from '../../models/incremento-individual-tabla.interface';
+import { IDataIndividual } from '../../models/data-individual.interface';
 import { ITransaccion } from '../../models/transaccion.interface';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class IncrementosService {
 
 	constructor(private http: HttpClient) { }
 
-	nuevoIncremento(data: IIncrementoIndividual): Observable<ITransaccion> {
+	nuevoIncremento(data: IDataIndividual): Observable<ITransaccion> {
 		return this.http.post<ITransaccion>(`${this.url}/increment/individual`, data);
 	}
 

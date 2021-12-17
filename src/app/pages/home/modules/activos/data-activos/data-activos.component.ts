@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { IState } from 'src/app/shared/models/state.interface';
-import { IActivo } from 'src/app/shared/models/activo.interface';
+import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IActivosReducersMap } from '../activos.reducers.map';
 import { setGetActivos, setGetActivosClear } from './store/activos.actions';
 import { NotificationsService } from 'angular2-notifications';

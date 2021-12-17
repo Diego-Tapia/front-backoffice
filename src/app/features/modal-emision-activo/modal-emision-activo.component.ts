@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
-import { IActivo } from 'src/app/shared/models/activo.interface';
+import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { ITransaccion } from 'src/app/shared/models/transaccion.interface';
 import { IFeaturesReducersMap } from '../features.reducers.map';

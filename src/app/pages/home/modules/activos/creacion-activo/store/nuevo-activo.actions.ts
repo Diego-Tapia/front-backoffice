@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { IActivo } from 'src/app/shared/models/activo.interface';
+import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 
 export const setNuevoActivo = createAction(
-	'[Activos Component] Set Nuevo Activo', 
+	'[Activos Component] Set Nuevo Activo',
 	props<{ form: IActivo }>()
 );
 

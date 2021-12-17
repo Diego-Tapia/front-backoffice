@@ -1,4 +1,4 @@
-export interface IIncrementoMasivo {
+export interface IDataMasivo {
 	id: string;
 	detail: object;
 	name: string;
