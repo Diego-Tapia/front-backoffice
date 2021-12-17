@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IIncrementoIndividual } from 'src/app/shared/models/incremento-individual-tabla.interface';
+import { IDataIndividual } from 'src/app/shared/models/data-individual.interface';
 
 export const setNuevoIncremento = createAction(
 	'[Nuevo Incremento Component] Set Nuevo Incremento',

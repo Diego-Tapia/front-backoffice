@@ -1,6 +1,6 @@
 <div class="section__container" *ngIf="usuario">
 	<div class="image__container">
-		<img class="profile__img" src="{{ usuario.avatar_url }}" alt="" />
+		<img class="profile__img" src="{{ usuario.avatarUrl }}" alt="" />
 	</div>
 	<div class="user__management">
 		<mat-card-title>{{ usuario.shortName }} {{ usuario.lastName }}</mat-card-title>
@@ -13,7 +13,7 @@
 		</div>
 		<br />
 		<button mat-raised-button color="primary" class="buttons__management">Activar</button>
-		<button mat-stroked-button class="buttons__management" (click)="modificar(usuario._id)">Editar</button>
+		<button mat-stroked-button class="buttons__management" (click)="modificar(usuario.id)">Editar</button>
 	</div>
 	<div class="divider"></div>
 	<div class="user__info">

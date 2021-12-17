@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IActivo } from '../../models/activo.interface';
-import { IReemisionActivo } from '../../models/reemision-activo.interface';
+import { IActivo } from '../../models/activos/activo.interface';
+
+import { IReemisionActivo } from '../../models/activos/reemision-activo.interface';
 import { ITransaccion } from '../../models/transaccion.interface';
 
 @Injectable({

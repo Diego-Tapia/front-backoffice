@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IReemisionActivo } from 'src/app/shared/models/reemision-activo.interface';
+import { IReemisionActivo } from 'src/app/shared/models/activos/reemision-activo.interface';
 import { ITransaccion } from 'src/app/shared/models/transaccion.interface';
 
 export const setReemitirActivos = createAction(

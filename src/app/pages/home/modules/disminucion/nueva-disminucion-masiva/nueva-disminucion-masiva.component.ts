@@ -7,7 +7,7 @@ import { IDisminucionReducersMap } from '../disminuciones.reducers.map';
 import { setNuevaDisminucionMasiva, setNuevaDisminucionMasivaClear } from './store/nueva-dis-mas.action';
 import { NotificationsService } from 'angular2-notifications';
 import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
-import { IActivo } from 'src/app/shared/models/activo.interface';
+import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { Router } from '@angular/router';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { IAplicabilidad } from 'src/app/shared/models/aplicabilidad.interface';
+import { IAplicabilidad } from 'src/app/shared/models/activos/aplicabilidad.interface';
 
 import { IState } from 'src/app/shared/models/state.interface';
 import { setGetAplicabilidades, setGetAplicabilidadesClear, setGetAplicabilidadesError, setGetAplicabilidadesSucces } from './get-aplicabilidades.actions';

@@ -10,7 +10,7 @@ export interface IUser {
 	customId: string;
 	clientId: string;
 	rol?: string;
-	avatar_url?: string;
+	avatarUrl?: string;
 	createdAt?: Date;
-	_id?: string;
+	id?: string;
 }

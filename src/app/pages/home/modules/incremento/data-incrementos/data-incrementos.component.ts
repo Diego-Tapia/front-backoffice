@@ -3,12 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ModalNuevaOperacionComponent } from 'src/app/features/modal-nueva-operacion-incremento/modal-nueva-operacion.component';
-import { IIncrementoIndividual } from 'src/app/shared/models/incremento-individual-tabla.interface';
+import { IDataIndividual } from 'src/app/shared/models/data-individual.interface';
 import { IIncrementoReducersMap } from '../incremento.reducers.map';
 import { setGetIncrementos, setGetIncrementosClear } from './store/get-inc.action';
 import { setGetIncrementosMasivos, setGetIncrementosMasivosClear } from './store/get-inc-mas.action';
 import { NotificationsService } from 'angular2-notifications';
-import { IIncrementoMasivo } from 'src/app/shared/models/incremento-masivo-tabla.interface';
+import { IDataMasivo } from 'src/app/shared/models/data-masivo.interface';
 
 @Component({
 	selector: 'app-data-incrementos',
@@ -18,8 +18,8 @@ import { IIncrementoMasivo } from 'src/app/shared/models/incremento-masivo-tabla
 export class DataIncrementosComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
 
-	incrementsIndividual!: IIncrementoIndividual[];
-	incrementsMasive!: IIncrementoMasivo[];
+	incrementsIndividual!: IDataIndividual[];
+	incrementsMasive!: IDataMasivo[];
 
 	constructor(
 		public dialog: MatDialog,

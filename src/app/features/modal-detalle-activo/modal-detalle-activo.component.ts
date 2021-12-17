@@ -7,7 +7,7 @@ import {
 	setGetActivosById,
 	setGetActivosByIdClear
 } from 'src/app/pages/home/modules/activos/data-activos/store/activos-by-id.actions';
-import { IActivo } from 'src/app/shared/models/activo.interface';
+import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IFeaturesReducersMap } from '../features.reducers.map';
 

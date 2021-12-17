@@ -3,12 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalNuevaOperacionDisminucionComponent } from 'src/app/features/modal-nueva-operacion-disminucion/modal-nueva-operacion-disminucion.component';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { IIncrementoIndividual } from 'src/app/shared/models/incremento-individual-tabla.interface';
+import { IDataIndividual } from 'src/app/shared/models/data-individual.interface';
 import { IDisminucionReducersMap } from '../disminuciones.reducers.map';
 import { setGetDisminucionesMasivas, setGetDisminucionesMasivasClear } from './store/get-dis-mas.action';
 import { setGetDisminuciones, setGetDisminucionesClear } from './store/get-dis.action';
 import { NotificationsService } from 'angular2-notifications';
-import { IIncrementoMasivo } from 'src/app/shared/models/incremento-masivo-tabla.interface';
+import { IDataMasivo } from 'src/app/shared/models/data-masivo.interface';
 @Component({
 	selector: 'app-data-disminuciones',
 	templateUrl: './data-disminuciones.component.html',
@@ -17,8 +17,8 @@ import { IIncrementoMasivo } from 'src/app/shared/models/incremento-masivo-tabla
 export class DataDisminucionesComponent implements OnInit {
 	subscriptions: Subscription[] = [];
 
-	incrementsIndividual!: IIncrementoIndividual[];
-	incrementsMasive!: IIncrementoMasivo[];
+	incrementsIndividual!: IDataIndividual[];
+	incrementsMasive!: IDataMasivo[];
 
 	constructor(
 		public dialog: MatDialog,

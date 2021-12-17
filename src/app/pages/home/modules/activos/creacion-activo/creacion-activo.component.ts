@@ -9,10 +9,10 @@ import { Store } from '@ngrx/store';
 import { IActivosReducersMap } from '../activos.reducers.map';
 import { IState } from 'src/app/shared/models/state.interface';
 import { setNuevoActivo, setNuevoActivoClear } from './store/nuevo-activo.actions';
-import { IActivo } from 'src/app/shared/models/activo.interface';
+import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
-import { IAplicabilidad } from 'src/app/shared/models/aplicabilidad.interface';
+import { IAplicabilidad } from 'src/app/shared/models/activos/aplicabilidad.interface';
 import { setGetAplicabilidades } from '../store/get-aplicabilidades.actions';
 
 @Component({
