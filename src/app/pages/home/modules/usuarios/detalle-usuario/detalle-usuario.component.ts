@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { IState } from 'src/app/shared/models/state.interface';
-import { IUser } from 'src/app/shared/models/user.interface';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { setGetUsuarioById, setGetUsuarioByIdClear } from '../data-usuarios/store/get-usuarios-by-id.action';
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
 
@@ -15,7 +15,7 @@ import { IUsuariosReducersMap } from '../usuarios.reducers.map';
 })
 export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
-	usuario!: IUser;
+	usuario!: IUserProfile;
 	id!: string;
 	userType!: string;
 
@@ -26,7 +26,7 @@ export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 		private store: Store<{ usuariosRedecuersMap: IUsuariosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('usuariosRedecuersMap', 'getUsuarioById').subscribe((res: IState<IUser>) => {
+			this.store.select('usuariosRedecuersMap', 'getUsuarioById').subscribe((res: IState<IUserProfile>) => {
 				this.handleGetUsuarioById(res);
 			}),
 			this.route.params.subscribe((params) => {
@@ -45,7 +45,7 @@ export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 		this.store.dispatch(setGetUsuarioByIdClear());
 	}
 
-	handleGetUsuarioById(res: IState<IUser>): void {
+	handleGetUsuarioById(res: IState<IUserProfile>): void {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo el usuario');
 		if (res.success && res.response) this.usuario = res.response;
 	}

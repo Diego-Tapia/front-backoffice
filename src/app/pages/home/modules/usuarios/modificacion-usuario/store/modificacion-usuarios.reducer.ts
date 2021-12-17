@@ -1,11 +1,11 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { IFormUser } from 'src/app/shared/models/form-user.interface';
 import { IState } from 'src/app/shared/models/state.interface';
-import { IUser } from 'src/app/shared/models/user.interface';
 import { setModificacionUsuarios,  setModificacionUsuariosClear,  setModificacionUsuariosError, setModificacionUsuariosSucces } from './modificacion-usuarios.action';
 
 
 
-export const initialState: IState<IUser | null> = {
+export const initialState: IState<IFormUser | null> = {
 	response: null,
 	pending: false,
 	success: false,
@@ -44,6 +44,6 @@ const mySetModificacionUsuariosReducer = createReducer(
 	})
 );
 
-export function SetModificacionUsuariosReducer(state: IState<IUser> | undefined, action: Action) {
+export function SetModificacionUsuariosReducer(state: IState<IFormUser> | undefined, action: Action) {
 	return mySetModificacionUsuariosReducer(state, action);
 }

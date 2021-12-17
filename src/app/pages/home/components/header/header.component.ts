@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { IUser } from 'src/app/shared/models/user.interface';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
@@ -10,9 +9,15 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 export class HeaderComponent implements OnInit {
 	@Output() sideNavToggle = new EventEmitter();
 
-	constructor(private authService: AuthService) {}
+	public userData!: any;
+	
+	constructor(
+		private authService: AuthService,
+		) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {		
+		this.userData = this.authService.getUserData()
+	}
 
 	toggleSideNav(): void {
 		this.sideNavToggle.emit();

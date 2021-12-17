@@ -1,14 +1,14 @@
 import { createAction, props } from '@ngrx/store';
-import { IUser } from 'src/app/shared/models/user.interface';
+import { IFormUser } from 'src/app/shared/models/form-user.interface';
 
 export const setModificacionUsuarios = createAction(
 	'[Usuario Component] Set Modificacion Usuarios',
-	props<{ id:string, form:IUser }>()
+	props<{ id:string, form:IFormUser }>()
 	);
 
 export const setModificacionUsuariosSucces = createAction(
 	'[Usuario Component] Set Modificacion Usuarios Success',
-	props<{ payload: IUser }>()
+	props<{ payload: IFormUser }>()
 );
 
 export const setModificacionUsuariosError = createAction(

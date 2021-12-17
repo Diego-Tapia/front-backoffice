@@ -6,7 +6,7 @@
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Nombre del incremento</ng-template>
 					<br />
-					<mat-form-field appearance="outline">
+					<mat-form-field appearance="outline" style="width: 24%">
 						<mat-label>Nombre</mat-label>
 						<input matInput placeholder="Nombre" formControlName="name" required />
 					</mat-form-field>
@@ -21,7 +21,7 @@
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Activos</ng-template>
 					<br />
-					<mat-form-field appearance="outline">
+					<mat-form-field appearance="outline" style="width: 24%">
 						<mat-label>Activo</mat-label>
 						<mat-select formControlName="tokenId">
 							<mat-option *ngFor="let activo of activos" [value]="activo">
@@ -41,7 +41,7 @@
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Cargar usuarios</ng-template>
 					<br />
-					<mat-form-field appearance="outline">
+					<mat-form-field appearance="outline" style="width: 24%">
 						<input
 							type="file"
 							accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -51,7 +51,12 @@
 							(change)="fileSelected($event)"
 						/>
 
-						<mat-label><img src="assets/images/arrow_circle_up-24px.svg" />Cargar usuarios</mat-label>
+						<mat-label class="file__input__label">
+							<img src="assets/images/arrow_circle_up-24px.svg" />
+							<span class="file__input__label__text">
+								Cargar usuarios
+							</span>
+						</mat-label>
 						<input
 							matInput
 							formControlName="excelFile"

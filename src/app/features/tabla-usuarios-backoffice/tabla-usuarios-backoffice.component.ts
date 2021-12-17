@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IUser } from 'src/app/shared/models/user.interface';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
+
 
 @Component({
 	selector: 'app-tabla-usuarios-backoffice',
@@ -9,11 +10,11 @@ import { IUser } from 'src/app/shared/models/user.interface';
 })
 export class TablaUsuariosBackofficeComponent implements OnInit {
 	
-	@Input() usuarios!:IUser[]
+	@Input() usuarios!:IUserProfile[]
 	
 	displayedColumns: string[] = ['dni', 'userName', 'createdAt', 'status', 'star'];
 	
-	public dataSource: IUser[] = [];
+	public dataSource: IUserProfile[] = [];
 	
 	
 	constructor(private router: Router) {}

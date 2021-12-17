@@ -1,6 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { IState } from 'src/app/shared/models/state.interface';
-import { IUser } from 'src/app/shared/models/user.interface';
+
 import {
 	setGetUsuarios,
 	setGetUsuariosClear,
@@ -8,7 +9,7 @@ import {
 	setGetUsuariosSucces
 } from './get-usuarios.action';
 
-export const initialState: IState<IUser[] | null> = {
+export const initialState: IState<IUserProfile[] | null> = {
 	response: null,
 	pending: false,
 	success: false,
@@ -47,6 +48,6 @@ const mySetGetUsuariosReducer = createReducer(
 	})
 );
 
-export function setGetUsuariosReducer(state: IState<IUser[]> | undefined, action: Action) {
+export function setGetUsuariosReducer(state: IState<IUserProfile[]> | undefined, action: Action) {
 	return mySetGetUsuariosReducer(state, action);
 }

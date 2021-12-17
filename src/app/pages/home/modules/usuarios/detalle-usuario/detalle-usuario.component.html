@@ -7,13 +7,13 @@
 		<div class="flex__user__info">
 			<div style="display: flex">
 				<mat-card-subtitle class="highlight__info">Usuario</mat-card-subtitle>
-				<mat-card-subtitle>{{ usuario.username }}</mat-card-subtitle>
+				<mat-card-subtitle>{{ usuario.userId.username }}</mat-card-subtitle>
 			</div>
 			<mat-card-subtitle class="highlight__info" *ngIf="usuario.rol">{{ usuario.rol }}</mat-card-subtitle>
 		</div>
 		<br />
-		<button mat-raised-button color="primary" class="buttons__management">Activar</button>
-		<button mat-stroked-button class="buttons__management" (click)="modificar(usuario.id)">Editar</button>
+		<button mat-raised-button color="primary" class="buttons__management" disabled>Activar</button>
+		<button mat-stroked-button class="buttons__management" (click)="modificar(usuario.id)" disabled>Editar</button>
 	</div>
 	<div class="divider"></div>
 	<div class="user__info">

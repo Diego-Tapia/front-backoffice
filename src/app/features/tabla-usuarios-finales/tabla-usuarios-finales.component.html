@@ -8,27 +8,27 @@
 			<ng-container matColumnDef="customId">
 				<th mat-header-cell *matHeaderCellDef>ID/CUIL/DNI</th>
 				<td mat-cell *matCellDef="let element">
-					<span class="text__id">{{ element.customId }}</span>
+					<span class="text__id">{{ element.cuil }}</span>
 				</td>
 			</ng-container>
 
 			<!-- Type Column -->
 			<ng-container matColumnDef="username">
 				<th mat-header-cell *matHeaderCellDef>Nombre</th>
-				<td mat-cell *matCellDef="let element">{{ element.username }}</td>
+				<td mat-cell *matCellDef="let element">{{ element.userId.username }}</td>
 			</ng-container>
 
 			<!-- Concept Column -->
 			<ng-container matColumnDef="createdAt">
 				<th mat-header-cell *matHeaderCellDef>Creación</th>
-				<td mat-cell *matCellDef="let element">{{ element.createdAt | date }}</td>
+				<td mat-cell *matCellDef="let element">{{ element.userId.createdAt | date }}</td>
 			</ng-container>
 
 			<!-- Status Column -->
 			<ng-container matColumnDef="status">
 				<th mat-header-cell *matHeaderCellDef>Estado</th>
 				<td mat-cell *matCellDef="let element">
-					{{ element.status }}
+					{{ element.userId.status }}
 				</td>
 			</ng-container>
 
@@ -42,10 +42,10 @@
 						<button mat-menu-item (click)="verDetalle(element.id)">
 							<span>Ver detalle</span>
 						</button>
-						<button mat-menu-item (click)="modificar(element.id)">
+						<button mat-menu-item (click)="modificar(element.id)" disabled>
 							<span>Editar</span>
 						</button>
-						<button mat-menu-item>
+						<button mat-menu-item disabled>
 							<span *ngIf="element.status === 'Activo'; else elseBlock">Desactivar</span>
 							<ng-template #elseBlock>Activar</ng-template>
 						</button>
