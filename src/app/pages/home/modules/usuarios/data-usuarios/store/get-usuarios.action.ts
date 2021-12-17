@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IUser } from 'src/app/shared/models/user.interface';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 
 export const setGetUsuarios = createAction(
 	'[Usuario Component] Set Get Usuario',
@@ -7,7 +7,7 @@ export const setGetUsuarios = createAction(
 
 export const setGetUsuariosSucces = createAction(
 	'[Usuario Component] Set Get Usuario Success',
-	props<{ payload: IUser[] }>()
+	props<{ payload: IUserProfile[] }>()
 );
 
 export const setGetUsuariosError = createAction(

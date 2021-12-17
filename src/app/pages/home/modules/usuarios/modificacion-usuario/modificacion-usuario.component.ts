@@ -4,9 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
+import { IFormUser } from 'src/app/shared/models/form-user.interface';
 import { IRol } from 'src/app/shared/models/rol.interface';
 import { IState } from 'src/app/shared/models/state.interface';
-import { IUser } from 'src/app/shared/models/user.interface';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
+
 import { setGetUsuarioById, setGetUsuarioByIdClear } from '../data-usuarios/store/get-usuarios-by-id.action';
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
 import { setModificacionUsuarios, setModificacionUsuariosClear } from './store/modificacion-usuarios.action';
@@ -30,16 +32,19 @@ export class ModificacionUsuarioComponent implements OnInit {
 	];
 
 	myForm = this.formBuilder.group({
-		shortName: ['', [Validators.maxLength(15), Validators.required]],
-		lastName: ['', [Validators.maxLength(15), Validators.required]],
+		shortName: ['', [Validators.required]],
+		lastName: ['', [Validators.required]],
 		dni: ['', [Validators.min(1), Validators.required]],
 		cuil: ['', [Validators.min(1), Validators.required]],
-		userName: ['', [Validators.maxLength(15), Validators.required]],
+		username: ['', [Validators.required]],
 		rol: [''],
-		password: ['', [Validators.maxLength(6), Validators.maxLength(14), Validators.required]],
-		repeat_pass: ['', [Validators.maxLength(6), Validators.maxLength(14), Validators.required]],
+		password: ['', [Validators.required]],
+		repeat_pass: ['', [Validators.required]],
 		email: ['', [Validators.email, Validators.required]],
-		phoneNumber: ['', [Validators.min(1), Validators.required]]
+		phoneNumber: ['', [Validators.min(1), Validators.required]],
+		avatarUrl: [''],
+		customId: [''],
+		clientId: ['']
 	});
 
 	constructor(
@@ -50,13 +55,13 @@ export class ModificacionUsuarioComponent implements OnInit {
 		private store: Store<{ usuariosRedecuersMap: IUsuariosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('usuariosRedecuersMap', 'getUsuarioById').subscribe((res: IState<IUser>) => {
+			this.store.select('usuariosRedecuersMap', 'getUsuarioById').subscribe((res: IState<IUserProfile>) => {
 				this.handleGetUsuarioById(res);
 			}),
 			this.store.select('usuariosRedecuersMap', 'getRoles').subscribe((res: IState<IRol[]>) => {
 				this.handleGetRoles(res);
 			}),
-			this.store.select('usuariosRedecuersMap', 'modificacionUsuario').subscribe((res: IState<IUser>) => {
+			this.store.select('usuariosRedecuersMap', 'modificacionUsuario').subscribe((res: IState<IFormUser>) => {
 				this.handleModificacionUsuarios(res);
 			}),
 			this.route.params.subscribe((params) => {
@@ -79,7 +84,7 @@ export class ModificacionUsuarioComponent implements OnInit {
 		this.store.dispatch(setModificacionUsuariosClear());
 	}
 
-	handleGetUsuarioById(res: IState<IUser>): void {
+	handleGetUsuarioById(res: IState<IUserProfile>): void {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo el usuario');
 		if (res.success && res.response) this.updateFormValues(res.response);
 	}
@@ -93,7 +98,7 @@ export class ModificacionUsuarioComponent implements OnInit {
 		}
 	}
 
-	handleModificacionUsuarios(res: IState<IUser>): void {
+	handleModificacionUsuarios(res: IState<IFormUser>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Usuario modificado con éxito');
@@ -102,7 +107,7 @@ export class ModificacionUsuarioComponent implements OnInit {
 		}
 	}
 
-	updateFormValues(usuario: IUser) {
+	updateFormValues(usuario: IUserProfile) {		
 		this.myForm.patchValue({
 			shortName: usuario.shortName,
 			lastName: usuario.lastName,
@@ -111,14 +116,19 @@ export class ModificacionUsuarioComponent implements OnInit {
 			rol: (usuario.rol ? usuario.rol : ''),
 			password: '',
 			repeat_pass: '',
-			username: usuario.username,
+			username: usuario.userId.username,
 			email: usuario.email,
-			phoneNumber: usuario.phoneNumber
+			phoneNumber: usuario.phoneNumber,
+			avatarUrl: usuario.userId.clientId,
+			customId: usuario.userId.clientId,
+			clientId: usuario.userId.clientId,
+		
 		});
 	}
 
 	submit() {
 		const { password, repeat_pass } = this.myForm.value
+		console.log(this.myForm.value);
 
 		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de registro');
 		if (password !== repeat_pass) return this.noti.error('Error', 'Las contraseñas no coinciden');
@@ -126,6 +136,7 @@ export class ModificacionUsuarioComponent implements OnInit {
 
 		const putUser = this.myForm.value
 		putUser.rol = putUser.rol.id
+		
 
 		return this.store.dispatch(setModificacionUsuarios({ id: this.id, form: putUser }));
 	}

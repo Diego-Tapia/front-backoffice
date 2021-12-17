@@ -30,11 +30,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 			logOnly: environment.production // Restrict extension to log-only mode
 		}),
 		SimpleNotificationsModule.forRoot({
-			position: ['top', 'right'],
+			position: ['bottom', 'right'],
 			showProgressBar: true,
 			timeOut: 5000,
 			clickToClose: true,
-			pauseOnHover: true
+			pauseOnHover: true,
+			maxStack: 3
 		})
 	],
 	bootstrap: [AppComponent],

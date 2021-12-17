@@ -6,7 +6,7 @@ import { IDataMasivo } from 'src/app/shared/models/data-masivo.interface';
 	styleUrls: ['./tabla-masivos.component.sass']
 })
 export class TablaMasivosComponent implements OnInit {
-	displayedColumns: string[] = ['id', 'tipo', 'concepto', 'estado', 'creacion', 'actualizacion', 'star'];
+	displayedColumns: string[] = ['id', 'concepto', 'estado', 'creacion', 'actualizacion', 'star'];
 
 	@Input() incrementsMasive!: IDataMasivo[];
 

@@ -6,7 +6,7 @@
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Asunto</ng-template>
 					<br />
-					<mat-form-field appearance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>Asunto</mat-label>
 						<input matInput formControlName="asunto" required />
 					</mat-form-field>
@@ -21,7 +21,7 @@
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Cargar usuarios</ng-template>
 					<br />
-					<mat-form-field appearance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label><img src="assets/images/arrow_circle_up-24px.svg" />Cargar usuarios</mat-label>
 						<input matInput formControlName="usuarios" required />
 					</mat-form-field>
@@ -37,7 +37,7 @@
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Notificación</ng-template>
 					<br />
-					<mat-form-field class="example-full-width" appearance="fill">
+					<mat-form-field class="example-full-width" appearance="outline">
 						<mat-label>Escribe algo...</mat-label>
 						<textarea matInput formControlName="notificacion"></textarea>
 					</mat-form-field>

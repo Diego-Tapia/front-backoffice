@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
+import { IFormUser } from 'src/app/shared/models/form-user.interface';
 import { IRol } from 'src/app/shared/models/rol.interface';
 import { IState } from 'src/app/shared/models/state.interface';
-import { IUser } from 'src/app/shared/models/user.interface';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
 import { setAltaUsuarios, setAltaUsuariosClear } from './store/alta-usuarios.action';
 import { setGetRoles, setGetRolesClear } from './store/get-roles.action';
@@ -22,6 +23,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
   isBackoffice!: boolean;
   userType!: string;
   isLinear = false;
+  public userData!: any;
 
   roles: IRol[] = [
     { id: 'asdasd', rol: 'ADMIN' },
@@ -40,20 +42,20 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     repeat_pass: ['', [Validators.required]],
     email: ['', [Validators.email, Validators.required]],
     phoneNumber: ['', [Validators.min(1), Validators.required]],
-    avatarUrl: ['www.google.com'],
+    avatarUrl: ['avatarUrl'],
     customId: ['customId'],
-    clientId: ['61b22f8f7793c500fc435705'],
-    // clientId: [localStorage.user.clientId],
+    clientId: [''],
   })
 
   constructor(
     public route: ActivatedRoute,
     public router: Router,
+		private authService: AuthService,
     public formBuilder: FormBuilder,
     private noti: NotificationsService,
     private store: Store<{ usuariosRedecuersMap: IUsuariosReducersMap }>) {
     this.subscriptions.push(
-      this.store.select('usuariosRedecuersMap', 'altaUsuarios').subscribe((res: IState<IUser>) => {
+      this.store.select('usuariosRedecuersMap', 'altaUsuarios').subscribe((res: IState<IFormUser>) => {
         this.handleAltaUsuarios(res);
       }),
       this.store.select('usuariosRedecuersMap', 'getRoles').subscribe((res: IState<IRol[]>) => {
@@ -70,6 +72,9 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+		this.userData = this.authService.getUserData()
+    console.log(this.userData);
+    
     if (this.isBackoffice) this.store.dispatch(setGetRoles());
   }
 
@@ -103,7 +108,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleAltaUsuarios(res: IState<IUser>): void {
+  handleAltaUsuarios(res: IState<IFormUser>): void {
     if (res.error) this.noti.error('Error', res.error.error.message)
     if (res.success) {
       this.noti.success('Éxito', 'Usuario creado con éxito')
@@ -120,6 +125,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
 
     const newUser = this.myForm.value
     newUser.rol = ''
+    newUser.clientId = this.userData.user.clientId
 
     return this.store.dispatch(setAltaUsuarios({ form: newUser, userType: this.userType }))
   }

@@ -7,24 +7,24 @@
 				<ng-template matStepLabel>Datos personales</ng-template>
 				<br />
 				<div class="form__group">
-					<mat-form-field appareance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>Nombre</mat-label>
 						<input matInput placeholder="Nombre" formControlName="shortName" required />
 					</mat-form-field>
 
-					<mat-form-field appareance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>Apellido</mat-label>
 						<input matInput placeholder="Apellido" formControlName="lastName" required />
 					</mat-form-field>
 				</div>
 
 				<div class="form__group">
-					<mat-form-field appareance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>DNI</mat-label>
 						<input matInput placeholder="DNI" formControlName="dni" required />
 					</mat-form-field>
 
-					<mat-form-field appareance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>CUIL</mat-label>
 						<input matInput placeholder="CUIL" formControlName="cuil" required />
 					</mat-form-field>
@@ -40,12 +40,12 @@
 				<ng-template matStepLabel>Credenciales</ng-template>
 				<br />
 				<div class="form__group">
-					<mat-form-field appareance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>Usuario</mat-label>
-						<input matInput placeholder="Usuario" formControlName="userName" required />
+						<input matInput placeholder="Usuario" formControlName="username" required />
 					</mat-form-field>
 
-					<mat-form-field appareance="fill" *ngIf="isBackoffice">
+					<mat-form-field appareance="outline" *ngIf="isBackoffice">
 						<mat-label>Rol</mat-label>
 						<mat-select>
 							<mat-option *ngFor="let rol of roles" [value]="rol">
@@ -56,12 +56,12 @@
 				</div>
 
 				<div class="form__group">
-					<mat-form-field appareance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>Contraseña</mat-label>
 						<input matInput placeholder="Contraseña" type="password" formControlName="password" required />
 					</mat-form-field>
 
-					<mat-form-field appareance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>Repetir contraseña</mat-label>
 						<input matInput placeholder="Repetir contraseña" type="password" formControlName="repeat_pass" required />
 					</mat-form-field>
@@ -78,12 +78,12 @@
 				<ng-template matStepLabel>Datos de contacto</ng-template>
 				<br />
 				<div class="form__group">
-					<mat-form-field appareance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>E-mail</mat-label>
 						<input matInput placeholder="E-mail" formControlName="email" required />
 					</mat-form-field>
 
-					<mat-form-field appareance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>Teléfono</mat-label>
 						<input matInput placeholder="Teléfono" formControlName="phoneNumber" required />
 					</mat-form-field>
@@ -169,7 +169,7 @@
 						<div style="float: left; width: 30%">
 							<ul>
 								<mat-card-title class="title__options">Usuario</mat-card-title>
-								<mat-card-subtitle class="subtitle__options">{{ myForm.get('userName')?.value }}</mat-card-subtitle>
+								<mat-card-subtitle class="subtitle__options">{{ myForm.get('username')?.value }}</mat-card-subtitle>
 							</ul>
 						</div>
 						<div style="float: left; width: 40%">

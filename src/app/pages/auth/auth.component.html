@@ -4,11 +4,11 @@
 		<h1 class="form__title">¡Bienvenido a BackOffice!</h1>
 		<p class="form__description">Accedé con tus credenciales Interconomy</p>
 		<form class="login__form" [formGroup]="loginForm" (ngSubmit)="onLogin()" autocomplete="off">
-			<mat-form-field appearance="fill">
+			<mat-form-field appearance="outline">
 				<mat-label>Usuario</mat-label>
 				<input matInput formControlName="username" />
 			</mat-form-field>
-			<mat-form-field appearance="fill">
+			<mat-form-field appearance="outline">
 				<mat-label>Contraseña</mat-label>
 				<input
 					matInput

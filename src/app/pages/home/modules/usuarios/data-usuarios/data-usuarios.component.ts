@@ -8,7 +8,8 @@ import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { ModalAltaUsuarioComponent } from 'src/app/features/modal-alta-usuario/modal-alta-usuario.component';
 import { IState } from 'src/app/shared/models/state.interface';
-import { IUser } from 'src/app/shared/models/user.interface';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
+
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
 import { setGetUsuarios, setGetUsuariosClear } from './store/get-usuarios.action';
 
@@ -19,8 +20,8 @@ import { setGetUsuarios, setGetUsuariosClear } from './store/get-usuarios.action
 })
 export class DataUsuariosComponent implements OnInit {
 	subscriptions: Subscription[] = [];
-	usuariosFinales!: IUser[];
-	usuariosBackoffice!: IUser[];
+	usuariosFinales!: IUserProfile[];
+	usuariosBackoffice!: IUserProfile[];
 	selectedIndex!: number;
 	isBackoffice: boolean = false;
 	userType!: string;
@@ -34,7 +35,7 @@ export class DataUsuariosComponent implements OnInit {
 		private store: Store<{ usuariosRedecuersMap: IUsuariosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('usuariosRedecuersMap', 'getUsuarios').subscribe((res: IState<IUser[]>) => {
+			this.store.select('usuariosRedecuersMap', 'getUsuarios').subscribe((res: IState<IUserProfile[]>) => {
 				this.handleGetUsuarios(res);
 			}),
 			this.route.params.subscribe((params) => (this.userType = params.type))
@@ -54,7 +55,7 @@ export class DataUsuariosComponent implements OnInit {
 		this.store.dispatch(setGetUsuariosClear());
 	}
 
-	handleGetUsuarios(res: IState<IUser[]>): void {
+	handleGetUsuarios(res: IState<IUserProfile[]>): void {
 		this.isLoading = true;
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo los usuarios');
 		if (res.success && res.response) {

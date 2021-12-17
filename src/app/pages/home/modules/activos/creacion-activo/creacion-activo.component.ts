@@ -54,6 +54,7 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 		transferable: [false],
 		observations: [''],
 		clientId: ['61b22f8f7793c500fc435705']
+		// clientId: [localStorage.user.clientId],
 	});
 
 	constructor(

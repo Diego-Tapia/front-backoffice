@@ -6,7 +6,7 @@
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Destinatario</ng-template>
 
-					<mat-form-field appearance="fill">
+					<mat-form-field appearance="outline" style="width: 24%">
 						<mat-label>ID usuario</mat-label>
 						<input matInput type="text" placeholder="ID usuario" formControlName="userName" required />
 					</mat-form-field>
@@ -20,12 +20,12 @@
 
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Activo y cantidad</ng-template>
-					<mat-form-field appearance="fill">
+					<mat-form-field appearance="outline" style="width: 15%">
 						<mat-label>Cantidad</mat-label>
 						<input matInput type="number" formControlName="amount" placeholder="Cantidad de BEN" required />
 					</mat-form-field>
 
-					<mat-form-field appearance="fill" style="margin-left: 15px">
+					<mat-form-field appearance="outline" style="margin-left: 15px; width: 8%">
 						<mat-label>Activo</mat-label>
 						<mat-select formControlName="tokenId">
 							<mat-option *ngFor="let activo of activos" [value]="activo">
@@ -44,7 +44,7 @@
 
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Observaciones</ng-template>
-					<mat-form-field appearance="fill">
+					<mat-form-field appearance="outline" style="width: 24%">
 						<mat-label>Observaciones</mat-label>
 						<input matInput type="text" formControlName="notes" placeholder="Escribe algo" />
 					</mat-form-field>
