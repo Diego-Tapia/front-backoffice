@@ -6,7 +6,7 @@
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Nombre del incremento</ng-template>
 					<br />
-					<mat-form-field appearance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>Nombre</mat-label>
 						<input matInput placeholder="Nombre" formControlName="name" required />
 					</mat-form-field>
@@ -21,7 +21,7 @@
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Activos</ng-template>
 					<br />
-					<mat-form-field appearance="fill">
+					<mat-form-field appearance="outline">
 						<mat-label>Activo</mat-label>
 						<mat-select formControlName="tokenId">
 							<mat-option *ngFor="let activo of activos" [value]="activo">
@@ -41,7 +41,7 @@
 				<mat-step [stepControl]="myForm">
 					<ng-template matStepLabel>Cargar usuarios</ng-template>
 					<br />
-					<mat-form-field appearance="fill">
+					<mat-form-field appearance="outline">
 						<input
 							type="file"
 							accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

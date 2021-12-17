@@ -17,7 +17,7 @@
   transition: all .2s
   color: $grey
   &:hover
-    color: $primary
+    color: $dark-purple
     background-color: rgba($primary, .5 )
     .mat-icon
       color: $primary
@@ -28,8 +28,12 @@
       color: $primary
 .disabled
   color: $light-gray
-  cursor: not-allowed
-  pointer-events: none
+  cursor: default
+  &:hover
+    background-color: #ffffff00
+    color: $light-gray
+    .mat-icon
+      color: $light-gray
 .title
   font-weight: 500
   letter-spacing: 0.8px
