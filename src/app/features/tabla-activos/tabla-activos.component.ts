@@ -58,6 +58,10 @@ export class TablaActivosComponent implements OnInit, OnDestroy {
 		this.store.dispatch(setPutActivo({ id: activo.id, status: { status: 'ACTIVE' } }))
 	}
 
+	desactivarActivo(activo: IActivo) {
+		this.store.dispatch(setPutActivo({ id: activo.id, status: { status: 'INACTIVE' } }))
+	}
+
 	openEmitir(activo: IActivo) {
 		this.dialog.open(ModalEmisionActivoComponent, { data: activo })
 	}
@@ -72,6 +76,12 @@ export class TablaActivosComponent implements OnInit, OnDestroy {
 
 	handlePutActivo(res: IState<IActivo>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
-		if (res.success) this.noti.success('Éxito', 'Se ha activado el activo con éxito');
+		if (res.success) {
+		this.noti.success ('Éxito', 'Se ha modificado el activo con éxito');
+		this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+			this.router.navigate([this.router.url]);
+		}); 
+
+		} 
 	}
 }

@@ -8,13 +8,13 @@
 	<div class="header__rigth">
 		<div class="usuario__container">
 			<div class="usuario__nombre">
-				<p>Hola {{userData.user.shortName}} {{userData.user.lastName}}!</p>
-				<p>{{userData.user.username}}</p>
+				<p>Hola {{userData.admin.shortName}} {{userData.admin.lastName}}!</p>
+				<p>{{userData.admin.username}}</p>
 			</div>
-			<img *ngIf="userData.user.avatarUrl" class="material-icons account__icon" [src]="userData.user.avatarUrl" alt="">
-			<button *ngIf="!userData.user.avatarUrl" mat-mini-fab class="account__btn">
-				<mat-icon class="material-icons account__icon">account_circle</mat-icon>
-			</button>
+			<img *ngIf="userData.admin.avatarUrl" class="material-icons account__icon" [src]="userData.admin.avatarUrl" onError="this.src='assets/images/default-profile-img.png'">
+			<!-- <button mat-mini-fab class="account__btn"> -->
+				<!-- <mat-icon class="material-icons account__icon">account_circle</mat-icon> -->
+			<!-- </button> -->
 		</div>
 		<div class="usuario__icons">
 			<mat-icon class="material-icons noti">notifications</mat-icon>

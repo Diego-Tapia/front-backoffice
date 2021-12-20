@@ -53,7 +53,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 	}
 
 	handleLogin(res: IState<IAuthResponse | null>): void {
-		if (res.success && res.response) {
+		if (res.success && res.response) {			
 			this.authService.setUser(res.response.token, res.response.refreshToken, res.response.admin);
 		} else if (res.error) {
 			this.noti.error('Error login', res.error?.message || '');

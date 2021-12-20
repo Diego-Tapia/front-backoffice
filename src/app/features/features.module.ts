@@ -38,6 +38,8 @@ import { featuresRedecuersMap } from './features.reducers.map';
 import { GetActivosByIdEffects } from '../pages/home/modules/activos/data-activos/store/activos-by-id.effects';
 import { MatDividerModule } from '@angular/material/divider';
 import { PutActivoEffects } from './tabla-activos/store/put-activo.effects';
+import { NuevoIncrementoMasivoEffects } from '../pages/home/modules/incremento/nuevo-incremento-masivo/store/nuevo-inc-mas.effects';
+import { NuevaDisminucionMasivaEffects } from '../pages/home/modules/disminucion/nueva-disminucion-masiva/store/nueva-dis-mas.effects';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -76,7 +78,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
 		MatInputModule,
 		ReactiveFormsModule,
 		StoreModule.forFeature('featuresRedecuersMap', featuresRedecuersMap),
-		EffectsModule.forFeature([EmitirActivosEffects, ReemitirActivosEffects, GetActivosByIdEffects, PutActivoEffects])
+		EffectsModule.forFeature([EmitirActivosEffects, ReemitirActivosEffects, GetActivosByIdEffects, PutActivoEffects, NuevoIncrementoMasivoEffects, NuevaDisminucionMasivaEffects])
 	],
 	providers: [
 		{ provide: LOCALE_ID, useValue: 'es-Ar' }

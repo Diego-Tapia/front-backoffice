@@ -34,14 +34,14 @@ export class AuthService {
 		}
 	}
 
-	setUser(token: string, refreskToken: string, user: any): void {
+	setUser(token: string, refreskToken: string, admin: any): void {
 		try {
 			localStorage.removeItem(STORAGE_KEY);
 			const currentData = this.localStorage.get(STORAGE_KEY) || [];
 			currentData.push({
 				token: token,
 				refreshToken: refreskToken,
-				user: user
+				admin: admin
 			});
 			this.localStorage.set(STORAGE_KEY, currentData);
 			this.router.navigateByUrl('/home');

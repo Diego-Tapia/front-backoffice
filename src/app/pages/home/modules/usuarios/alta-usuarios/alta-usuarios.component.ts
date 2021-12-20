@@ -44,7 +44,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     phoneNumber: ['', [Validators.min(1), Validators.required]],
     avatarUrl: ['avatarUrl'],
     customId: ['customId'],
-    clientId: [''],
+		clientId: [''],
   })
 
   constructor(
@@ -69,7 +69,6 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
       })
     )
   }
-
 
   ngOnInit(): void {
 		this.userData = this.authService.getUserData()

@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { IActivo } from 'src/app/shared/models/activos/activo.interface';
+import { IFormMasivo } from 'src/app/shared/models/form-masivo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
 import { IIncrementoReducersMap } from '../incremento.reducers.map';
@@ -52,12 +53,12 @@ export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
 		this.myForm.patchValue({ excelFile: this.fileName });
 	}
 
-	handleGetActivos(res: IState<any>) {
+	handleGetActivos(res: IState<IActivo[]>) {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema listando los activos');
 		if (res.success && res.response) this.activos = res.response
 	}
 
-	handleNuevoIncrementoMasivo(res: IState<any>) {
+	handleNuevoIncrementoMasivo(res: IState<IFormMasivo>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.router.navigate(['home/incremento']);

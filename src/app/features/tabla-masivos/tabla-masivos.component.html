@@ -49,10 +49,10 @@
 						<button mat-menu-item disabled>
 							<span>Ver detalle</span>
 						</button>
-						<button mat-menu-item disabled>
+						<button mat-menu-item (click)="procesarMasivo(element)">
 							<span>Procesar</span>
 						</button>
-						<button mat-menu-item disabled>
+						<button mat-menu-item (click)="cancelarMasivo(element)">
 							<span>Cancelar</span>
 						</button>
 					</mat-menu>

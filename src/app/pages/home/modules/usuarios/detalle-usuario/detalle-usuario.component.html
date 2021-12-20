@@ -1,6 +1,6 @@
 <div class="section__container" *ngIf="usuario">
 	<div class="image__container">
-		<img class="profile__img" src="{{ usuario.avatarUrl }}" alt="" />
+		<img class="profile__img" [src]="usuario.avatarUrl" onError="this.src='assets/images/default-profile-img.png'">
 	</div>
 	<div class="user__management">
 		<mat-card-title>{{ usuario.shortName }} {{ usuario.lastName }}</mat-card-title>
