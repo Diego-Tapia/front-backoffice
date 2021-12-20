@@ -52,12 +52,12 @@
 							<span>Editar</span>
 						</button>
 						<div *ngIf="!element.emited">
-							<button mat-menu-item (click)="openEmitir(element)">
+							<button mat-menu-item (click)="openEmitir(element)" disabled>
 								<span> Emitir </span>
 							</button>
 						</div>
 						<div *ngIf="element.emited">
-							<button mat-menu-item (click)="openReemitir(element)">
+							<button mat-menu-item (click)="openReemitir(element)" disabled>
 								<span> Reemitir </span>
 							</button>
 						</div>
