@@ -28,6 +28,16 @@
 		</div>
 		<mat-divider></mat-divider>
 		<div class="flex__list__item">
+			<div>Estado</div>
+			<div>{{ activo.status }}</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="flex__list__item">
+			<div>Transferible</div>
+			<div>{{ activo.transferable ? 'Si' : 'No' }}</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="flex__list__item">
 			<div>Vigencia desde</div>
 			<div>{{ activo.validFrom | date }}</div>
 		</div>
@@ -35,6 +45,16 @@
 		<div class="flex__list__item">
 			<div>Vigencia hasta</div>
 			<div>{{ activo.validTo | date }}</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="flex__list__item">
+			<div>Emitido</div>
+			<div>{{ activo.emited ? 'Si' : 'No' }}</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="flex__list__item">
+			<div>Última modificación</div>
+			<div>{{ activo.updatedAt | date }}</div>
 		</div>
 		<mat-divider></mat-divider>
 	</div>

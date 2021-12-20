@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { IAplicabilidad } from 'src/app/shared/models/activos/aplicabilidad.interface';
 import { setGetAplicabilidades } from '../store/get-aplicabilidades.actions';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
 	selector: 'app-creacion-activo',
@@ -36,6 +37,7 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 	applicabilitiesResume: string[] = []
 	applicabilityCtrl = new FormControl();
 	allApplicabilities: IAplicabilidad[] = [];
+	userData!: any;
 
 	@ViewChild('applicabilityInput') applicabilityInput!: ElementRef<HTMLInputElement>;
 
@@ -53,14 +55,14 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 		validTo: [''],
 		transferable: [false],
 		observations: [''],
-		clientId: ['61b22f8f7793c500fc435705']
-		// clientId: [localStorage.user.clientId],
+		clientId: [''],
 	});
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private noti: NotificationsService,
+		private authService: AuthService,
 		private store: Store<{ activosRedecuersMap: IActivosReducersMap }>
 	) {
 		this.subscriptions.push(
@@ -81,6 +83,7 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
+		this.userData = this.authService.getUserData()
 		this.store.dispatch(setGetAplicabilidades());
 	}
 
@@ -96,7 +99,10 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 
 		applicabilities_form.forEach(app => applicabilities_id.push(app.id));
 
-		this.myForm.patchValue({ applicabilities: applicabilities_id })
+		this.myForm.patchValue({ 
+			applicabilities: applicabilities_id,
+			clientId: this.userData.admin.clientId
+		})
 
 		return this.store.dispatch(setNuevoActivo({ form: this.myForm.value }));
 	}

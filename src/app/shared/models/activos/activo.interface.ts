@@ -16,4 +16,6 @@ export interface IActivo {
 	validFrom?: Date;
 	validTo?: Date;
 	observations?: string;
+	createdAt: Date;
+	updatedAt: Date;
 }

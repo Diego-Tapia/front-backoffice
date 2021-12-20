@@ -57,8 +57,13 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 
 		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
 
+		console.log(this.myForm.value);
+		
 		const incrementoIndividual = this.myForm.value
 		incrementoIndividual.tokenId = this.myForm.value.tokenId.id
+
+		console.log(incrementoIndividual.tokenId);
+		
 
 		return this.store.dispatch(setNuevoIncremento({ form: incrementoIndividual }));
 	}
