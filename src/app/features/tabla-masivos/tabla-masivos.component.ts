@@ -37,7 +37,6 @@ export class TablaMasivosComponent implements OnInit, OnDestroy {
 	}
 
 	procesarMasivo(element: IDataMasivo) {
-		console.log(element);
 		const formData = new FormData()
 		formData.append('tokenId', element.tokenId)
 		formData.append('name', element.name)
@@ -59,8 +58,6 @@ export class TablaMasivosComponent implements OnInit, OnDestroy {
 	}
 	
 	cancelarMasivo(element: IDataMasivo) {
-		console.log(element);
-		
 		const formData = new FormData()
 		formData.append('tokenId', element.tokenId)
 		formData.append('name', element.name)

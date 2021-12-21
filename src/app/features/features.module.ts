@@ -40,6 +40,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { PutActivoEffects } from './tabla-activos/store/put-activo.effects';
 import { NuevoIncrementoMasivoEffects } from '../pages/home/modules/incremento/nuevo-incremento-masivo/store/nuevo-inc-mas.effects';
 import { NuevaDisminucionMasivaEffects } from '../pages/home/modules/disminucion/nueva-disminucion-masiva/store/nueva-dis-mas.effects';
+import { StatusPipe } from '../shared/pipes/status.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -60,7 +62,8 @@ registerLocaleData(localeEsAr, 'es-Ar');
 		ModalAltaUsuarioComponent,
 		ModalEmisionActivoComponent,
 		ModalReemisionActivoComponent,
-		ModalDetalleActivoComponent
+		ModalDetalleActivoComponent,
+		
 	],
 	imports: [
 		CommonModule,
@@ -77,6 +80,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
 		RouterModule,
 		MatInputModule,
 		ReactiveFormsModule,
+		SharedModule,
 		StoreModule.forFeature('featuresRedecuersMap', featuresRedecuersMap),
 		EffectsModule.forFeature([EmitirActivosEffects, ReemitirActivosEffects, GetActivosByIdEffects, PutActivoEffects, NuevoIncrementoMasivoEffects, NuevaDisminucionMasivaEffects])
 	],
