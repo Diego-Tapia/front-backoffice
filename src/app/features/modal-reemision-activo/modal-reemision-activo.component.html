@@ -22,14 +22,7 @@
 
 <mat-dialog-actions class="button__align">
 	<button mat-stroked-button color="primary" mat-dialog-close class="buttons__modal">Cancelar</button>
-	<button
-		mat-raised-button
-		color="primary"
-		[mat-dialog-close]="true"
-		cdkFocusInitial
-		(click)="reemitirActivo()"
-		class="buttons__modal"
-	>
+	<button mat-raised-button color="primary" cdkFocusInitial (click)="reemitirActivo()" class="buttons__modal">
 		Emitir
 	</button>
 </mat-dialog-actions>
