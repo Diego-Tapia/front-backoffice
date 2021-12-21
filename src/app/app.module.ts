@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { SharedModule } from './shared/shared.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { StatusPipe } from './shared/pipes/status.pipe';
 
 @NgModule({
 	declarations: [AppComponent],

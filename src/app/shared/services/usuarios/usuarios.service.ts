@@ -20,8 +20,6 @@ export class UsuariosService {
 	}
 
 	getUsuariosById(userType: string, id: string): Observable<IUserProfile> {
-		console.log(userType + ' ' + id);
-
 		if (userType === 'final') return this.http.get<any>(`${this.url}/user-profile/${id}`);
 		else return this.http.get<any>(`${this.url}/admin/${id}`);
 	}

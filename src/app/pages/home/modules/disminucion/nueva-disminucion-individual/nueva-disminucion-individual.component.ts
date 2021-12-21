@@ -23,7 +23,7 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 
 
 	myForm = this.formBuilder.group({
-		userName: ['', [Validators.required]],
+		userIdentifier: ['', [Validators.required]],
 		amount: ['', [Validators.required]],
 		tokenId: ['', [Validators.required]],
 		notes: ['']

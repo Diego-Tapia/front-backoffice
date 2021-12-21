@@ -128,7 +128,6 @@ export class ModificacionUsuarioComponent implements OnInit {
 
 	submit() {
 		const { password, repeat_pass } = this.myForm.value
-		console.log(this.myForm.value);
 
 		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de registro');
 		if (password !== repeat_pass) return this.noti.error('Error', 'Las contraseñas no coinciden');

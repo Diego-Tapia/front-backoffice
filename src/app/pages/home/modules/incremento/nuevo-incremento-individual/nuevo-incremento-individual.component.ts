@@ -21,7 +21,7 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 	activos: IActivo[] = []
 
 	myForm = this.formBuilder.group({
-		userName: ['', [Validators.required]],
+		userIdentifier: ['', [Validators.required]],
 		amount: ['', [Validators.required]],
 		tokenId: ['', [Validators.required]],
 		notes: ['']
@@ -54,16 +54,10 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 	}
 
 	submit() {
-
 		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
-
-		console.log(this.myForm.value);
 		
 		const incrementoIndividual = this.myForm.value
-		incrementoIndividual.tokenId = this.myForm.value.tokenId.id
-
-		console.log(incrementoIndividual.tokenId);
-		
+		incrementoIndividual.tokenId = this.myForm.value.tokenId.id		
 
 		return this.store.dispatch(setNuevoIncremento({ form: incrementoIndividual }));
 	}
