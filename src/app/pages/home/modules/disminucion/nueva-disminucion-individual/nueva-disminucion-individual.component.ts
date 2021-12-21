@@ -52,7 +52,6 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 	handleNuevaDisminucion(res: IState<IFormMasivo>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
-			this.router.navigate(['home/disminucion']);
 			this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');
 		}
 	}

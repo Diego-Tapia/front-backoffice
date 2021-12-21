@@ -71,9 +71,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-		this.userData = this.authService.getUserData()
-    console.log(this.userData);
-    
+		this.userData = this.authService.getUserData()    
     if (this.isBackoffice) this.store.dispatch(setGetRoles());
   }
 
@@ -124,7 +122,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
 
     const newUser = this.myForm.value
     newUser.rol = ''
-    newUser.clientId = this.userData.user.clientId
+    newUser.clientId = this.userData.admin.clientId
 
     return this.store.dispatch(setAltaUsuarios({ form: newUser, userType: this.userType }))
   }
