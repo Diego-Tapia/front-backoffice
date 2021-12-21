@@ -15,7 +15,7 @@
 			<!-- Type Column -->
 			<ng-container matColumnDef="username">
 				<th mat-header-cell *matHeaderCellDef>Nombre</th>
-				<td mat-cell *matCellDef="let element">{{ element.userId.username }}</td>
+				<td mat-cell *matCellDef="let element">{{ element.shortName }} {{ element.lastName }}</td>
 			</ng-container>
 
 			<!-- Concept Column -->

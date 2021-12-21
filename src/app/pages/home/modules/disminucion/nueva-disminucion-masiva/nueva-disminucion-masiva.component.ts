@@ -60,7 +60,6 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 	handleNuevaDisminucionMasiva(res: IState<any>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
-			this.router.navigate(['home/disminucion']);
 			this.noti.success('Éxito', 'La disminución masiva se ha creado con éxito');
 		}
 	}

@@ -76,8 +76,7 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 	handleNuevoIncremento(res: IState<any>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
-			this.router.navigate(['home/incremento']);
-			this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');
+			this.noti.success('Éxito', 'El incremento individual se ha creado con éxito');
 		}
 	}
 }

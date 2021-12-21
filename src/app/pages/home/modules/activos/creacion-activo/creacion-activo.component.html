@@ -32,13 +32,13 @@
 			<mat-step [stepControl]="myForm">
 				<ng-template matStepLabel>Valor y vigencia</ng-template>
 				<br />
-				<div class="form__group" style="width: 60%">
-					<mat-form-field appearance="outline">
+				<div class="form__group">
+					<mat-form-field appearance="outline" style="width: 15%">
 						<mat-label>Cantidad a emitir</mat-label>
 						<input matInput type="number" placeholder="Cantidad a emitir" formControlName="initialAmount" required />
 					</mat-form-field>
 
-					<mat-form-field appearance="outline">
+					<mat-form-field appearance="outline" style="width: 25%">
 						<mat-label>Vigencia desde - hasta</mat-label>
 						<mat-date-range-input [rangePicker]="picker">
 							<input matStartDate placeholder="Desde" formControlName="validFrom" />
@@ -48,12 +48,12 @@
 						<mat-date-range-picker #picker></mat-date-range-picker>
 					</mat-form-field>
 
-					<mat-checkbox color="primary" style="margin: 25px 10px" formControlName="transferable">
+					<mat-checkbox color="primary" style="margin: 25px 25px" formControlName="transferable">
 						Transferible
 					</mat-checkbox>
 				</div>
 
-				<mat-form-field style="width: 60%" appearance="outline">
+				<mat-form-field style="width: 60%; margin-left: 10px" appearance="outline">
 					<mat-label>Observaciones...</mat-label>
 					<textarea
 						matInput
@@ -61,9 +61,9 @@
 						formControlName="observations"
 						placeholder="Observaciones..."
 					></textarea>
+					<mat-hint align="start"><strong>(Opcional)</strong> </mat-hint>
 				</mat-form-field>
-				<p class="detail__options">(Opcional)</p>
-
+				<br />
 				<br />
 				<mat-dialog-actions>
 					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
@@ -120,71 +120,55 @@
 				<ng-template matStepLabel>Confirmacion</ng-template>
 				<br />
 				<mat-card class="card_content">
-					<div style="float: left; width: 37.5%">
-						<ul>
-							<mat-card-title class="title__options">Nombre completo</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ myForm.get('description')?.value }}</mat-card-subtitle>
-						</ul>
-					</div>
-					<div style="float: left; width: 37.5%">
-						<ul>
-							<mat-card-title class="title__options">Acrónimo</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ myForm.get('shortName')?.value }}</mat-card-subtitle>
-						</ul>
-					</div>
-					<div style="float: left; width: 25%">
-						<ul>
-							<mat-card-title class="title__options">Sigla</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ myForm.get('symbol')?.value }}</mat-card-subtitle>
-						</ul>
-					</div>
-				</mat-card>
-				<br />
-
-				<mat-card class="card_content">
-					<div style="float: left; width: 30%">
-						<ul>
-							<mat-card-title class="title__options">Cantidad a emitir</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ myForm.get('initialAmount')?.value }}</mat-card-subtitle>
-						</ul>
-					</div>
-					<div style="float: left; width: 45%">
-						<ul>
-							<mat-card-title class="title__options">Vigencia</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">
-								{{ myForm.get('validFrom')?.value | date }} -
-								{{ myForm.get('validTo')?.value | date }}</mat-card-subtitle
-							>
-						</ul>
-					</div>
-					<div style="float: left; width: 25%">
-						<ul>
-							<mat-card-title class="title__options">Condición</mat-card-title>
-							<mat-card-subtitle class="subtitle__options" *ngIf="myForm.get('transferable')?.value">
-								Transferible
-							</mat-card-subtitle>
-							<mat-card-subtitle class="subtitle__options" *ngIf="!myForm.get('transferable')?.value">
-								No transferible
-							</mat-card-subtitle>
-						</ul>
+					<div>
+						<mat-card-title class="title__options">Nombre completo</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ myForm.get('description')?.value }}</mat-card-subtitle>
 					</div>
 					<div>
-						<ul>
-							<mat-card-title class="title__options">Observaciones</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ myForm.get('observations')?.value }}</mat-card-subtitle>
-						</ul>
+						<mat-card-title class="title__options">Acrónimo</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ myForm.get('shortName')?.value }}</mat-card-subtitle>
+					</div>
+					<div>
+						<mat-card-title class="title__options">Sigla</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ myForm.get('symbol')?.value }}</mat-card-subtitle>
 					</div>
 				</mat-card>
 				<br />
 
 				<mat-card class="card_content">
 					<div>
-						<ul>
-							<mat-card-title class="title__options">Aplicabilidad</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">
-								{{ applicabilitiesResume.join(', ') }}
-							</mat-card-subtitle>
-						</ul>
+						<mat-card-title class="title__options">Cantidad a emitir</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ myForm.get('initialAmount')?.value | number }}</mat-card-subtitle>
+					</div>
+					<div style="width: 40%">
+						<mat-card-title class="title__options">Vigencia</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">
+							{{ myForm.get('validFrom')?.value | date }} -
+							{{ myForm.get('validTo')?.value | date }}</mat-card-subtitle
+						>
+					</div>
+					<div style="width: 25%">
+						<mat-card-title class="title__options">Condición</mat-card-title>
+						<mat-card-subtitle class="subtitle__options" *ngIf="myForm.get('transferable')?.value">
+							Transferible
+						</mat-card-subtitle>
+						<mat-card-subtitle class="subtitle__options" *ngIf="!myForm.get('transferable')?.value">
+							No transferible
+						</mat-card-subtitle>
+					</div>
+					<div style="margin-top: 15px;">
+						<mat-card-title class="title__options">Observaciones</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ myForm.get('observations')?.value }}</mat-card-subtitle>
+					</div>
+				</mat-card>
+				<br />
+
+				<mat-card class="card_content">
+					<div>
+						<mat-card-title class="title__options">Aplicabilidad</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">
+							{{ applicabilitiesResume.join(', ') }}
+						</mat-card-subtitle>
 					</div>
 				</mat-card>
 				<br />
