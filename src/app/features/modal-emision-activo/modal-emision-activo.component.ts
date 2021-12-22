@@ -45,12 +45,10 @@ export class ModalEmisionActivoComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	ngOnInit(): void {
-
-	}
+	ngOnInit(): void { }
 
 	ngOnDestroy(): void {
-		this.store.dispatch(setEmitirActivosClear());
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
+		this.store.dispatch(setEmitirActivosClear());
 	}
 }

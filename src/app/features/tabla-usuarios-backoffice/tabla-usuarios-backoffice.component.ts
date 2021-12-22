@@ -12,7 +12,7 @@ export class TablaUsuariosBackofficeComponent implements OnInit {
 	
 	@Input() usuarios!:IUserProfile[]
 	
-	displayedColumns: string[] = ['dni', 'userName', 'createdAt', 'status', 'star'];
+	displayedColumns: string[] = ['cuil', 'userName', 'createdAt', 'status', 'star'];
 	
 	public dataSource: IUserProfile[] = [];
 	

@@ -6,7 +6,7 @@
 				<app-tabla-usuarios-finales [usuarios]="usuariosFinales"></app-tabla-usuarios-finales>
 			</ng-container>
 		</mat-tab>
-		<mat-tab label="Back Office" [disabled]="true">
+		<mat-tab label="Back Office">
 			<ng-container *ngIf="!isLoading">
 				<app-tabla-usuarios-backoffice [usuarios]="usuariosBackoffice"></app-tabla-usuarios-backoffice>
 			</ng-container>

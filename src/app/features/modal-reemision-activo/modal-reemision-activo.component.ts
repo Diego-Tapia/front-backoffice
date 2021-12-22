@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
@@ -30,6 +30,7 @@ export class ModalReemisionActivoComponent implements OnInit, OnDestroy {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private noti: NotificationsService,
+		private dialogRef: MatDialogRef<ModalReemisionActivoComponent>,
 		private store: Store<{ featuresRedecuersMap: IFeaturesReducersMap }>
 	) {
 		this.subscriptions.push(
@@ -45,10 +46,13 @@ export class ModalReemisionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	handleReemitirActivo(res: IState<ITransaccion>): void {
-		if (res.error) this.noti.error('Error', res.error.error.message);
+		if (res.error) {
+			this.noti.error('Error', res.error.error.message);
+			this.dialogRef.close();
+		} 
 		if (res.success) {
 			this.noti.success('Éxito', 'Se ha reemitido el activo con éxito');
-			this.router.navigate(['home/activos']);
+			this.dialogRef.close();
 		}
 	}
 

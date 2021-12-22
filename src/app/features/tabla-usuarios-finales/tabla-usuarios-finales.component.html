@@ -5,10 +5,10 @@
                   The actual rendered columns are set as a property on the row definition" -->
 
 			<!-- ID Column -->
-			<ng-container matColumnDef="customId">
+			<ng-container matColumnDef="cuil">
 				<th mat-header-cell *matHeaderCellDef>ID/CUIL/DNI</th>
 				<td mat-cell *matCellDef="let element">
-					<span class="text__id">{{ element.cuil }}</span>
+					<span class="text__id">{{ element.cuil | cuil }}</span>
 				</td>
 			</ng-container>
 
@@ -28,6 +28,7 @@
 			<ng-container matColumnDef="status">
 				<th mat-header-cell *matHeaderCellDef>Estado</th>
 				<td mat-cell *matCellDef="let element">
+					<div [class]="element.userId.status"></div>
 					{{ element.userId.status | status }}
 				</td>
 			</ng-container>

@@ -12,7 +12,7 @@ export class TablaUsuariosFinalesComponent implements OnInit {
 
 	@Input() usuarios!: IUserProfile[]
 
-	displayedColumns: string[] = ['customId', 'username', 'createdAt', 'status', 'star'];
+	displayedColumns: string[] = ['cuil', 'username', 'createdAt', 'status', 'star'];
 
 	public dataSource: IUserProfile[] = [];
 
