@@ -1,6 +1,6 @@
 import { IUserId } from "./user-id.interface";
 
-export interface IUserProfile {
+export interface IAdmin {
 	id: string;
 	username: string;
 	shortName: string;
@@ -10,10 +10,9 @@ export interface IUserProfile {
 	password: string;
 	email: string;
 	phoneNumber: number;
-	userId: IUserId;
 	rol: string;
+	clientId: string;
 	avatarUrl: string;
 	createdAt: Date;
 	updatedAt: Date;
 }
-

@@ -4,10 +4,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { StatusPipe } from './pipes/status.pipe';
+import { CuilPipe } from './pipes/cuil.pipe';
 
 @NgModule({
 	declarations: [
-    	StatusPipe
+    	StatusPipe,
+     CuilPipe
   	],
 	imports: [CommonModule],
 	providers: [
@@ -15,7 +17,8 @@ import { StatusPipe } from './pipes/status.pipe';
 		{ provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
 	],
 	exports: [
-		StatusPipe
+		StatusPipe,
+		CuilPipe
 	]
 })
 export class SharedModule {}

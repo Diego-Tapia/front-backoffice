@@ -7,7 +7,7 @@
 		<div class="flex__user__info">
 			<div style="display: flex">
 				<mat-card-subtitle class="highlight__info">Usuario</mat-card-subtitle>
-				<mat-card-subtitle>{{ usuario.userId.username }}</mat-card-subtitle>
+				<mat-card-subtitle>{{ usuario.userId ? usuario.userId.username : usuario.username  }}</mat-card-subtitle>
 			</div>
 			<mat-card-subtitle class="highlight__info" *ngIf="usuario.rol">{{ usuario.rol }}</mat-card-subtitle>
 		</div>
@@ -19,40 +19,16 @@
 	<div class="user__info">
 		<table>
 			<td class="table__header">
-				<tr>
-					DNI
-				</tr>
-				<tr>
-					CUIL
-				</tr>
-				<tr>
-					Teléfono
-				</tr>
-				<tr>
-					E-mail
-				</tr>
+				<tr>DNI</tr>
+				<tr>CUIL</tr>
+				<tr>Teléfono</tr>
+				<tr>E-mail</tr>
 			</td>
 			<td>
-				<tr>
-					{{
-						usuario.dni
-					}}
-				</tr>
-				<tr>
-					{{
-						usuario.cuil
-					}}
-				</tr>
-				<tr>
-					{{
-						usuario.phoneNumber
-					}}
-				</tr>
-				<tr>
-					{{
-						usuario.email
-					}}
-				</tr>
+				<tr>{{usuario.dni}}</tr>
+				<tr>{{usuario.cuil}}</tr>
+				<tr>{{usuario.phoneNumber}}</tr>
+				<tr>{{usuario.email}}</tr>
 			</td>
 		</table>
 	</div>
