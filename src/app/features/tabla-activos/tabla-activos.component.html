@@ -28,6 +28,7 @@
 			<ng-container matColumnDef="status">
 				<th mat-header-cell *matHeaderCellDef>Estado</th>
 				<td mat-cell *matCellDef="let element">
+					<div [class]="element.status"></div>
 					{{ element.status | status }}
 				</td>
 			</ng-container>
@@ -35,7 +36,7 @@
 			<!-- Creation Column -->
 			<ng-container matColumnDef="createdAt">
 				<th mat-header-cell *matHeaderCellDef>Creación</th>
-				<td mat-cell *matCellDef="let element">{{ element.createdAt | date }}</td>
+				<td mat-cell *matCellDef="let element">{{ element.createdAt | date: 'dd/MM/yyyy' }}</td>
 			</ng-container>
 
 			<ng-container matColumnDef="star" stickyEnd>
@@ -51,21 +52,15 @@
 						<button mat-menu-item (click)="modificarActivo(element.id)" disabled>
 							<span>Editar</span>
 						</button>
-						<div *ngIf="!element.emited">
-							<button mat-menu-item (click)="openEmitir(element)" disabled>
-								<span> Emitir </span>
+						<div >
+							<button mat-menu-item (click)="openEmitir(element)" [disabled]="element.status === 'INACTIVE'">
+								<span *ngIf="!element.emited"> Emitir </span>
+								<span *ngIf="element.emited"> Reemitir </span>
 							</button>
 						</div>
-						<div *ngIf="element.emited">
-							<button mat-menu-item (click)="openReemitir(element)" disabled>
-								<span> Reemitir </span>
-							</button>
-						</div>
-						<button mat-menu-item (click)="activarActivo(element)" *ngIf="element.status === 'INACTIVE'">
-							<span>Activar</span>
-						</button>
-						<button mat-menu-item (click)="desactivarActivo(element)" *ngIf="element.status === 'ACTIVE'">
-							<span>Desactivar</span>
+						<button mat-menu-item (click)="actualizarEstado(element)">
+							<span *ngIf="element.status === 'INACTIVE'">Activar</span>
+							<span *ngIf="element.status === 'ACTIVE'">Desactivar</span>
 						</button>
 					</mat-menu>
 				</td>

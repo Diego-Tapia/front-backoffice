@@ -51,10 +51,6 @@ export class TablaMasivosComponent implements OnInit, OnDestroy {
 			formData.append('massiveDecreaseId', element.id)
 			this.store.dispatch(setNuevaDisminucionMasiva({form: formData}))
 		}
-
-		this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-			this.router.navigate([this.router.url]);
-		}); 
 	}
 	
 	cancelarMasivo(element: IDataMasivo) {
@@ -72,10 +68,6 @@ export class TablaMasivosComponent implements OnInit, OnDestroy {
 			formData.append('massiveDecreaseId', element.id)
 			this.store.dispatch(setNuevaDisminucionMasiva({form: formData}))
 		}
-
-		this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
-			this.router.navigate([this.router.url]);
-		}); 
 	}
 
 	handleNuevoIncrementoMasivo(res: IState<IFormMasivo>): void {

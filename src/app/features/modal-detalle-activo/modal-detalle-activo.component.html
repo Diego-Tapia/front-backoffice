@@ -39,12 +39,12 @@
 		<mat-divider></mat-divider>
 		<div class="flex__list__item">
 			<div>Vigencia desde</div>
-			<div>{{ activo.validFrom | date }}</div>
+			<div>{{ activo.validFrom | date: 'dd/MM/yyyy' }}</div>
 		</div>
 		<mat-divider></mat-divider>
 		<div class="flex__list__item">
 			<div>Vigencia hasta</div>
-			<div>{{ activo.validTo | date }}</div>
+			<div>{{ activo.validTo | date: 'dd/MM/yyyy' }}</div>
 		</div>
 		<mat-divider></mat-divider>
 		<div class="flex__list__item">
@@ -54,7 +54,7 @@
 		<mat-divider></mat-divider>
 		<div class="flex__list__item">
 			<div>Última modificación</div>
-			<div>{{ activo.updatedAt | date }}</div>
+			<div>{{ activo.updatedAt | date: 'dd/MM/yyyy' }}</div>
 		</div>
 		<mat-divider></mat-divider>
 	</div>

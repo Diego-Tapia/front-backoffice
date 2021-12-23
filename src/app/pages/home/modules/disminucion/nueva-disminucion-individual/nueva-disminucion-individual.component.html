@@ -7,8 +7,9 @@
 					<ng-template matStepLabel>Destinatario</ng-template>
 
 					<mat-form-field appearance="outline">
-						<mat-label>ID usuario</mat-label>
+						<mat-label>DNI / CUIL / Nombre de usuario</mat-label>
 						<input matInput type="text" placeholder="ID usuario" formControlName="userIdentifier" required />
+						<mat-hint align="start"><strong>(CUIL y DNI sin espacios, puntos o guiones)</strong> </mat-hint>
 					</mat-form-field>
 					<br />
 					<mat-dialog-actions>
@@ -29,7 +30,7 @@
 						<mat-label>Activo</mat-label>
 						<mat-select formControlName="tokenId">
 							<mat-option *ngFor="let activo of activos" [value]="activo">
-								{{ activo.symbol }}
+								{{ activo.symbol | uppercase }}
 							</mat-option>
 						</mat-select>
 					</mat-form-field>

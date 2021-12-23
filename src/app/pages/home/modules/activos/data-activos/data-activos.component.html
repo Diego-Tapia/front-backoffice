@@ -1,6 +1,6 @@
 <div class="section__activos">
 	<app-title [title]="'Activos digitales'" [textButton]="'CREAR ACTIVO'" routerLink="/home/activos/crear"></app-title>
     <ng-container *ngIf="activos">
-        <app-tabla-activos [activos]="activos"></app-tabla-activos>
+        <app-tabla-activos [activos]="activos" (updateValues)="updateValues()"></app-tabla-activos>
     </ng-container>
 </div>

@@ -143,8 +143,8 @@
 					<div style="width: 40%">
 						<mat-card-title class="title__options">Vigencia</mat-card-title>
 						<mat-card-subtitle class="subtitle__options">
-							{{ myForm.get('validFrom')?.value | date }} -
-							{{ myForm.get('validTo')?.value | date }}</mat-card-subtitle
+							{{ myForm.get('validFrom')?.value | date: 'dd/MM/yyyy' }} -
+							{{ myForm.get('validTo')?.value | date: 'dd/MM/yyyy' }}</mat-card-subtitle
 						>
 					</div>
 					<div style="width: 25%">

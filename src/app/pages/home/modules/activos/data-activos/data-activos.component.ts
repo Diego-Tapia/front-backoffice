@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { IState } from 'src/app/shared/models/state.interface';
@@ -31,6 +31,10 @@ export class DataActivosComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.subscriptions.forEach((subscription) => subscription.unsubscribe());
 		this.store.dispatch(setGetActivosClear());
+	}
+
+	updateValues(): void {
+		this.store.dispatch(setGetActivos())
 	}
 
 	handleGetActivos(res: IState<IActivo[]>): void {
