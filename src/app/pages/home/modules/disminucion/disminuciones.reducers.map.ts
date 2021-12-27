@@ -5,12 +5,14 @@ import { setGetDisminucionesMasivasReducer } from './data-disminuciones/store/ge
 import { setNuevaDisminucionReducer } from './nueva-disminucion-individual/store/nueva-dis.reducer';
 import { setNuevaDisminucionMasivaReducer } from './nueva-disminucion-masiva/store/nueva-dis-mas.reducer';
 import { setGetActivosReducer } from '../activos/data-activos/store/activos.reducer';
+import { setVerifyUsuarioReducer } from '../usuarios/data-usuarios/store/verify/verify-usuarios.reducer';
 export interface IDisminucionReducersMap {
 	nuevaDisminucion: IState<any>;
 	getDisminuciones: IState<any>;
 	nuevaDisminucionMasiva: IState<any>;
 	getDisminucionesMasivas: IState<any>;
 	getActivos: IState<any>;
+	verifyUsuario: IState<any>;
 }
 
 export const disminucionRedecuersMap: ActionReducerMap<IDisminucionReducersMap> = {
@@ -18,5 +20,6 @@ export const disminucionRedecuersMap: ActionReducerMap<IDisminucionReducersMap> 
 	getDisminuciones: setGetDisminucionesReducer,
 	nuevaDisminucionMasiva: setNuevaDisminucionMasivaReducer,
 	getDisminucionesMasivas: setGetDisminucionesMasivasReducer,
-	getActivos: setGetActivosReducer
+	getActivos: setGetActivosReducer,
+	verifyUsuario: setVerifyUsuarioReducer
 };

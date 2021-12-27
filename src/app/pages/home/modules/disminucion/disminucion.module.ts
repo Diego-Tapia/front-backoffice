@@ -24,6 +24,8 @@ import { NuevaDisminucionMasivaEffects } from './nueva-disminucion-masiva/store/
 import { MatOptionModule } from '@angular/material/core';
 import { GetActivosEffects } from '../activos/data-activos/store/activos.effects';
 import { MatSelectModule } from '@angular/material/select';
+import { VerifyUsuarioEffects } from '../usuarios/data-usuarios/store/verify/verify-usuarios.effect';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
 	declarations: [DataDisminucionesComponent, NuevaDisminucionMasivaComponent, NuevaDisminucionIndividualComponent],
@@ -41,13 +43,15 @@ import { MatSelectModule } from '@angular/material/select';
 		MatCardModule,
 		MatOptionModule,
 		MatSelectModule,
+		SharedModule,
 		StoreModule.forFeature('disminucionRedecuersMap', disminucionRedecuersMap),
 		EffectsModule.forFeature([
 			NuevaDisminucionEffects,
 			NuevaDisminucionMasivaEffects,
 			GetDisminucionesEffects,
 			GetDisminucionesMasivasEffects,
-			GetActivosEffects
+			GetActivosEffects,
+			VerifyUsuarioEffects
 		])
 	]
 })
