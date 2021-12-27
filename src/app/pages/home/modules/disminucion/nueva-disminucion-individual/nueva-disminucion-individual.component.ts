@@ -10,6 +10,8 @@ import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
 import { Router } from '@angular/router';
 import { IFormMasivo } from 'src/app/shared/models/form-masivo.interface';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
+import { setVerifyUsuario } from '../../usuarios/data-usuarios/store/verify/verify-usuarios.action';
 
 @Component({
 	selector: 'app-nueva-disminucion-individual',
@@ -20,14 +22,19 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 	isLinear = false;
 	subscriptions: Subscription[] = [];
 	activos: IActivo[] = []
+	usuario!: IUserProfile;
 
+	verifyForm = this.formBuilder.group({
+		unassignedUser: ['', [Validators.required]],
+	})
 
 	myForm = this.formBuilder.group({
 		userIdentifier: ['', [Validators.required]],
 		amount: ['', [Validators.required]],
 		tokenId: ['', [Validators.required]],
-		notes: ['']
+		notes:['']
 	});
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private noti: NotificationsService,
@@ -40,21 +47,19 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 			}),
 			this.store.select('disminucionRedecuersMap', 'getActivos').subscribe((res) => {
 				this.handleGetActivos(res);
+			}),
+			this.store.select('disminucionRedecuersMap', 'verifyUsuario').subscribe((res: IState<IUserProfile>) => {
+				this.handleVerifyUsuario(res);
 			})
 		);
 	}
 
-	handleGetActivos(res: IState<IActivo[]>) {
-		if (res.error) this.noti.error('Error', 'Ocurrió un problema listando los activos');
-		if (res.success && res.response) this.activos = res.response
-	}
 
-	handleNuevaDisminucion(res: IState<IFormMasivo>) {
-		if (res.error) this.noti.error('Error', res.error.error.message);
-		if (res.success) {
-			this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');
-			this.router.navigate(['home/disminucion']);
-		}
+	verifyUsuario(){
+		console.log(this.verifyForm.value) 
+		if(!this.verifyForm.value.unassignedUser) this.noti.error('Error','Debes completar el campo para continuar')
+		if(this.verifyForm.value.unassignedUser)
+			this.store.dispatch(setVerifyUsuario({userIdentifier: this.verifyForm.value.unassignedUser}));
 	}
 
 	submit() {
@@ -74,5 +79,30 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
 		this.store.dispatch(setNuevaDisminucionClear());
 		this.store.dispatch(setGetActivosClear());
+	}
+
+	handleGetActivos(res: IState<IActivo[]>) {
+		if (res.error) this.noti.error('Error', 'Ocurrió un problema listando los activos');
+		if (res.success && res.response) this.activos = res.response
+	}
+
+	handleVerifyUsuario(res: IState<IUserProfile>) {	
+		if (res.error) {
+			if(res.error.status === 404) this.noti.error('Error', 'No se encontró ningun usuario con esa identificación');
+			else this.noti.error('Error', res.error.error.message);
+			this.myForm.patchValue({userIdentifier:''})
+		} 
+		if (res.success && res.response) {
+			this.usuario = res.response
+			this.myForm.patchValue({userIdentifier:this.verifyForm.value.unassignedUser})
+		} 
+	}
+
+	handleNuevaDisminucion(res: IState<IFormMasivo>) {
+		if (res.error) this.noti.error('Error', res.error.error.message);
+		if (res.success) {
+			this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');
+			this.router.navigate(['home/disminucion']);
+		}
 	}
 }

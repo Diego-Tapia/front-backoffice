@@ -23,27 +23,15 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 	activos: IActivo[] = [];
 	usuario!: IUserProfile;
 
-	firstForm = this.formBuilder.group({
-		userIdentifier: ['', [Validators.required]],
-	})
-
 	verifyForm = this.formBuilder.group({
 		unassignedUser: ['', [Validators.required]],
-	})
-
-	secondForm = this.formBuilder.group({
-		amount: ['', [Validators.required]],
-		tokenId: ['', [Validators.required]],
-	})
-
-	thirdForm = this.formBuilder.group({
-		notes: ['']
 	})
 
 	myForm = this.formBuilder.group({
 		userIdentifier: ['', [Validators.required]],
 		amount: ['', [Validators.required]],
 		tokenId: ['', [Validators.required]],
+		notes:['']
 	});
 
 	constructor(
@@ -84,10 +72,10 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 	}
 
 	submit() {
-		if (!this.firstForm.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
+		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
 		
-		const incrementoIndividual = this.firstForm.value
-		incrementoIndividual.tokenId = this.firstForm.value.tokenId.id		
+		const incrementoIndividual = this.myForm.value
+		incrementoIndividual.tokenId = this.myForm.value.tokenId.id		
 
 		return this.store.dispatch(setNuevoIncremento({ form: incrementoIndividual }));
 	}
@@ -101,10 +89,11 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 		if (res.error) {
 			if(res.error.status === 404) this.noti.error('Error', 'No se encontró ningun usuario con esa identificación');
 			else this.noti.error('Error', res.error.error.message);
-			this.firstForm.patchValue({userIdentifier:''})
+			this.myForm.patchValue({userIdentifier:''})
 		} 
 		if (res.success && res.response) {
 			this.usuario = res.response
+			this.myForm.patchValue({userIdentifier:this.verifyForm.value.unassignedUser})
 		} 
 	}
 
