@@ -5,7 +5,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
-import { setGetUsuarioById, setGetUsuarioByIdClear } from '../data-usuarios/store/get-usuarios-by-id.action';
+import { setGetUsuarioById, setGetUsuarioByIdClear } from '../data-usuarios/store/get-by-id/get-usuarios-by-id.action';
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
 
 @Component({

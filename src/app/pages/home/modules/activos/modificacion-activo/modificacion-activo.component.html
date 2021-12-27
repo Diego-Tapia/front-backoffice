@@ -1,4 +1,4 @@
-<h1>Nuevo activo digital</h1>
+<h1>Editar activo digital</h1>
 <div class="section__stepper">
 	<form [formGroup]="myForm">
 		<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
@@ -8,17 +8,17 @@
 				<div class="form__group">
 					<mat-form-field appearance="outline">
 						<mat-label>Nombre completo</mat-label>
-						<input matInput type="text" placeholder="Nombre completo" formControlName="description" required />
+						<input matInput type="text" placeholder="Nombre completo" formControlName="description" />
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>Acrónimo</mat-label>
-						<input matInput type="text" placeholder="Acrónimo" formControlName="shortName" required />
+						<input matInput type="text" placeholder="Acrónimo" formControlName="shortName" readonly />
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>Sigla</mat-label>
-						<input matInput type="text" placeholder="Sigla" formControlName="symbol" required />
+						<input matInput type="text" placeholder="Sigla" formControlName="symbol" readonly />
 					</mat-form-field>
 				</div>
 				<br />
@@ -35,7 +35,7 @@
 				<div class="form__group" style="width: 60%">
 					<mat-form-field appearance="outline">
 						<mat-label>Cantidad a emitir</mat-label>
-						<input matInput type="number" placeholder="Cantidad a emitir" formControlName="initialAmount" required />
+						<input matInput type="number" placeholder="Cantidad a emitir" formControlName="initialAmount" readonly required />
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
@@ -85,7 +85,7 @@
 							[removable]="removable"
 							(removed)="remove(applicability)"
 						>
-							{{ applicability }}
+							{{ applicability.name }}
 							<button type="button" matChipRemove *ngIf="removable">
 								<mat-icon class="button__cancel">cancel</mat-icon>
 							</button>
@@ -102,7 +102,7 @@
 					</mat-chip-list>
 					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
 						<mat-option *ngFor="let applicability of filteredApplicabilities | async" [value]="applicability">
-							{{ applicability }}
+							{{ applicability.name }}
 						</mat-option>
 					</mat-autocomplete>
 				</mat-form-field>
@@ -171,7 +171,8 @@
 					<div>
 						<ul>
 							<mat-card-title class="title__options">Observaciones</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ myForm.get('observations')?.value }}</mat-card-subtitle>
+							<mat-card-subtitle class="subtitle__options" *ngIf="myForm.get('observations')?.value">{{ myForm.get('observations')?.value }}</mat-card-subtitle>
+							<mat-card-subtitle class="subtitle__options" *ngIf="!myForm.get('observations')?.value">Sin observaciones</mat-card-subtitle>
 						</ul>
 					</div>
 				</mat-card>

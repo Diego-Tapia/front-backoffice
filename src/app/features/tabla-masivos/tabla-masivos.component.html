@@ -22,8 +22,9 @@
 			<ng-container matColumnDef="estado">
 				<th mat-header-cell *matHeaderCellDef>Estado</th>
 				<td mat-cell *matCellDef="let element">
-					<img src="../../../assets/images/tabla-masivos/icon_action_autorenew_circle_24px.svg" class="image__status" />
-					{{ element.status }}
+					<!-- <img *ngIf="element.status === 'FINALIZADO'" src="../../../assets/images/tabla-masivos/icon_action_check_circle_24px.svg" class="image__status" /> -->
+					<img [src]="'../../../assets/images/tabla-masivos/'+element.status+'.svg'" class="image__status" />
+					{{ element.status | status }}
 				</td>
 			</ng-container>
 
@@ -49,10 +50,10 @@
 						<button mat-menu-item disabled>
 							<span>Ver detalle</span>
 						</button>
-						<button mat-menu-item (click)="procesarMasivo(element)">
+						<button mat-menu-item (click)="procesarMasivo(element)" [disabled]="element.status !== 'LISTO_PROCESAR'">
 							<span>Procesar</span>
 						</button>
-						<button mat-menu-item (click)="cancelarMasivo(element)">
+						<button mat-menu-item (click)="cancelarMasivo(element)" [disabled]="element.status !== 'LISTO_PROCESAR' && element.status !== 'CREADO'">
 							<span>Cancelar</span>
 						</button>
 					</mat-menu>

@@ -3,30 +3,56 @@
 	<div class="section__stepper">
 		<form [formGroup]="myForm" (ngSubmit)="submit()">
 			<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
-				<mat-step [stepControl]="myForm">
-					<ng-template matStepLabel>Destinatario</ng-template>
-
-					<mat-form-field appearance="outline" style="width: 24%">
-						<mat-label>DNI / CUIL / Nombre de usuario</mat-label>
-						<input matInput type="text" placeholder="ID usuario" formControlName="userIdentifier" required />
-						<mat-hint align="start"><strong>(CUIL y DNI sin espacios, puntos o guiones)</strong> </mat-hint>
-					</mat-form-field>
+				<mat-step [stepControl]="verifyForm">
+					<form [formGroup]="verifyForm" (ngSubmit)="submit()">	
+						<ng-template matStepLabel>Destinatario</ng-template>
+						<div class="container__user__info">
+							<mat-form-field appearance="outline" style="width: 40%; margin-bottom: 15px;">
+								<mat-label>DNI / CUIL / Nombre de usuario</mat-label>
+								<input matInput type="text" placeholder="ID usuario" formControlName="unassignedUser" required />
+								<mat-hint align="start"><strong>(CUIL y DNI sin espacios, puntos o guiones)</strong> </mat-hint>
+							</mat-form-field>
+							<mat-card [ngClass]="verifyForm.value.verified ? 'card_content_user' : 'hidden'" >
+								<div>
+									<mat-card-title class="title__options">Nombre</mat-card-title>
+									<mat-card-subtitle class="subtitle__options" *ngIf="usuario"> 
+										{{usuario.shortName}} {{usuario.lastName}} 
+									</mat-card-subtitle>
+								</div>
+								<div>
+									<mat-card-title class="title__options">DNI </mat-card-title>
+									<mat-card-subtitle class="subtitle__options" *ngIf="usuario">
+										{{usuario.dni | number}}
+									</mat-card-subtitle>
+								</div>
+								<div>
+									<mat-card-title class="title__options">CUIL</mat-card-title>
+									<mat-card-subtitle class="subtitle__options" *ngIf="usuario"> 
+										{{usuario.cuil | cuil}} 
+									</mat-card-subtitle>
+								</div>
+							</mat-card>
+						</div>
+					</form>
 					<br />
 					<mat-dialog-actions>
-						<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+						<button type="button" mat-stroked-button color="primary" class="buttons__stepper" (click)="verifyUsuario()">
 							Verificar
+						</button>
+						<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" [disabled]="!verifyForm.value.verified" matStepperNext>
+							Siguiente
 						</button>
 					</mat-dialog-actions>
 				</mat-step>
 
-				<mat-step [stepControl]="myForm">
+				<mat-step [stepControl]="secondForm.value.amount">
 					<ng-template matStepLabel>Activo y cantidad</ng-template>
-					<mat-form-field appearance="outline" style="width: 15%">
+					<mat-form-field appearance="outline" style="width: 25%;">
 						<mat-label>Cantidad</mat-label>
 						<input matInput type="number" formControlName="amount" placeholder="Cantidad de BEN" required />
 					</mat-form-field>
 
-					<mat-form-field appearance="outline" style="margin-left: 15px; width: 8%">
+					<mat-form-field appearance="outline" style="width: 13% ;margin-left: 15px">
 						<mat-label>Activo</mat-label>
 						<mat-select formControlName="tokenId">
 							<mat-option *ngFor="let activo of activos" [value]="activo">
@@ -43,9 +69,9 @@
 					</mat-dialog-actions>
 				</mat-step>
 
-				<mat-step [stepControl]="myForm">
+				<mat-step>
 					<ng-template matStepLabel>Observaciones</ng-template>
-					<mat-form-field appearance="outline" style="width: 24%">
+					<mat-form-field appearance="outline" style="width: 40%;">
 						<mat-label>Observaciones</mat-label>
 						<input matInput type="text" formControlName="notes" placeholder="Escribe algo" />
 						<mat-hint align="start"><strong>(Opcional)</strong> </mat-hint>

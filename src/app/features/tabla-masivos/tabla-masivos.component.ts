@@ -72,12 +72,12 @@ export class TablaMasivosComponent implements OnInit, OnDestroy {
 
 	handleNuevoIncrementoMasivo(res: IState<IFormMasivo>): void {
 		if(res.error) this.noti.error('Error', res.error.error.message)
-		if (res.success) this.noti.success('Éxito', 'Se ha modificado el activo con éxito');
+		if (res.success) this.noti.success('Éxito', 'Se ha modificado el estado del incremento con éxito');
 	}
 	
 	handleNuevaDisminucionMasiva(res: IState<IFormMasivo>): void {
 		if(res.error) this.noti.error('Error', res.error.error.message)
-		if (res.success) this.noti.success('Éxito', 'Se ha modificado el activo con éxito');
+		if (res.success) this.noti.success('Éxito', 'Se ha modificado el estado de la disminución  con éxito');
 	}
 
 	ngOnInit(): void {		

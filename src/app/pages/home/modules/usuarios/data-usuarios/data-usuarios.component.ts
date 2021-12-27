@@ -11,7 +11,7 @@ import { IState } from 'src/app/shared/models/state.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
-import { setGetUsuarios, setGetUsuariosClear } from './store/get-usuarios.action';
+import { setGetUsuarios, setGetUsuariosClear } from './store/get-all/get-usuarios.action';
 
 @Component({
 	selector: 'app-data-usuarios',

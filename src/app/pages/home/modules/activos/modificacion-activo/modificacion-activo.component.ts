@@ -13,6 +13,7 @@ import { IAplicabilidad } from 'src/app/shared/models/activos/aplicabilidad.inte
 import { IState } from 'src/app/shared/models/state.interface';
 import { IActivosReducersMap } from '../activos.reducers.map';
 import { setGetActivosById, setGetActivosByIdClear } from '../data-activos/store/activos-by-id.actions';
+import { setGetAplicabilidades, setGetAplicabilidadesClear } from '../store/get-aplicabilidades.actions';
 import { setModificarActivo, setModificarActivoClear } from './store/modificacion-activo.actions';
 
 @Component({
@@ -23,8 +24,9 @@ import { setModificarActivo, setModificarActivoClear } from './store/modificacio
 export class ModificacionActivoComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
 	isLinear = false;
-	activos!: IActivo;
+	activo!: IActivo;
 	id!: string;
+	oldAppNames: string[] = []
 
 	//FORM DATA
 	selectable = true;
@@ -43,15 +45,16 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 		shortName: ['', [Validators.required]],
 		symbol: ['', [Validators.required]],
 		initialAmount: ['', [Validators.required]],
-		money: [''],
-		price: [''],
+		money: ['ARS'],
+		price: [1],
 		emited: [''],
 		status: [''],
-		applicabilities: [this.applicabilities],
+		applicabilities: [''],
 		validFrom: [''],
 		validTo: [''],
 		transferable: [''],
-		observations: ['']
+		observations: [''],
+		clientId: [''],
 	});
 
 	constructor(
@@ -66,7 +69,7 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 				this.handleGetActivosById(res);
 			}),
 			this.store.select('activosRedecuersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[]>) => {
-				// this.handleGetAplicabilidades(res);
+				this.handleGetAplicabilidades(res);
 			}),
 			this.store.select('activosRedecuersMap', 'modificarActivo').subscribe((res: IState<IActivo>) => {
 				this.handleModificarActivo(res);
@@ -84,22 +87,40 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		this.subscriptions.push(this.route.params.subscribe((params) => (this.id = params.id)));
 		this.store.dispatch(setGetActivosById({ id: this.id }));
+		this.store.dispatch(setGetAplicabilidades());
+
 	}
 
 	ngOnDestroy(): void {
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
 		this.store.dispatch(setGetActivosByIdClear());
+		this.store.dispatch(setGetAplicabilidadesClear());
 		this.store.dispatch(setModificarActivoClear());
 	}
 
 	handleGetActivosById(res: IState<IActivo>): void {
-		if (res.success) this.updateFormValues(res.response);
+		if (res.success && res.response) {
+			this.activo = res.response;
+			this.updateFormValues();
+		}
+	}
+
+	handleGetAplicabilidades(res: IState<IAplicabilidad[]>): void {
+		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las aplicabilidades');
+		if (res.success && res.response) this.allApplicabilities = res.response
 	}
 
 	modificarActivo() {
-		if (!this.myForm.valid)
+		if (!this.myForm.valid) 
 			return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de modificación de activos');
-		return this.store.dispatch(setModificarActivo({ id: this.id, form: this.myForm.value }));
+
+		let appIds: string[] = [];
+		this.applicabilities.forEach(app => appIds.push(app.id))
+		this.myForm.patchValue({applicabilities: appIds})
+
+		const { shortName, symbol, ...resto } = this.myForm.value
+
+		return this.store.dispatch(setModificarActivo({ id: this.id, form: resto }));
 	}
 
 	handleModificarActivo(res: IState<IActivo>): void {
@@ -110,33 +131,43 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	updateFormValues(activo: IActivo) {
+	updateFormValues() {
+
+		if (this.activo.applicabilities) {
+			this.activo.applicabilities.forEach((app:any) => {
+				this.applicabilities.push(app);
+				this.applicabilitiesResume.push(app.name);
+			})
+		}
+		
 		this.myForm.patchValue({
-			description: activo.description,
-			shortName: activo.shortName,
-			symbol: activo.symbol,
-			initialAmount: activo.initialAmount,
-			money: activo.money,
-			price: activo.price,
-			emited: activo.emited,
-			status: activo.status,
-			applicabilities: activo.applicabilities,
-			validFrom: activo.validFrom,
-			validTo: activo.validTo,
-			transferable: activo.transferable,
-			observations: activo.observations
-		});
+			description: this.activo.description,
+			shortName: this.activo.shortName,
+			symbol: this.activo.symbol,
+			initialAmount: this.activo.initialAmount,
+			money: this.activo.money,
+			price: this.activo.price,
+			emited: this.activo.emited,
+			status: this.activo.status,
+			applicabilities: this.activo.applicabilities,
+			validFrom: this.activo.validFrom,
+			validTo: this.activo.validTo,
+			transferable: this.activo.transferable,
+			observations: this.activo.observations,
+			clientId: this.activo.clientId
+		})
 	}
 
 	//APPLICABILITY FILTER
 	//Filtro aplicabilidad
 	add(event: MatChipInputEvent): void {
-
 		const value = (event.value || '').trim();
-
-		if (value) this.applicabilities.push(value);
-		event.chipInput!.clear();
-		this.applicabilityCtrl.setValue(null);
+		if((this.allApplicabilities.find(app => app.name === value))) {
+			const writen = (this.allApplicabilities.find(app => app.name === value))
+			if (writen) this.applicabilities.push(writen);
+			event.chipInput!.clear();
+			this.applicabilityCtrl.setValue(null);
+		}
 	}
 
 	remove(applicability: string): void {

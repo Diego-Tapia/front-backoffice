@@ -158,7 +158,8 @@
 					</div>
 					<div style="margin-top: 15px;">
 						<mat-card-title class="title__options">Observaciones</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">{{ myForm.get('observations')?.value }}</mat-card-subtitle>
+						<mat-card-subtitle class="subtitle__options" *ngIf="myForm.get('observations')?.value">{{ myForm.get('observations')?.value }}</mat-card-subtitle>
+						<mat-card-subtitle class="subtitle__options" *ngIf="!myForm.get('observations')?.value">Sin observaciones</mat-card-subtitle>
 					</div>
 				</mat-card>
 				<br />
