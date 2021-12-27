@@ -24,6 +24,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { GetIncrementosMasivosEffects } from './data-incrementos/store/get-inc.mas.effect';
 import { NuevoIncrementoMasivoEffects } from './nuevo-incremento-masivo/store/nuevo-inc-mas.effects';
 import { GetActivosEffects } from '../activos/data-activos/store/activos.effects';
+import { VerifyUsuarioEffects } from '../usuarios/data-usuarios/store/verify/verify-usuarios.effect';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
 	declarations: [DataIncrementosComponent, NuevoIncrementoIndividualComponent, NuevoIncrementoMasivoComponent],
@@ -41,14 +43,9 @@ import { GetActivosEffects } from '../activos/data-activos/store/activos.effects
 		MatCardModule,
 		MatOptionModule,
 		MatSelectModule,
+		SharedModule,
 		StoreModule.forFeature('incrementoRedecuersMap', incrementoRedecuersMap),
-		EffectsModule.forFeature([
-			NuevoIncrementoEffects,
-			NuevoIncrementoMasivoEffects,
-			GetIncrementosEffects,
-			GetIncrementosMasivosEffects,
-			GetActivosEffects
-		])
+		EffectsModule.forFeature([ NuevoIncrementoEffects, NuevoIncrementoMasivoEffects, GetIncrementosEffects, GetIncrementosMasivosEffects, GetActivosEffects, VerifyUsuarioEffects ])
 	]
 })
 export class IncrementoModule { }

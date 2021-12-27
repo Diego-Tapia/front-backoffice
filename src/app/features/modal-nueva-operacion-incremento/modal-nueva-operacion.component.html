@@ -13,6 +13,7 @@
 					class="button__increments spacing-one button_colors"
 					(click)="diferentColor($event, 1)"
 					[ngClass]="{ tabActivate: cambioColor === 'tab1' }"
+					disabled
 				>
 					<mat-icon>person</mat-icon> Individual
 					<mat-icon class="check">done</mat-icon>
@@ -21,7 +22,6 @@
 			<mat-dialog-actions class="increments">
 				<button
 					mat-button
-					disabled
 					class="button__increments spacing button_colors"
 					(click)="diferentColor($event, 2)"
 					[ngClass]="{ tabActivate: cambioColor === 'tab2' }"

@@ -3,6 +3,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
 import { catchError } from 'rxjs/operators';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -24,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
 		return next.handle(request).pipe(
 			catchError((error: HttpErrorResponse) => {
 				if (error.status === 401) {
-					//TODO: HANDLE EXPIRED TOKEN
+					this.authService.logOut()
 					return throwError(error);
 					//return next.handle(request);
 				} else {

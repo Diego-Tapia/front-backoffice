@@ -20,10 +20,11 @@ import { usuariosRedecuersMap } from './usuarios.reducers.map';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AltaUsuariosEffects } from './alta-usuarios/store/alta-usuarios.effect';
-import { GetUsuariosEffects } from './data-usuarios/store/get-usuarios.effect';
-import { GetUsuarioByIdEffects } from './data-usuarios/store/get-usuarios-by-id.effect';
+import { GetUsuariosEffects } from './data-usuarios/store/get-all/get-usuarios.effect';
+import { GetUsuarioByIdEffects } from './data-usuarios/store/get-by-id/get-usuarios-by-id.effect';
 import { ModificacionUsuariosEffects } from './modificacion-usuario/store/modificacion-usuarios.effect';
 import { GetRolesEffects } from './alta-usuarios/store/get-roles.effect';
+import { VerifyUsuarioEffects } from './data-usuarios/store/verify/verify-usuarios.effect';
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import { GetRolesEffects } from './alta-usuarios/store/get-roles.effect';
     MatOptionModule,
     MatSelectModule,
     StoreModule.forFeature('usuariosRedecuersMap', usuariosRedecuersMap),
-    EffectsModule.forFeature([GetUsuariosEffects, GetUsuarioByIdEffects, AltaUsuariosEffects, ModificacionUsuariosEffects, GetRolesEffects])
+    EffectsModule.forFeature([GetUsuariosEffects, GetUsuarioByIdEffects, AltaUsuariosEffects, ModificacionUsuariosEffects, VerifyUsuarioEffects, GetRolesEffects])
   ]
 })
 export class UsuariosModule { }

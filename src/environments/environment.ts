@@ -6,7 +6,7 @@ import { IEnvironment } from 'src/app/shared/models/environment.interface';
 
 export const environment: IEnvironment = {
 	production: false,
-	apiUrl: 'https://backoffice-ms-develop.herokuapp.com/api'
+	apiUrl: 'http://localhost:3000/api'
 };
 
 

@@ -24,6 +24,10 @@ export class UsuariosService {
 		else return this.http.get<any>(`${this.url}/admin/${id}`);
 	}
 
+	verifyUsuario(userIdentifier: string): Observable<IUserProfile> {
+		return this.http.get<any>(`${this.url}/user-profile/verify-user/${userIdentifier}`);
+	}
+
 	altaUsuario(form: IFormUser, userType: string): Observable<IFormUser> {
 		if (userType === 'final') return this.http.post<any>(`${this.url}/user/register`, form);
 		else return this.http.post<any>(`${this.url}/admin/register`, form);

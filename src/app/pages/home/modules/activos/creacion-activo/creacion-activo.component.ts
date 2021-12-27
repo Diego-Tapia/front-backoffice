@@ -13,7 +13,7 @@ import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { IAplicabilidad } from 'src/app/shared/models/activos/aplicabilidad.interface';
-import { setGetAplicabilidades } from '../store/get-aplicabilidades.actions';
+import { setGetAplicabilidades, setGetAplicabilidadesClear } from '../store/get-aplicabilidades.actions';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
@@ -90,6 +90,7 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
 		this.store.dispatch(setNuevoActivoClear());
+		this.store.dispatch(setGetAplicabilidadesClear());
 	}
 
 	crearActivo() {
@@ -122,12 +123,13 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 
 	//Filtro aplicabilidad
 	add(event: MatChipInputEvent): void {
-
 		const value = (event.value || '').trim();
-
-		if (value) this.applicabilities.push(value);
-		event.chipInput!.clear();
-		this.applicabilityCtrl.setValue(null);
+		if((this.allApplicabilities.find(app => app.name === value))) {
+			const writen = (this.allApplicabilities.find(app => app.name === value))
+			if (writen) this.applicabilities.push(writen);
+			event.chipInput!.clear();
+			this.applicabilityCtrl.setValue(null);
+		}
 	}
 
 	remove(applicability: string): void {
@@ -139,6 +141,9 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	selected(event: MatAutocompleteSelectedEvent): void {
+
+		console.log(event);
+
 
 		if (!this.applicabilities.find(app => app.id === event.option.value.id)) {
 			this.applicabilitiesResume.push(event.option.value.name)
