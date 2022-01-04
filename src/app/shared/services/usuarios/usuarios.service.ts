@@ -15,12 +15,12 @@ export class UsuariosService {
 	constructor(private http: HttpClient) { }
 
 	getUsuarios(userType: string): Observable<IUserProfile[]> {
-		if (userType === 'finales') return this.http.get<any>(`${this.url}/user`);
+		if (userType === 'finales' || userType === 'final') return this.http.get<any>(`${this.url}/user`);
 		else return this.http.get<any>(`${this.url}/admin`);
 	}
 
 	getUsuariosById(userType: string, id: string): Observable<IUserProfile> {
-		if (userType === 'final') return this.http.get<any>(`${this.url}/user/${id}`);
+		if (userType === 'finales' || userType === 'final') return this.http.get<any>(`${this.url}/user/${id}`);
 		else return this.http.get<any>(`${this.url}/admin/${id}`);
 	}
 
@@ -29,7 +29,7 @@ export class UsuariosService {
 	}
 
 	altaUsuario(form: IFormUser, userType: string): Observable<IFormUser> {
-		if (userType === 'final') return this.http.post<any>(`${this.url}/user/register`, form);
+		if (userType === 'finales' || userType === 'final') return this.http.post<any>(`${this.url}/user/register`, form);
 		else return this.http.post<any>(`${this.url}/admin/register`, form);
 	}
 

@@ -77,10 +77,8 @@ export class TablaUsuariosComponent implements OnInit, OnDestroy, OnChanges, Aft
 	}
 	
 	modificarUsuario(usuario: IUserProfile) {		
-	console.log(usuario.userId);
-	
-	if(usuario.userId) this.router.navigate(['/home/usuarios/modificar/final', usuario.id])
-	else this.router.navigate(['/home/usuarios/modificar/backoffice', usuario.id]);
+		if(usuario.userId) this.router.navigate(['/home/usuarios/modificar/final', usuario.id])
+		else this.router.navigate(['/home/usuarios/modificar/backoffice', usuario.id]);
 	}
 
 	modificarEstado(usuario: IUserProfile){

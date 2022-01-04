@@ -133,7 +133,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     if (res.success) {
       this.noti.success('Éxito', 'Usuario creado con éxito')
       if (this.isBackoffice) this.router.navigate(['home/usuarios/backoffice']);
-      else this.router.navigate(['home/usuarios/finales']);
+      else this.router.navigate(['home/usuarios/final']);
     }
   }
 

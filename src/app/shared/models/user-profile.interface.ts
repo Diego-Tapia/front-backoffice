@@ -13,6 +13,7 @@ export interface IUserProfile {
 	userId: IUserId;
 	rol: string;
 	avatarUrl: string;
+	clientId: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

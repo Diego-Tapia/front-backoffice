@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
 		{ name: 'INICIO', route: '/home/inicio', icon: 'home_outlined', disabled: false, soon: true },
 		{ name: 'ACTIVOS', route: '/home/activos', icon: 'monetization_on', disabled: false, soon: true },
 		{ name: 'BILLETERAS', route: '/home', icon: 'account_balance_wallet', disabled: true, soon: false },
-		{ name: 'GESTIÓN DE USUARIOS', route: '/home/usuarios/finales', icon: 'group', disabled: false, soon: true },
+		{ name: 'GESTIÓN DE USUARIOS', route: '/home/usuarios/final', icon: 'group', disabled: false, soon: true },
 		{ name: 'INCREMENTAR', route: '/home/incremento', icon: 'trending_up', disabled: false, soon: true },
 		{ name: 'DISMINUIR', route: '/home/disminucion', icon: 'trending_down', disabled: false, soon: true },
 		{ name: 'NOTIFICACIONES', route: '/home', icon: 'notifications', disabled: true, soon: false },
