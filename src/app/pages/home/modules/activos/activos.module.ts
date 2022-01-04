@@ -20,7 +20,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { activosRedecuersMap } from './activos.reducers.map';
+import { activosReducersMap } from './activos.reducers.map';
 import { GetActivosEffects } from './data-activos/store/activos.effects';
 import { NuevoActivoEffects } from './creacion-activo/store/nuevo-activo.effects';
 import { DataActivosComponent } from './data-activos/data-activos.component';
@@ -50,7 +50,7 @@ import { GetAplicabilidadesEffects } from './store/get-aplicabilidades.effects';
 		MatChipsModule,
 		MatIconModule,
 		MatNativeDateModule,
-		StoreModule.forFeature('activosRedecuersMap', activosRedecuersMap),
+		StoreModule.forFeature('activosReducersMap', activosReducersMap),
 		EffectsModule.forFeature([GetActivosEffects, GetActivosByIdEffects, NuevoActivoEffects, ModificarActivoEffects, GetAplicabilidadesEffects])
 	]
 })

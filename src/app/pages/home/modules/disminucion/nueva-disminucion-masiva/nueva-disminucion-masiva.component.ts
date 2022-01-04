@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -13,32 +13,39 @@ import { Router } from '@angular/router';
 @Component({
 	selector: 'app-nueva-disminucion-masiva',
 	templateUrl: './nueva-disminucion-masiva.component.html',
-	styleUrls: ['./nueva-disminucion-masiva.component.sass']
+	styleUrls: ['./nueva-disminucion-masiva.component.sass'],
+	encapsulation: ViewEncapsulation.None
 })
 export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
-	isLinear = false;
-	subscriptions: Subscription[] = [];
-	file: File | null = null;
-	activos: IActivo[] = []
-	fileName!: string;
+	private subscriptions: Subscription[] = [];
+	public isLinear = true;
+	public file: File | null = null;
+	public activos: IActivo[] = []
+	public fileName!: string;
 
-	myForm = this._formBuilder.group({
+	firstStep = this.formBuilder.group({
 		name: ['', [Validators.required]],
+	})
+	
+	secondStep = this.formBuilder.group({
 		tokenId: ['', [Validators.required]],
-		excelFile: ['', [Validators.required]],
-	});
+	})
+
+	thirdStep = this.formBuilder.group({
+		excelFile: ['', [Validators.required]]
+	})
 
 	constructor(
-		private _formBuilder: FormBuilder,
+		private formBuilder: FormBuilder,
 		private noti: NotificationsService,
 		private router: Router,
-		private store: Store<{ disminucionRedecuersMap: IDisminucionReducersMap }>
+		private store: Store<{ disminucionReducersMap: IDisminucionReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('disminucionRedecuersMap', 'nuevaDisminucionMasiva').subscribe((res) => {
+			this.store.select('disminucionReducersMap', 'nuevaDisminucionMasiva').subscribe((res) => {
 				this.handleNuevaDisminucionMasiva(res);
 			}),
-			this.store.select('disminucionRedecuersMap', 'getActivos').subscribe((res) => {
+			this.store.select('disminucionReducersMap', 'getActivos').subscribe((res) => {
 				this.handleGetActivos(res);
 			})
 		);
@@ -49,12 +56,17 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 			this.file = event.target.files[0];
 			this.fileName = event.target.files[0].name;
 		}
-		this.myForm.patchValue({ excelFile: this.fileName });
+		this.thirdStep.patchValue({ excelFile: this.fileName });
 	}
 
-	handleGetActivos(res: IState<any>) {
+	handleGetActivos(res: IState<IActivo[]>) {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema listando los activos');
-		if (res.success && res.response) this.activos = res.response
+		if (res.success && res.response) {
+			res.response.forEach(activo => {
+				if(activo.emited && activo.status === 'ACTIVE')
+				this.activos.push(activo)
+			})
+		} 
 	}
 
 	handleNuevaDisminucionMasiva(res: IState<any>) {
@@ -66,16 +78,18 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 	}
 
 	submit() {
-		if (!this.myForm.valid) {
-			return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
-		}
-		this.myForm.patchValue({ excelFile: this.file });
+		if (!this.firstStep.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el primer paso');
+		if (!this.secondStep.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el segundo paso');
+		if (!this.thirdStep.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el tercer paso');
+
+		this.thirdStep.patchValue({ excelFile: this.file });
 
 		const formData = new FormData();
-		formData.append('excelFile', this.myForm.value.excelFile)
-		formData.append('name', this.myForm.value.name)
-		formData.append('tokenId', this.myForm.value.tokenId.id)
+		formData.append('excelFile', this.thirdStep.value.excelFile)
+		formData.append('name', this.firstStep.value.name)
+		formData.append('tokenId', this.secondStep.value.tokenId.id)
 		formData.append('action', 'CREAR')
+
 		return this.store.dispatch(setNuevaDisminucionMasiva({ form: formData }));
 	}
 

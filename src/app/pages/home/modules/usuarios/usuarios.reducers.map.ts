@@ -12,16 +12,16 @@ export interface IUsuariosReducersMap {
 	getUsuarios: IState<any>;
 	getUsuarioById: IState<any>;
 	altaUsuarios: IState<any>;
-	modificacionUsuario: IState<any>;
+	modificarUsuario: IState<any>;
 	verifyUsuario: IState<any>;
 	getRoles: IState<any>;
 }
 
-export const usuariosRedecuersMap: ActionReducerMap<IUsuariosReducersMap> = {
+export const usuariosReducersMap: ActionReducerMap<IUsuariosReducersMap> = {
 	getUsuarios: setGetUsuariosReducer,
 	getUsuarioById: setGetUsuarioByIdReducer,
 	altaUsuarios: SetAltaUsuariosReducer,
-	modificacionUsuario: SetModificacionUsuariosReducer,
+	modificarUsuario: SetModificacionUsuariosReducer,
 	verifyUsuario: setVerifyUsuarioReducer,
 	getRoles: SetGetRolesReducer
 };

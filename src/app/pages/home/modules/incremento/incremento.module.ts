@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { incrementoRedecuersMap } from './incremento.reducers.map';
+import { incrementoReducersMap } from './incremento.reducers.map';
 import { MatCardModule } from '@angular/material/card';
 import { NuevoIncrementoEffects } from './nuevo-incremento-individual/store/nuevo-inc.effects';
 import { GetIncrementosEffects } from './data-incrementos/store/get-inc.effect';
@@ -26,6 +26,7 @@ import { NuevoIncrementoMasivoEffects } from './nuevo-incremento-masivo/store/nu
 import { GetActivosEffects } from '../activos/data-activos/store/activos.effects';
 import { VerifyUsuarioEffects } from '../usuarios/data-usuarios/store/verify/verify-usuarios.effect';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
 	declarations: [DataIncrementosComponent, NuevoIncrementoIndividualComponent, NuevoIncrementoMasivoComponent],
@@ -43,8 +44,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 		MatCardModule,
 		MatOptionModule,
 		MatSelectModule,
+		MatIconModule,
 		SharedModule,
-		StoreModule.forFeature('incrementoRedecuersMap', incrementoRedecuersMap),
+		StoreModule.forFeature('incrementoReducersMap', incrementoReducersMap),
 		EffectsModule.forFeature([ NuevoIncrementoEffects, NuevoIncrementoMasivoEffects, GetIncrementosEffects, GetIncrementosMasivosEffects, GetActivosEffects, VerifyUsuarioEffects ])
 	]
 })

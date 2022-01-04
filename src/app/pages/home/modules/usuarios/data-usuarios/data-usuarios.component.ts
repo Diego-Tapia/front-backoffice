@@ -32,10 +32,10 @@ export class DataUsuariosComponent implements OnInit {
 		private location: Location,
 		public dialog: MatDialog,
 		private noti: NotificationsService,
-		private store: Store<{ usuariosRedecuersMap: IUsuariosReducersMap }>
+		private store: Store<{ usuariosReducersMap: IUsuariosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('usuariosRedecuersMap', 'getUsuarios').subscribe((res: IState<IUserProfile[]>) => {
+			this.store.select('usuariosReducersMap', 'getUsuarios').subscribe((res: IState<IUserProfile[]>) => {
 				this.handleGetUsuarios(res);
 			}),
 			this.route.params.subscribe((params) => (this.userType = params.type))
@@ -55,13 +55,15 @@ export class DataUsuariosComponent implements OnInit {
 		this.store.dispatch(setGetUsuariosClear());
 	}
 
+	updateValues(): void {
+		this.store.dispatch(setGetUsuarios({ userType: this.userType }));
+	}
+
 	handleGetUsuarios(res: IState<IUserProfile[]>): void {
-		this.isLoading = true;
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo los usuarios');
 		if (res.success && res.response) {
 			if (!this.isBackoffice) this.usuariosFinales = res.response;
 			else this.usuariosBackoffice = res.response;
-			this.isLoading = false;
 		}
 	}
 

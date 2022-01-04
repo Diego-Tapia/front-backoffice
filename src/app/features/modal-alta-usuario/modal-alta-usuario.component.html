@@ -34,15 +34,15 @@
 </div>
 
 <mat-dialog-actions align="center">
-	<button mat-stroked-button color="primary" mat-dialog-close class="buttons__modal">Cancel</button>
+	<button mat-stroked-button  mat-dialog-close class="modal__btn">Cancel</button>
 	<button
 		mat-raised-button
-		color="primary"
 		[mat-dialog-close]="true"
 		cdkFocusInitial
 		(click)="redirectTo()"
-		class="buttons__modal"
+		class="modal__btn confirm__btn"
 	>
 		Confirmar
 	</button>
 </mat-dialog-actions>
+

@@ -17,31 +17,32 @@ import { IDataMasivo } from 'src/app/shared/models/data-masivo.interface';
 export class DataDisminucionesComponent implements OnInit {
 	subscriptions: Subscription[] = [];
 
-	incrementsIndividual!: IDataIndividual[];
-	incrementsMasive!: IDataMasivo[];
+	individualDec!: IDataIndividual[];
+	massiveDec!: IDataMasivo[];
 
 	constructor(
 		public dialog: MatDialog,
 		private noti: NotificationsService,
-		private store: Store<{ disminucionRedecuersMap: IDisminucionReducersMap }>
+		private store: Store<{ disminucionReducersMap: IDisminucionReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('disminucionRedecuersMap', 'getDisminuciones').subscribe((res) => {
+			this.store.select('disminucionReducersMap', 'getDisminuciones').subscribe((res) => {
 				if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las disminuciones individuales');
 				if (res.success && res.response) {
-					this.incrementsIndividual = res.response;
+					this.individualDec = res.response;
 				}
 			})
 		);
 		this.subscriptions.push(
-			this.store.select('disminucionRedecuersMap', 'getDisminucionesMasivas').subscribe((resM) => {
+			this.store.select('disminucionReducersMap', 'getDisminucionesMasivas').subscribe((resM) => {
 				if (resM.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las disminuciones masivas');
 				if (resM.success && resM.response) {
-					this.incrementsMasive = resM.response;
+					this.massiveDec = resM.response;
 				}
 			})
 		);
 	}
+
 	ngOnInit(): void {
 		// this.store.dispatch(setGetDisminuciones());
 		this.store.dispatch(setGetDisminucionesMasivas());
@@ -51,6 +52,10 @@ export class DataDisminucionesComponent implements OnInit {
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
 		this.store.dispatch(setGetDisminucionesClear());
 		this.store.dispatch(setGetDisminucionesMasivasClear());
+	}
+
+	updateValues(): void {
+		this.store.dispatch(setGetDisminucionesMasivas());
 	}
 
 	onCrearNuevoEvent(e: any): void {

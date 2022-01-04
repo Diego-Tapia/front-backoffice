@@ -25,10 +25,10 @@ export class DataNotificacionesComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private router: Router,
     private noti: NotificationsService,
-    private store: Store<{ notificacionesRedecuersMap: INotificacionesReducersMap }>
+    private store: Store<{ notificacionesReducersMap: INotificacionesReducersMap }>
   ) {
     this.subscriptions.push(
-      this.store.select('notificacionesRedecuersMap', 'getNotificaciones').subscribe((res: IState<INotificacion[]>) => {
+      this.store.select('notificacionesReducersMap', 'getNotificaciones').subscribe((res: IState<INotificacion[]>) => {
         this.handleGetNotificaciones(res)
       })
     );

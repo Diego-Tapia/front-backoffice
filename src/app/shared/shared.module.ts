@@ -5,11 +5,13 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { StatusPipe } from './pipes/status.pipe';
 import { CuilPipe } from './pipes/cuil.pipe';
+import { ShortIdPipe } from './pipes/short-id.pipe';
 
 @NgModule({
 	declarations: [
     	StatusPipe,
-     CuilPipe
+		CuilPipe,
+		ShortIdPipe
   	],
 	imports: [CommonModule],
 	providers: [
@@ -18,7 +20,8 @@ import { CuilPipe } from './pipes/cuil.pipe';
 	],
 	exports: [
 		StatusPipe,
-		CuilPipe
+		CuilPipe,
+		ShortIdPipe
 	]
 })
 export class SharedModule {}

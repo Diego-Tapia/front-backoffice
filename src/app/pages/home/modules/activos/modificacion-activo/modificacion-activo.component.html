@@ -1,4 +1,9 @@
-<h1>Editar activo digital</h1>
+<div style="display: flex;">
+	<div class="back__btn__container" routerLink="/home/activos">
+		<mat-icon class="back__btn">arrow_back</mat-icon>
+	</div>
+	<h1 style="margin-left: 10px;">Editar activo digital</h1>
+</div>
 <div class="section__stepper">
 	<form [formGroup]="myForm">
 		<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
@@ -23,7 +28,7 @@
 				</div>
 				<br />
 				<mat-dialog-actions>
-					<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+					<button type="button" mat-stroked-button  class="buttons__stepper__primary" matStepperNext>
 						Siguiente
 					</button>
 				</mat-dialog-actions>
@@ -48,7 +53,7 @@
 						<mat-date-range-picker #picker></mat-date-range-picker>
 					</mat-form-field>
 
-					<mat-checkbox color="primary" style="margin-top: 25px" formControlName="transferable">
+					<mat-checkbox  style="margin-top: 25px" formControlName="transferable">
 						Transferible
 					</mat-checkbox>
 				</div>
@@ -67,7 +72,7 @@
 				<br />
 				<mat-dialog-actions>
 					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
-					<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+					<button type="button" mat-stroked-button  class="buttons__stepper__primary" matStepperNext>
 						Siguiente
 					</button>
 				</mat-dialog-actions>
@@ -110,7 +115,7 @@
 				<br />
 				<mat-dialog-actions>
 					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
-					<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
+					<button type="button" mat-stroked-button  class="buttons__stepper__primary" matStepperNext>
 						Siguiente
 					</button>
 				</mat-dialog-actions>

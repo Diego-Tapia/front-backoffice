@@ -6,6 +6,7 @@ import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IActivosReducersMap } from '../activos.reducers.map';
 import { setGetActivos, setGetActivosClear } from './store/activos.actions';
 import { NotificationsService } from 'angular2-notifications';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-data-activos',
@@ -16,9 +17,12 @@ export class DataActivosComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
 	activos!: IActivo[];
 
-	constructor(private noti: NotificationsService, private store: Store<{ activosRedecuersMap: IActivosReducersMap }>) {
+	constructor(
+		private router: Router,
+		private noti: NotificationsService, 
+		private store: Store<{ activosReducersMap: IActivosReducersMap }>) {
 		this.subscriptions.push(
-			this.store.select('activosRedecuersMap', 'getActivos').subscribe((res: IState<IActivo[]>) => {
+			this.store.select('activosReducersMap', 'getActivos').subscribe((res: IState<IActivo[]>) => {
 				this.handleGetActivos(res);
 			})
 		);
@@ -33,12 +37,16 @@ export class DataActivosComponent implements OnInit, OnDestroy {
 		this.store.dispatch(setGetActivosClear());
 	}
 
-	updateValues(): void {
-		this.store.dispatch(setGetActivos())
+	onCrearNuevoEvent(e: any){
+		this.router.navigate(['home/activos/crear']);
 	}
 
+	updateValues(): void {
+		this.store.dispatch(setGetActivos());
+	}
+	
 	handleGetActivos(res: IState<IActivo[]>): void {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo los activos');
-		if (res.success && res.response) this.activos = res.response;
+		if (res.success && res.response) this.activos = res.response
 	}
 }

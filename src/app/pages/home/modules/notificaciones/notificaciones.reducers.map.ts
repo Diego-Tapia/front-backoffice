@@ -10,7 +10,7 @@ export interface INotificacionesReducersMap {
 	// getNotificacionesById: IState<any>;
 }
 
-export const notificacionesRedecuersMap: ActionReducerMap<INotificacionesReducersMap> = {
+export const notificacionesReducersMap: ActionReducerMap<INotificacionesReducersMap> = {
 	getNotificaciones: setGetNotificacionesReducer,
 	nuevaNotificacion: setNuevaNotificacionReducer,
 };

@@ -18,8 +18,6 @@ import { ModalNuevaOperacionDisminucionComponent } from './modal-nueva-operacion
 import { TablaInicioComponent } from './tabla-inicio/tabla-inicio.component';
 import { GraficsInicioComponent } from './grafics-inicio/grafics-inicio.component';
 import { TablaActivosComponent } from './tabla-activos/tabla-activos.component';
-import { TablaUsuariosFinalesComponent } from './tabla-usuarios-finales/tabla-usuarios-finales.component';
-import { TablaUsuariosBackofficeComponent } from './tabla-usuarios-backoffice/tabla-usuarios-backoffice.component';
 import { RouterModule } from '@angular/router';
 import { ModalAltaUsuarioComponent } from './modal-alta-usuario/modal-alta-usuario.component';
 import { ModalEmisionActivoComponent } from './modal-emision-activo/modal-emision-activo.component';
@@ -34,14 +32,16 @@ import { ReemitirActivosEffects } from './modal-reemision-activo/store/reemitir-
 
 import localeEsAr from '@angular/common/locales/es-AR';
 import { ModalDetalleActivoComponent } from './modal-detalle-activo/modal-detalle-activo.component';
-import { featuresRedecuersMap } from './features.reducers.map';
+import { featuresReducersMap } from './features.reducers.map';
 import { GetActivosByIdEffects } from '../pages/home/modules/activos/data-activos/store/activos-by-id.effects';
 import { MatDividerModule } from '@angular/material/divider';
 import { PutActivoEffects } from './tabla-activos/store/put-activo.effects';
 import { NuevoIncrementoMasivoEffects } from '../pages/home/modules/incremento/nuevo-incremento-masivo/store/nuevo-inc-mas.effects';
 import { NuevaDisminucionMasivaEffects } from '../pages/home/modules/disminucion/nueva-disminucion-masiva/store/nueva-dis-mas.effects';
-import { StatusPipe } from '../shared/pipes/status.pipe';
 import { SharedModule } from '../shared/shared.module';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { ModificacionUsuariosEffects } from '../pages/home/modules/usuarios/modificacion-usuario/store/modificacion-usuarios.effect';
+import { TablaUsuariosComponent } from './tabla-usuarios/tabla-usuarios.component';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -57,13 +57,11 @@ registerLocaleData(localeEsAr, 'es-Ar');
 		TablaInicioComponent,
 		GraficsInicioComponent,
 		TablaActivosComponent,
-		TablaUsuariosFinalesComponent,
-		TablaUsuariosBackofficeComponent,
 		ModalAltaUsuarioComponent,
 		ModalEmisionActivoComponent,
 		ModalReemisionActivoComponent,
 		ModalDetalleActivoComponent,
-		
+  		TablaUsuariosComponent,
 	],
 	imports: [
 		CommonModule,
@@ -81,11 +79,20 @@ registerLocaleData(localeEsAr, 'es-Ar');
 		MatInputModule,
 		ReactiveFormsModule,
 		SharedModule,
-		StoreModule.forFeature('featuresRedecuersMap', featuresRedecuersMap),
-		EffectsModule.forFeature([EmitirActivosEffects, ReemitirActivosEffects, GetActivosByIdEffects, PutActivoEffects, NuevoIncrementoMasivoEffects, NuevaDisminucionMasivaEffects])
+		StoreModule.forFeature('featuresReducersMap', featuresReducersMap),
+		EffectsModule.forFeature([
+			EmitirActivosEffects, 
+			ReemitirActivosEffects, 
+			GetActivosByIdEffects, 
+			PutActivoEffects, 
+			NuevoIncrementoMasivoEffects, 
+			NuevaDisminucionMasivaEffects,
+			ModificacionUsuariosEffects
+			])
 	],
 	providers: [
-		{ provide: LOCALE_ID, useValue: 'es-Ar' }
+		{ provide: LOCALE_ID, useValue: 'es-Ar', },
+		{ provide: MAT_DATE_LOCALE, useValue: 'es-Ar' }
 	],
 	exports: [
 		TitleComponent,
@@ -97,8 +104,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
 		TablaInicioComponent,
 		GraficsInicioComponent,
 		TablaActivosComponent,
-		TablaUsuariosFinalesComponent,
-		TablaUsuariosBackofficeComponent
+		TablaUsuariosComponent
 	]
 })
 export class FeaturesModule { }

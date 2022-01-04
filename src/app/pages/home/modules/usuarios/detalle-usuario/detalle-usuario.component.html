@@ -1,3 +1,6 @@
+<div class="back__btn__container" routerLink="/home/usuarios">
+	<mat-icon class="back__btn">arrow_back</mat-icon>
+</div>
 <div class="section__container" *ngIf="usuario">
 	<div class="image__container">
 		<img class="profile__img" [src]="usuario.avatarUrl" onError="this.src='assets/images/default-profile-img.png'">
@@ -12,8 +15,8 @@
 			<mat-card-subtitle class="highlight__info" *ngIf="usuario.rol">{{ usuario.rol }}</mat-card-subtitle>
 		</div>
 		<br />
-		<button mat-raised-button color="primary" class="buttons__management" disabled>Activar</button>
-		<button mat-stroked-button class="buttons__management" (click)="modificar(usuario.id)" disabled>Editar</button>
+		<button mat-raised-button class="buttons__management status__btn" *ngIf="usuario.userId" (click)="editarEstado(usuario)"> {{(usuario.userId.status === 'ACTIVE') ? 'Desactivar' : 'Activar' }}</button>
+		<button mat-stroked-button class="buttons__management" (click)="editarUsuario(usuario.id)">Editar</button>
 	</div>
 	<div class="divider"></div>
 	<div class="user__info">
@@ -26,7 +29,7 @@
 			</td>
 			<td>
 				<tr>{{usuario.dni | number}}</tr>
-				<tr>{{usuario.cuil}}</tr>
+				<tr>{{usuario.cuil | cuil}}</tr>
 				<tr>{{usuario.phoneNumber}}</tr>
 				<tr>{{usuario.email}}</tr>
 			</td>

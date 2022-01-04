@@ -42,9 +42,9 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 
 	myForm = this.formBuilder.group({
 		description: ['', [Validators.required]],
-		shortName: ['', [Validators.required]],
-		symbol: ['', [Validators.required]],
-		initialAmount: ['', [Validators.required]],
+		shortName: [{ value: '', disabled: true }],
+		symbol: [{ value: '', disabled: true }],
+		initialAmount: [{ value: '', disabled: true }],
 		money: ['ARS'],
 		price: [1],
 		emited: [''],
@@ -62,16 +62,16 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 		private router: Router,
 		private route: ActivatedRoute,
 		private noti: NotificationsService,
-		private store: Store<{ activosRedecuersMap: IActivosReducersMap }>
+		private store: Store<{ activosReducersMap: IActivosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('activosRedecuersMap', 'getActivosById').subscribe((res: IState<IActivo>) => {
+			this.store.select('activosReducersMap', 'getActivosById').subscribe((res: IState<IActivo>) => {
 				this.handleGetActivosById(res);
 			}),
-			this.store.select('activosRedecuersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[]>) => {
+			this.store.select('activosReducersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[]>) => {
 				this.handleGetAplicabilidades(res);
 			}),
-			this.store.select('activosRedecuersMap', 'modificarActivo').subscribe((res: IState<IActivo>) => {
+			this.store.select('activosReducersMap', 'modificarActivo').subscribe((res: IState<IActivo>) => {
 				this.handleModificarActivo(res);
 			})
 		);

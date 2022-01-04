@@ -18,28 +18,24 @@ import { IDataMasivo } from 'src/app/shared/models/data-masivo.interface';
 export class DataIncrementosComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
 
-	incrementsIndividual!: IDataIndividual[];
-	incrementsMasive!: IDataMasivo[];
+	individualInc!: IDataIndividual[];
+	massiveInc!: IDataMasivo[];
 
 	constructor(
 		public dialog: MatDialog,
 		private noti: NotificationsService,
-		private store: Store<{ incrementoRedecuersMap: IIncrementoReducersMap }>
+		private store: Store<{ incrementoReducersMap: IIncrementoReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('incrementoRedecuersMap', 'getIncrementos').subscribe((res) => {
+			this.store.select('incrementoReducersMap', 'getIncrementos').subscribe((res) => {
 				if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo los incrementos individuales');
-				if (res.success && res.response) {
-					this.incrementsIndividual = res.response;
-				}
+				if (res.success && res.response) this.individualInc = res.response
 			})
 		);
 		this.subscriptions.push(
-			this.store.select('incrementoRedecuersMap', 'getIncrementosMasivos').subscribe((resM) => {
+			this.store.select('incrementoReducersMap', 'getIncrementosMasivos').subscribe((resM) => {
 				if (resM.error) this.noti.error('Error', 'Ocurrió un problema obteniendo los incrementos masivos');
-				if (resM.success && resM.response) {
-					this.incrementsMasive = resM.response;
-				}
+				if (resM.success && resM.response) this.massiveInc = resM.response
 			})
 		);
 	}
@@ -53,6 +49,10 @@ export class DataIncrementosComponent implements OnInit, OnDestroy {
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
 		this.store.dispatch(setGetIncrementosClear());
 		this.store.dispatch(setGetIncrementosMasivosClear());
+	}
+
+	updateValues(): void {
+		this.store.dispatch(setGetIncrementosMasivos());
 	}
 
 	onCrearNuevoEvent(e: any): void {
