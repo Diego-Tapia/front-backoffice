@@ -27,6 +27,7 @@ import { GetRolesEffects } from './alta-usuarios/store/get-roles.effect';
 import { VerifyUsuarioEffects } from './data-usuarios/store/verify/verify-usuarios.effect';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatOptionModule,
     MatSelectModule,
     MatIconModule,
+    MatDividerModule,
     SharedModule,
     StoreModule.forFeature('usuariosReducersMap', usuariosReducersMap),
     EffectsModule.forFeature([GetUsuariosEffects, GetUsuarioByIdEffects, AltaUsuariosEffects, ModificacionUsuariosEffects, VerifyUsuarioEffects, GetRolesEffects])

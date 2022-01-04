@@ -65,9 +65,9 @@ export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 	}
 
 	editarUsuario(id: string | undefined) {
-		if (this.usuario.rol && this.usuario.rol !== 'USER')
-			this.router.navigate(['/home/usuarios/modificar/backoffice', id]);
-		else this.router.navigate(['/home/usuarios/modificar/final', id]);
+		(this.userType === 'backoffice')
+		? this.router.navigate(['/home/usuarios/modificar/backoffice', id])
+		: this.router.navigate(['/home/usuarios/modificar/final', id]);
 	}
 
 	editarEstado(usuario: IUserProfile){

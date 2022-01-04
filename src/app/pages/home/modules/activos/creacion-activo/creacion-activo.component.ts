@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -27,7 +27,8 @@ import { IAdmin } from 'src/app/shared/models/admin.interface';
 		  provide: STEPPER_GLOBAL_OPTIONS,
 		  useValue: {displayDefaultIndicatorType: false},
 		},
-	  ],
+	],
+	encapsulation: ViewEncapsulation.None
 })
 export class CreacionActivoComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];

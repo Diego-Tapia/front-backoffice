@@ -21,7 +21,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		MatListModule,
 		MatIconModule,
 		MatButtonModule,
-		MatTooltipModule
+		MatTooltipModule,
 	]
 })
 export class HomeModule { }
