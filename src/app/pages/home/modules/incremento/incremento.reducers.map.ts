@@ -15,7 +15,7 @@ export interface IIncrementoReducersMap {
 	verifyUsuario: IState<any>;
 }
 
-export const incrementoRedecuersMap: ActionReducerMap<IIncrementoReducersMap> = {
+export const incrementoReducersMap: ActionReducerMap<IIncrementoReducersMap> = {
 	nuevoIncremento: setNuevoIncrementoReducer,
 	getIncrementos: setGetIncrementosReducer,
 	nuevoIncrementoMasivo: setNuevoIncrementoMasivoReducer,

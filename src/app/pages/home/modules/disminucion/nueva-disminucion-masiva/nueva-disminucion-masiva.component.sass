@@ -2,17 +2,17 @@
 
 .section__stepper
     background-color: white
-    margin-top: 5vh
-    padding: 30px 30px 30px 30px
+    margin-top: 2vh
+    padding: 20px
 .buttons__stepper__primary
-    border-color: $primary
+    border-color: $primary !important
     color: $primary
 .buttons__stepper
-    margin-right: 12px
-    color: $light-grey
+    margin-right: 12px !important
+    border-color: $medium-gray !important
+    color: $medium-gray
 .card_content
-    display: flex
-    flex-wrap: wrap
+    display: flex !important
     width: 70%
     border: 0.5px solid $primary
     background-color: $primary-purple
@@ -24,13 +24,20 @@
     font-size: 14px
     color:$primary  
     font-weight: 500
-// .disabled__input
-//     color: #000
-//     cursor: pointer
-// .custom__file__input
-//     opacity: 0
-//     position: absolute
-//     height: 60px
-//     width: 200px
-//     transform: translate(-12px, -27px)
-//     cursor: pointer
+.disabled__input
+    color: #000
+    cursor: pointer
+.custom__file__input
+    opacity: 0
+    position: absolute
+    height: 60px
+    width: 200px
+    transform: translate(-12px, -27px)
+    cursor: pointer
+.file__input__label
+    height: 60px
+    float: left
+    transform: translateY(-5px)
+    img
+        height: 20px
+        transform: translateY(3px)

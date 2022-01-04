@@ -17,29 +17,35 @@ import { setNuevoIncrementoMasivo, setNuevoIncrementoMasivoClear } from './store
 	styleUrls: ['./nuevo-incremento-masivo.component.sass']
 })
 export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
-	subscriptions: Subscription[] = [];
-	isLinear = false;
-	file: File | null = null;
-	activos: IActivo[] = []
-	fileName!: string;
+	private subscriptions: Subscription[] = [];
+	public isLinear = true;
+	public file: File | null = null;
+	public activos: IActivo[] = []
+	public fileName!: string;
 
-	myForm = this._formBuilder.group({
+	firstStep = this.formBuilder.group({
 		name: ['', [Validators.required]],
+	})
+	
+	secondStep = this.formBuilder.group({
 		tokenId: ['', [Validators.required]],
+	})
+
+	thirdStep = this.formBuilder.group({
 		excelFile: ['', [Validators.required]]
-	});
+	})
 
 	constructor(
-		private _formBuilder: FormBuilder,
+		private formBuilder: FormBuilder,
 		private noti: NotificationsService,
 		private router: Router,
-		private store: Store<{ incrementoRedecuersMap: IIncrementoReducersMap }>
+		private store: Store<{ incrementoReducersMap: IIncrementoReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('incrementoRedecuersMap', 'nuevoIncrementoMasivo').subscribe((res) => {
+			this.store.select('incrementoReducersMap', 'nuevoIncrementoMasivo').subscribe((res) => {
 				this.handleNuevoIncrementoMasivo(res);
 			}),
-			this.store.select('incrementoRedecuersMap', 'getActivos').subscribe((res) => {
+			this.store.select('incrementoReducersMap', 'getActivos').subscribe((res) => {
 				this.handleGetActivos(res);
 			})
 		);
@@ -50,32 +56,38 @@ export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
 			this.file = event.target.files[0];
 			this.fileName = event.target.files[0].name;
 		}
-		this.myForm.patchValue({ excelFile: this.fileName });
+		this.thirdStep.patchValue({ excelFile: this.fileName });
 	}
 
 	handleGetActivos(res: IState<IActivo[]>) {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema listando los activos');
-		if (res.success && res.response) this.activos = res.response
+		if (res.success && res.response) {
+			res.response.forEach(activo => {
+				if(activo.emited && activo.status === 'ACTIVE')
+				this.activos.push(activo)
+			})
+		}
 	}
 
 	handleNuevoIncrementoMasivo(res: IState<IFormMasivo>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
-			this.router.navigate(['home/incremento']);
 			this.noti.success('Éxito', 'El incremento masivo se ha creado con éxito');
+			this.router.navigate(['home/incremento']);
 		}
 	}
 
 	submit() {
-		if (!this.myForm.valid) {
-			return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
-		}
-		this.myForm.patchValue({ excelFile: this.file });
+		if (!this.firstStep.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el primer paso');
+		if (!this.secondStep.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el segundo paso');
+		if (!this.thirdStep.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el tercer paso');
+
+		this.thirdStep.patchValue({ excelFile: this.file });
 
 		const formData = new FormData();
-		formData.append('excelFile', this.myForm.value.excelFile)
-		formData.append('name', this.myForm.value.name)
-		formData.append('tokenId', this.myForm.value.tokenId.id)
+		formData.append('excelFile', this.thirdStep.value.excelFile)
+		formData.append('name', this.firstStep.value.name)
+		formData.append('tokenId', this.secondStep.value.tokenId.id)
 		formData.append('action', 'CREAR')
 
 		return this.store.dispatch(setNuevoIncrementoMasivo({ form: formData }));

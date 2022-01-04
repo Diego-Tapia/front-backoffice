@@ -16,7 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.component';
 import { AltaUsuariosComponent } from './alta-usuarios/alta-usuarios.component';
 import { ModificacionUsuarioComponent } from './modificacion-usuario/modificacion-usuario.component';
-import { usuariosRedecuersMap } from './usuarios.reducers.map';
+import { usuariosReducersMap } from './usuarios.reducers.map';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AltaUsuariosEffects } from './alta-usuarios/store/alta-usuarios.effect';
@@ -25,6 +25,8 @@ import { GetUsuarioByIdEffects } from './data-usuarios/store/get-by-id/get-usuar
 import { ModificacionUsuariosEffects } from './modificacion-usuario/store/modificacion-usuarios.effect';
 import { GetRolesEffects } from './alta-usuarios/store/get-roles.effect';
 import { VerifyUsuarioEffects } from './data-usuarios/store/verify/verify-usuarios.effect';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { VerifyUsuarioEffects } from './data-usuarios/store/verify/verify-usuari
     MatCardModule,
     MatOptionModule,
     MatSelectModule,
-    StoreModule.forFeature('usuariosRedecuersMap', usuariosRedecuersMap),
+    MatIconModule,
+    SharedModule,
+    StoreModule.forFeature('usuariosReducersMap', usuariosReducersMap),
     EffectsModule.forFeature([GetUsuariosEffects, GetUsuarioByIdEffects, AltaUsuariosEffects, ModificacionUsuariosEffects, VerifyUsuarioEffects, GetRolesEffects])
   ]
 })

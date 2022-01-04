@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
+import { IAdmin } from 'src/app/shared/models/admin.interface';
 import { IFormUser } from 'src/app/shared/models/form-user.interface';
 import { IRol } from 'src/app/shared/models/rol.interface';
 import { IState } from 'src/app/shared/models/state.interface';
@@ -19,11 +21,13 @@ import { setGetRoles, setGetRolesClear } from './store/get-roles.action';
 })
 export class AltaUsuariosComponent implements OnInit, OnDestroy {
 
-  subscriptions: Subscription[] = [];
-  isBackoffice!: boolean;
-  userType!: string;
-  isLinear = false;
-  public userData!: any;
+  private subscriptions: Subscription[] = [];
+  public isBackoffice!: boolean;
+  public userType!: string;
+  public isLinear = true;
+  public admin: IAdmin | undefined;
+
+  @ViewChild('stepper') private stepper!: MatStepper;
 
   roles: IRol[] = [
     { id: 'asdasd', rol: 'ADMIN' },
@@ -31,21 +35,42 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     { id: 'asdasd', rol: 'VIEWER' }
   ];
 
-  myForm = this.formBuilder.group({
+  firstStep = this.formBuilder.group({
     shortName: ['', [Validators.maxLength(15), Validators.required]],
     lastName: ['', [Validators.maxLength(15), Validators.required]],
     dni: ['', [Validators.min(1), Validators.required]],
     cuil: ['', [Validators.min(1), Validators.required]],
+  })
+
+  secondStep = this.formBuilder.group({
     username: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    rol: [''],
+    password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\^$*.\[\]{}\(\)?\-\"!@#%&\/,><\':;|_~`])\S{8,99}$/)]],
     repeat_pass: ['', [Validators.required]],
+    rol: ['']
+  })
+
+  thirdStep = this.formBuilder.group({
     email: ['', [Validators.email, Validators.required]],
     phoneNumber: ['', [Validators.min(1), Validators.required]],
-    avatarUrl: ['avatarUrl'],
-    customId: ['customId'],
-		clientId: [''],
+    avatarUrl: [' '],
+    customId: [' '],
+    clientId: ['']
   })
+
+  // myForm = this.formBuilder.group({
+  //   shortName: ['', [Validators.maxLength(15), Validators.required]],
+  //   lastName: ['', [Validators.maxLength(15), Validators.required]],
+  //   dni: ['', [Validators.min(1), Validators.required]],
+  //   cuil: ['', [Validators.min(1), Validators.required]],
+  //   username: ['', [Validators.required]],
+  //   password: ['', [Validators.required]],
+  //   rol: [''],
+  //   repeat_pass: ['', [Validators.required]],
+  //   email: ['', [Validators.email, Validators.required]],
+  //   phoneNumber: ['', [Validators.min(1), Validators.required]],
+  //  avatarUrl: [' '],
+  //  customId: [' '],
+  // })
 
   constructor(
     public route: ActivatedRoute,
@@ -53,25 +78,23 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
 		private authService: AuthService,
     public formBuilder: FormBuilder,
     private noti: NotificationsService,
-    private store: Store<{ usuariosRedecuersMap: IUsuariosReducersMap }>) {
+    private store: Store<{ usuariosReducersMap: IUsuariosReducersMap }>) {
     this.subscriptions.push(
-      this.store.select('usuariosRedecuersMap', 'altaUsuarios').subscribe((res: IState<IFormUser>) => {
+      this.store.select('usuariosReducersMap', 'altaUsuarios').subscribe((res: IState<IFormUser>) => {
         this.handleAltaUsuarios(res);
       }),
-      this.store.select('usuariosRedecuersMap', 'getRoles').subscribe((res: IState<IRol[]>) => {
+      this.store.select('usuariosReducersMap', 'getRoles').subscribe((res: IState<IRol[]>) => {
         this.handleGetRoles(res);
       }),
       this.route.params.subscribe(params => {
         this.userType = params.type
-        if (params.type === 'final') return this.isBackoffice = false
-        if (params.type === 'backoffice') return this.isBackoffice = true
-        else return this.router.navigate(['home/usuarios/finales']);
+        this.userType === 'final' ? this.isBackoffice = false : this.isBackoffice = true
       })
     )
   }
 
   ngOnInit(): void {
-		this.userData = this.authService.getUserData()    
+	  this.admin = this.authService.getUserData()?.admin; 
     if (this.isBackoffice) this.store.dispatch(setGetRoles());
   }
 
@@ -114,16 +137,31 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     }
   }
 
-  submit() {
-    const { password, repeat_pass } = this.myForm.value
+  verifyPassword() {
+    const { username, password, repeat_pass } = this.secondStep.value
+    if(password !== repeat_pass) this.noti.error('Error', 'Las contraseñas no coinciden');
+    if(password.length < 8) this.noti.error('Error', 'La contraseña debe contener al menos 8 carácteres');
+    if(!password.match(/[0-9]/)) this.noti.error('Error', 'La contraseña debe contener al menos un número');
+    if(!password.match(/[\^$*.\[\]{}\(\)?\-\"!@#%&\/,><\':;|_~`]/)) this.noti.error('Error', 'La contraseña debe contener al menos un carácter especial');
+    if(!password.match(/[A-Z]/)) this.noti.error('Error', 'La contraseña debe contener al menos una letra mayúscula');
+    if(!password.match(/[a-z]/)) this.noti.error('Error', 'La contraseña debe contener al menos una letra minúscula');
+    if(!username) this.noti.error('Error', 'Debe completar el nombre de usuario');
+    else this.stepper.next()
+  }
 
-    if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de registro');
+  submit() {
+    const { password, repeat_pass } = this.secondStep.value
+
+    if (!this.firstStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el primer paso de registro');
+    if (!this.secondStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el segundo paso de registro');
+    if (!this.thirdStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el tercer paso de registro');
     if (password !== repeat_pass) return this.noti.error('Error', 'Las contraseñas no coinciden');
 
-    const newUser = this.myForm.value
-    newUser.rol = ''
-    newUser.clientId = this.userData.admin.clientId
+    const formUser = {...this.firstStep.value, ...this.secondStep.value, ...this.thirdStep.value}
+    //TODO ASIGNAR ROL
+    formUser.rol = ''
+    formUser.clientId = this.admin?.clientId
 
-    return this.store.dispatch(setAltaUsuarios({ form: newUser, userType: this.userType }))
+    return this.store.dispatch(setAltaUsuarios({ form: formUser, userType: this.userType }))
   }
 }

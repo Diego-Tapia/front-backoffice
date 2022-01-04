@@ -15,7 +15,7 @@ export interface IDisminucionReducersMap {
 	verifyUsuario: IState<any>;
 }
 
-export const disminucionRedecuersMap: ActionReducerMap<IDisminucionReducersMap> = {
+export const disminucionReducersMap: ActionReducerMap<IDisminucionReducersMap> = {
 	nuevaDisminucion: setNuevaDisminucionReducer,
 	getDisminuciones: setGetDisminucionesReducer,
 	nuevaDisminucionMasiva: setNuevaDisminucionMasivaReducer,

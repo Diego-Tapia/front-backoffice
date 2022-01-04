@@ -1,22 +1,19 @@
 <div class="section__modal">
 	<div class="section__data-modal">
-		<div align="end">
-			<img src="../../../assets/images/modal/close_black_24dp.svg" class="btn_close" mat-dialog-close />
-		</div>
 		<div class="title_modal">
 			<h2 class="title">Emitir activos</h2>
 		</div>
 		<div>
 			<span>
-				Usted está a punto de emitir <strong> {{ data.initialAmount | number }} {{ data.symbol }}</strong>
+				Usted está a punto de emitir <strong> {{ data.initialAmount | number }} {{ data.symbol | uppercase }}</strong>
 			</span>
 		</div>
 	</div>
 </div>
 
 <mat-dialog-actions class="button__align">
-	<button mat-stroked-button color="primary" mat-dialog-close class="buttons__modal">Cancelar</button>
-	<button mat-raised-button color="primary" cdkFocusInitial (click)="emitirActivo()" class="buttons__modal">
+	<button mat-stroked-button class="modal__btn cancel__btn" mat-dialog-close>Cancelar</button>
+	<button mat-raised-button class="modal__btn" cdkFocusInitial (click)="emitirActivo()">
 		Emitir
 	</button>
 </mat-dialog-actions>

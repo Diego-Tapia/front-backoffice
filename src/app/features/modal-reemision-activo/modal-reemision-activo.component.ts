@@ -19,7 +19,7 @@ import { setReemitirActivos, setReemitirActivosClear } from './store/reemitir-ac
 export class ModalReemisionActivoComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
 
-	myForm = this.formBuilder.group({
+	reemitForm = this.formBuilder.group({
 		id: [this.data.id, Validators.required],
 		symbol: [{ value: this.data.symbol, disabled: true }, [Validators.required]],
 		amount: ['', [Validators.min(1), Validators.required]]
@@ -28,21 +28,20 @@ export class ModalReemisionActivoComponent implements OnInit, OnDestroy {
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: IActivo,
 		private formBuilder: FormBuilder,
-		private router: Router,
 		private noti: NotificationsService,
 		private dialogRef: MatDialogRef<ModalReemisionActivoComponent>,
-		private store: Store<{ featuresRedecuersMap: IFeaturesReducersMap }>
+		private store: Store<{ featuresReducersMap: IFeaturesReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('featuresRedecuersMap', 'reemitirActivo').subscribe((res: IState<ITransaccion>) => {
+			this.store.select('featuresReducersMap', 'reemitirActivo').subscribe((res: IState<ITransaccion>) => {
 				this.handleReemitirActivo(res);
 			})
 		);
 	}
 
 	reemitirActivo() {
-		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de reemisión');
-		return this.store.dispatch(setReemitirActivos({ form: this.myForm.value }));
+		if (!this.reemitForm.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de reemisión');
+		return this.store.dispatch(setReemitirActivos({ form: this.reemitForm.value }));
 	}
 
 	handleReemitirActivo(res: IState<ITransaccion>): void {

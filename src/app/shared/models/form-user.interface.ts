@@ -14,3 +14,7 @@ export interface IFormUser {
 	createdAt?: Date;
 	id?: string;
 }
+
+export interface IUserStatus {
+	status: string
+}

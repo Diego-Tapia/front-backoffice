@@ -14,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DataNotificacionesComponent } from './data-notificaciones/data-notificaciones.component';
 import { StoreModule } from '@ngrx/store';
-import { notificacionesRedecuersMap } from './notificaciones.reducers.map';
+import { notificacionesReducersMap } from './notificaciones.reducers.map';
 import { EffectsModule } from '@ngrx/effects';
 import { GetNotificacionesEffects } from './data-notificaciones/store/notificaciones.effects';
 import { NuevaNotificacionEffects } from './nueva-notificacion-masiva/store/nueva-notificacion-masiva.effects';
@@ -33,7 +33,7 @@ import { NuevaNotificacionEffects } from './nueva-notificacion-masiva/store/nuev
 		FormsModule,
 		MatInputModule,
 		MatButtonModule,
-		StoreModule.forFeature('notificacionesRedecuersMap', notificacionesRedecuersMap),
+		StoreModule.forFeature('notificacionesReducersMap', notificacionesReducersMap),
 		EffectsModule.forFeature([GetNotificacionesEffects, NuevaNotificacionEffects])
 	]
 })

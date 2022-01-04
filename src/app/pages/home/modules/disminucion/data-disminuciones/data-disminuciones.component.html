@@ -6,13 +6,13 @@
 	></app-title>
 	<mat-tab-group mat-align-tabs="start">
 		<mat-tab label="Masivos">
-			<ng-container *ngIf="incrementsMasive">
-				<app-tabla-masivos [incrementsMasive]="incrementsMasive"></app-tabla-masivos>
+			<ng-container *ngIf="massiveDec">
+				<app-tabla-masivos [massive]="massiveDec" (updateValues)="updateValues()"></app-tabla-masivos>
 			</ng-container>
 		</mat-tab>
 		<mat-tab label="Individuales" [disabled]="true">
-			<ng-container *ngIf="incrementsIndividual">
-				<app-tabla-individuales [incrementsIndividual]="incrementsIndividual"></app-tabla-individuales>
+			<ng-container *ngIf="individualDec">
+				<app-tabla-individuales [individual]="individualDec"></app-tabla-individuales>
 			</ng-container>
 		</mat-tab>
 	</mat-tab-group>

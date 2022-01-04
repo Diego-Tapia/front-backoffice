@@ -15,16 +15,24 @@ import { NotificationsService } from 'angular2-notifications';
 import { IAplicabilidad } from 'src/app/shared/models/activos/aplicabilidad.interface';
 import { setGetAplicabilidades, setGetAplicabilidadesClear } from '../store/get-aplicabilidades.actions';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { IAdmin } from 'src/app/shared/models/admin.interface';
 
 @Component({
 	selector: 'app-creacion-activo',
 	templateUrl: './creacion-activo.component.html',
-	styleUrls: ['./creacion-activo.component.sass']
+	styleUrls: ['./creacion-activo.component.sass'],
+	providers: [
+		{
+		  provide: STEPPER_GLOBAL_OPTIONS,
+		  useValue: {displayDefaultIndicatorType: false},
+		},
+	  ],
 })
 export class CreacionActivoComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
 
-	isLinear = false;
+	isLinear = true;
 
 	startDate = Date.now();
 
@@ -37,39 +45,40 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 	applicabilitiesResume: string[] = []
 	applicabilityCtrl = new FormControl();
 	allApplicabilities: IAplicabilidad[] = [];
-	userData!: any;
+	public admin!: IAdmin | undefined;
 
 	@ViewChild('applicabilityInput') applicabilityInput!: ElementRef<HTMLInputElement>;
 
-	myForm = this.formBuilder.group({
+	firstStep = this.formBuilder.group({
 		description: ['', [Validators.required]],
 		shortName: ['', [Validators.required]],
 		symbol: ['', [Validators.required]],
+	})
+
+	secondStep = this.formBuilder.group({
 		initialAmount: ['', [Validators.required]],
-		money: ['ARS'],
-		price: [1],
-		emited: [false],
-		status: ['PENDING_APPROVE'],
-		applicabilities: [this.applicabilities],
 		validFrom: [''],
 		validTo: [''],
 		transferable: [false],
-		observations: [''],
-		clientId: [''],
-	});
+		observations: ['']
+	})
+
+	thirdStep = this.formBuilder.group({
+		applicabilities: [this.applicabilities],
+	})
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private noti: NotificationsService,
 		private authService: AuthService,
-		private store: Store<{ activosRedecuersMap: IActivosReducersMap }>
+		private store: Store<{ activosReducersMap: IActivosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('activosRedecuersMap', 'nuevoActivo').subscribe((res: IState<IActivo>) => {
+			this.store.select('activosReducersMap', 'nuevoActivo').subscribe((res: IState<IActivo>) => {
 				this.handleNuevoActivo(res);
 			}),
-			this.store.select('activosRedecuersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[]>) => {
+			this.store.select('activosReducersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[]>) => {
 				this.handleGetAplicabilidades(res);
 			})
 		);
@@ -83,7 +92,7 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.userData = this.authService.getUserData()
+		this.admin = this.authService.getUserData()?.admin
 		this.store.dispatch(setGetAplicabilidades());
 	}
 
@@ -94,18 +103,21 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	crearActivo() {
-		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de creación de activos');
-		const applicabilities_form: IAplicabilidad[] = this.myForm.value.applicabilities
-		const applicabilities_id: string[] = []
+		
+		if (!this.firstStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el primer paso de creación de activos');
+		if (!this.secondStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el segundo paso de creación de activos');
+		if (!this.thirdStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el tercer paso de creación de activos');		
+		
+		const formActivo: IActivo = {...this.firstStep.value, ...this.secondStep.value}
+		formActivo.applicabilities = []
+		this.thirdStep.value.applicabilities.forEach((app: IAplicabilidad) => formActivo.applicabilities?.push(app.id));
+		if(this.admin) formActivo.clientId = this.admin.clientId;
+		formActivo.money = 'ARS';
+		formActivo.price = 1;
+		formActivo.emited = false;
+		formActivo.status = 'PENDING_APPROVE';
 
-		applicabilities_form.forEach(app => applicabilities_id.push(app.id));
-
-		this.myForm.patchValue({ 
-			applicabilities: applicabilities_id,
-			clientId: this.userData.admin.clientId
-		})
-
-		return this.store.dispatch(setNuevoActivo({ form: this.myForm.value }));
+		return this.store.dispatch(setNuevoActivo({ form: formActivo }));
 	}
 
 	handleGetAplicabilidades(res: IState<IAplicabilidad[]>): void {
@@ -141,10 +153,6 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	selected(event: MatAutocompleteSelectedEvent): void {
-
-		console.log(event);
-
-
 		if (!this.applicabilities.find(app => app.id === event.option.value.id)) {
 			this.applicabilitiesResume.push(event.option.value.name)
 			this.applicabilities.push(event.option.value);

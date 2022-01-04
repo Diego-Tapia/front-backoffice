@@ -25,29 +25,33 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 
 	verifyForm = this.formBuilder.group({
 		unassignedUser: ['', [Validators.required]],
+		verified:['', [Validators.required]]
 	})
 
-	myForm = this.formBuilder.group({
+	secondStep = this.formBuilder.group({
 		userIdentifier: ['', [Validators.required]],
-		amount: ['', [Validators.required]],
+		amount: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
 		tokenId: ['', [Validators.required]],
-		notes:['']
 	});
+	
+	thirdStep = this.formBuilder.group({
+		notes:['']
+	})
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private noti: NotificationsService,
 		private router: Router,
-		private store: Store<{ incrementoRedecuersMap: IIncrementoReducersMap }>
+		private store: Store<{ incrementoReducersMap: IIncrementoReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('incrementoRedecuersMap', 'nuevoIncremento').subscribe((res: IState<any>) => {
+			this.store.select('incrementoReducersMap', 'nuevoIncremento').subscribe((res: IState<any>) => {
 				this.handleNuevoIncremento(res);
 			}),
-			this.store.select('incrementoRedecuersMap', 'getActivos').subscribe((res: IState<IActivo[]>) => {
+			this.store.select('incrementoReducersMap', 'getActivos').subscribe((res: IState<IActivo[]>) => {
 				this.handleGetActivos(res);
 			}),
-			this.store.select('incrementoRedecuersMap', 'verifyUsuario').subscribe((res: IState<IUserProfile>) => {
+			this.store.select('incrementoReducersMap', 'verifyUsuario').subscribe((res: IState<IUserProfile>) => {
 				this.handleVerifyUsuario(res);
 			})
 		);
@@ -65,35 +69,41 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 	}
 
 	verifyUsuario(){
-		console.log(this.verifyForm.value) 
 		if(!this.verifyForm.value.unassignedUser) this.noti.error('Error','Debes completar el campo para continuar')
 		if(this.verifyForm.value.unassignedUser)
 			this.store.dispatch(setVerifyUsuario({userIdentifier: this.verifyForm.value.unassignedUser}));
 	}
 
 	submit() {
-		if (!this.myForm.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
+		if (!this.secondStep.valid) return this.noti.error('Error', 'Hay errores o campos vacíos en el formulario');
 		
-		const incrementoIndividual = this.myForm.value
-		incrementoIndividual.tokenId = this.myForm.value.tokenId.id		
+		const incrementoIndividual = {...this.secondStep.value, ...this.thirdStep.value}
+		incrementoIndividual.tokenId = this.secondStep.value.tokenId.id
 
 		return this.store.dispatch(setNuevoIncremento({ form: incrementoIndividual }));
 	}
 
 	handleGetActivos(res: IState<IActivo[]>) {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema listando los activos');
-		if (res.success && res.response) this.activos = res.response
+		if (res.success && res.response) {
+			res.response.forEach(activo => {
+				if(activo.emited && activo.status === 'ACTIVE')
+				this.activos.push(activo)
+			})
+		} 
 	}
 
 	handleVerifyUsuario(res: IState<IUserProfile>) {	
 		if (res.error) {
 			if(res.error.status === 404) this.noti.error('Error', 'No se encontró ningun usuario con esa identificación');
 			else this.noti.error('Error', res.error.error.message);
-			this.myForm.patchValue({userIdentifier:''})
+			this.verifyForm.patchValue({verified:''})
+			this.secondStep.patchValue({userIdentifier:''})
 		} 
 		if (res.success && res.response) {
 			this.usuario = res.response
-			this.myForm.patchValue({userIdentifier:this.verifyForm.value.unassignedUser})
+			this.verifyForm.patchValue({verified:true})
+			this.secondStep.patchValue({userIdentifier:this.verifyForm.value.unassignedUser})
 		} 
 	}
 

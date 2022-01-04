@@ -15,7 +15,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { FeaturesModule } from '../../../../features/features.module';
 import { MatCardModule } from '@angular/material/card';
 import { StoreModule } from '@ngrx/store';
-import { disminucionRedecuersMap } from './disminuciones.reducers.map';
+import { disminucionReducersMap } from './disminuciones.reducers.map';
 import { EffectsModule } from '@ngrx/effects';
 import { GetDisminucionesEffects } from './data-disminuciones/store/get-dis.effect';
 import { GetDisminucionesMasivasEffects } from './data-disminuciones/store/get-dis-mas.effect';
@@ -26,6 +26,7 @@ import { GetActivosEffects } from '../activos/data-activos/store/activos.effects
 import { MatSelectModule } from '@angular/material/select';
 import { VerifyUsuarioEffects } from '../usuarios/data-usuarios/store/verify/verify-usuarios.effect';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
 	declarations: [DataDisminucionesComponent, NuevaDisminucionMasivaComponent, NuevaDisminucionIndividualComponent],
@@ -43,8 +44,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 		MatCardModule,
 		MatOptionModule,
 		MatSelectModule,
+		MatIconModule,
 		SharedModule,
-		StoreModule.forFeature('disminucionRedecuersMap', disminucionRedecuersMap),
+		StoreModule.forFeature('disminucionReducersMap', disminucionReducersMap),
 		EffectsModule.forFeature([
 			NuevaDisminucionEffects,
 			NuevaDisminucionMasivaEffects,

@@ -22,10 +22,10 @@ export class NuevaNotificacionMasivaComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private noti: NotificationsService,
-		private store: Store<{ notificacionesRedecuersMap: INotificacionesReducersMap }>
+		private store: Store<{ notificacionesReducersMap: INotificacionesReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('notificacionesRedecuersMap', 'nuevaNotificacion').subscribe((res: IState<INotificacion>) => {
+			this.store.select('notificacionesReducersMap', 'nuevaNotificacion').subscribe((res: IState<INotificacion>) => {
 				this.handleNuevaNotificacion(res);
 			})
 		);

@@ -10,13 +10,13 @@ import { IDataIndividual } from 'src/app/shared/models/data-individual.interface
 export class TablaIndividualesComponent implements OnInit {
 	displayedColumns: string[] = ['id', 'tipo', 'concepto', 'estado', 'creacion', 'actualizacion', 'star'];
 
-	@Input() incrementsIndividual!: IDataIndividual[];
+	@Input() individual!: IDataIndividual[];
 
 	public dataSource: IDataIndividual[] = [];
 
 	constructor(private router: Router) { }
 
 	ngOnInit(): void {
-		this.dataSource = this.incrementsIndividual;
+		this.dataSource = this.individual;
 	}
 }

@@ -6,48 +6,57 @@
 
 			<!-- ID Column -->
 			<ng-container matColumnDef="cuil">
-				<th mat-header-cell *matHeaderCellDef>ID/CUIL/DNI</th>
+				<th mat-header-cell *matHeaderCellDef style="width: 25%;">ID/CUIL/DNI</th>
 				<td mat-cell *matCellDef="let element">
 					<span class="text__id">{{ element.cuil | cuil }}</span>
 				</td>
 			</ng-container>
 
 			<!-- Type Column -->
-			<ng-container matColumnDef="userName">
-				<th mat-header-cell *matHeaderCellDef>Nombre</th>
+			<ng-container matColumnDef="username">
+				<th mat-header-cell *matHeaderCellDef style="width: 30%;">Nombre</th>
 				<td mat-cell *matCellDef="let element">{{ element.shortName }} {{ element.lastName }}</td>
 			</ng-container>
 
 			<!-- Concept Column -->
 			<ng-container matColumnDef="createdAt">
-				<th mat-header-cell *matHeaderCellDef>Creación</th>
+				<th mat-header-cell *matHeaderCellDef style="width: 20%;">Creación</th>
 				<td mat-cell *matCellDef="let element">{{ element.createdAt | date: 'dd/MM/yyyy' }}</td>
 			</ng-container>
 
 			<!-- Status Column -->
 			<ng-container matColumnDef="status">
-				<th mat-header-cell *matHeaderCellDef>Estado</th>
+				<th mat-header-cell *matHeaderCellDef style="width: 20%; min-width: 155px;">Estado</th>
 				<td mat-cell *matCellDef="let element">
-					{{ element.status | status }}
+                    <div *ngIf="element.userId">
+                        <div [class]="element.userId.status"></div>
+                        {{ element.userId.status | status }}
+                    </div>
 				</td>
 			</ng-container>
 
 			<ng-container matColumnDef="star" stickyEnd>
-				<th mat-header-cell *matHeaderCellDef></th>
+				<th mat-header-cell *matHeaderCellDef style="width: 5%;"></th>
 				<td mat-cell *matCellDef="let element">
 					<button mat-icon-button [matMenuTriggerFor]="menu">
 						<mat-icon>more_vert</mat-icon>
 					</button>
 					<mat-menu #menu="matMenu">
-						<button mat-menu-item (click)="verDetalle(element.id)">
+						<button mat-menu-item (click)="verDetalle(element)">
 							<span>Ver detalle</span>
 						</button>
-						<button mat-menu-item (click)="modificar(element.id)">
+						<button mat-menu-item (click)="modificarUsuario(element)">
 							<span>Editar</span>
 						</button>
-						<button mat-menu-item>
-							<div *ngIf="element.status === 'Activo'; else elseBlock">Desactivar</div>
-							<ng-template #elseBlock>Activar</ng-template>
+						<button mat-menu-item (click)="modificarEstado(element)" [disabled]="(!element.userId)">
+                            <ng-container *ngIf="element.userId; else elseBlock">
+                                <span *ngIf="element.userId.status === 'ACTIVE'; else elseBlock">Desactivar</span>
+                                <ng-template #elseBlock>Activar</ng-template>
+                            </ng-container>
+                            <ng-template #elseBlock>
+                                <span *ngIf="element.status === 'ACTIVE'; else elseBlock">Desactivar</span>
+                                <ng-template #elseBlock>Activar</ng-template>
+                            </ng-template>
 						</button>
 					</mat-menu>
 				</td>
@@ -57,9 +66,9 @@
 			<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 		</table>
 		<mat-paginator
-			[pageSizeOptions]="[5, 10, 25, 100]"
-			aria-label="Select page of users"
 			class="paginator"
+			[pageSizeOptions]="pageSize"
+			showFirstLastButtons 
 		></mat-paginator>
 	</div>
 </div>

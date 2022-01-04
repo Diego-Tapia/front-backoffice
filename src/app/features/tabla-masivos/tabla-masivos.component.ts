@@ -1,4 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
@@ -14,79 +16,100 @@ import { IFeaturesReducersMap } from '../features.reducers.map';
 	templateUrl: './tabla-masivos.component.html',
 	styleUrls: ['./tabla-masivos.component.sass']
 })
-export class TablaMasivosComponent implements OnInit, OnDestroy {
-	subscriptions: Subscription[] = [];
+export class TablaMasivosComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+	private subscriptions: Subscription[] = [];
+	public pageSize:number[] = [5]
 	displayedColumns: string[] = ['id', 'concepto', 'estado', 'creacion', 'actualizacion', 'star'];
+	public dataSource = new MatTableDataSource<IDataMasivo>();
+	
+	@Input() massive!: IDataMasivo[];
+	@Output() updateValues = new EventEmitter();
 
-	@Input() incrementsMasive!: IDataMasivo[];
+	
+	@ViewChild(MatPaginator) paginator!: MatPaginator;
 
-	public dataSource: IDataMasivo[] = [];
 	constructor(
 		private router: Router,
 		private noti: NotificationsService,
-		private store: Store<{ featuresRedecuersMap: IFeaturesReducersMap }>
+		private store: Store<{ featuresReducersMap: IFeaturesReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('featuresRedecuersMap', 'nuevoIncrementoMasivo').subscribe((res) => {
+			this.store.select('featuresReducersMap', 'nuevoIncrementoMasivo').subscribe((res) => {
 				this.handleNuevoIncrementoMasivo(res);
 			}),
-			this.store.select('featuresRedecuersMap', 'nuevaDisminucionMasiva').subscribe((res) => {
+			this.store.select('featuresReducersMap', 'nuevaDisminucionMasiva').subscribe((res) => {
 				this.handleNuevaDisminucionMasiva(res);
 			}),
 		)
 	}
 
 	procesarMasivo(element: IDataMasivo) {
-		const formData = new FormData()
-		formData.append('tokenId', element.tokenId)
-		formData.append('name', element.name)
-		formData.append('action', 'PROCESAR')		
+		const formData = new FormData();
+		formData.append('tokenId', element.tokenId);
+		formData.append('name', element.name);
+		formData.append('action', 'PROCESAR');
 
 		if (this.router.url.includes('incremento')) {
-			formData.append('massiveIncreaseId', element.id)
-			this.store.dispatch(setNuevoIncrementoMasivo({form: formData}))
+			formData.append('massiveIncreaseId', element.id);
+			this.store.dispatch(setNuevoIncrementoMasivo({form: formData}));
 		}
 		
 		if (this.router.url.includes('disminucion')) {
-			formData.append('massiveDecreaseId', element.id)
-			this.store.dispatch(setNuevaDisminucionMasiva({form: formData}))
+			formData.append('massiveDecreaseId', element.id);
+			this.store.dispatch(setNuevaDisminucionMasiva({form: formData}));
 		}
 	}
 	
 	cancelarMasivo(element: IDataMasivo) {
-		const formData = new FormData()
-		formData.append('tokenId', element.tokenId)
-		formData.append('name', element.name)
-		formData.append('action', 'CANCELAR')
+		const formData = new FormData();
+		formData.append('tokenId', element.tokenId);
+		formData.append('name', element.name);
+		formData.append('action', 'CANCELAR');
 
 		if (this.router.url.includes('incremento')) {
-			formData.append('massiveIncreaseId', element.id)
-			this.store.dispatch(setNuevoIncrementoMasivo({form: formData}))
+			formData.append('massiveIncreaseId', element.id);
+			this.store.dispatch(setNuevoIncrementoMasivo({form: formData}));
 		}
 		
 		if (this.router.url.includes('disminucion')) {
-			formData.append('massiveDecreaseId', element.id)
-			this.store.dispatch(setNuevaDisminucionMasiva({form: formData}))
+			formData.append('massiveDecreaseId', element.id);
+			this.store.dispatch(setNuevaDisminucionMasiva({form: formData}));
 		}
 	}
 
 	handleNuevoIncrementoMasivo(res: IState<IFormMasivo>): void {
-		if(res.error) this.noti.error('Error', res.error.error.message)
-		if (res.success) this.noti.success('Éxito', 'Se ha modificado el estado del incremento con éxito');
+		if(res.error) this.noti.error('Error', res.error.error.message);
+		if (res.success) {
+			this.noti.success('Éxito', 'Se ha modificado el estado del incremento con éxito');
+			this.updateValues.emit();
+		} 
 	}
 	
 	handleNuevaDisminucionMasiva(res: IState<IFormMasivo>): void {
-		if(res.error) this.noti.error('Error', res.error.error.message)
-		if (res.success) this.noti.success('Éxito', 'Se ha modificado el estado de la disminución  con éxito');
+		if(res.error) this.noti.error('Error', res.error.error.message);
+		if (res.success) {
+			this.noti.success('Éxito', 'Se ha modificado el estado de la disminución  con éxito');
+			this.updateValues.emit();
+		} 
 	}
 
 	ngOnInit(): void {		
-		this.dataSource = this.incrementsMasive;
+		this.dataSource = new MatTableDataSource(this.massive);
 	}
 
 	ngOnDestroy(): void {
-		this.store.dispatch(setNuevaDisminucionMasivaClear())
-		this.store.dispatch(setNuevoIncrementoMasivoClear())
+		this.store.dispatch(setNuevaDisminucionMasivaClear());
+		this.store.dispatch(setNuevoIncrementoMasivoClear());
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
+	}
+
+	ngOnChanges(changes: SimpleChanges) {		
+		if(changes.massive.previousValue != changes.massive.currentValue) {	
+			this.dataSource = new MatTableDataSource(this.massive);
+		}
+	}
+
+	ngAfterViewInit() {
+		this.dataSource.paginator = this.paginator;
 	}
 }

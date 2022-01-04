@@ -21,10 +21,10 @@ export class ModalEmisionActivoComponent implements OnInit, OnDestroy {
 		@Inject(MAT_DIALOG_DATA) public data: IActivo,
 		private noti: NotificationsService,
 		private dialogRef: MatDialogRef<ModalEmisionActivoComponent>,
-		private store: Store<{ featuresRedecuersMap: IFeaturesReducersMap }>
+		private store: Store<{ featuresReducersMap: IFeaturesReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('featuresRedecuersMap', 'emitirActivo').subscribe((res: IState<ITransaccion>) => {
+			this.store.select('featuresReducersMap', 'emitirActivo').subscribe((res: IState<ITransaccion>) => {
 				this.handleEmitirActivo(res);
 			})
 		);

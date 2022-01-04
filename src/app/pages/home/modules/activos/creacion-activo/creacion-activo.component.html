@@ -1,10 +1,15 @@
-<h1>Nuevo activo digital</h1>
+<div style="display: flex;">
+	<div class="back__btn__container" routerLink="..">
+		<mat-icon class="back__btn">arrow_back</mat-icon>
+	</div>
+	<h1 style="margin-left: 10px;">Nuevo activo digital</h1>
+</div>
 <div class="section__stepper">
-	<form [formGroup]="myForm">
-		<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
-			<mat-step [stepControl]="myForm">
-				<ng-template matStepLabel>Denominación</ng-template>
-				<br />
+	<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+		<mat-step [stepControl]="firstStep">
+			<ng-template matStepLabel>Denominación</ng-template>
+			<br />
+			<form [formGroup]="firstStep">
 				<div class="form__group">
 					<mat-form-field appearance="outline" style="width: 28%">
 						<mat-label>Nombre completo</mat-label>
@@ -21,24 +26,25 @@
 						<input matInput type="text" placeholder="Sigla" formControlName="symbol" required />
 					</mat-form-field>
 				</div>
-				<br />
-				<mat-dialog-actions>
-					<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
-						Siguiente
-					</button>
-				</mat-dialog-actions>
-			</mat-step>
+			</form>
+			<mat-dialog-actions>
+				<button type="button" mat-stroked-button  class="buttons__stepper__primary" matStepperNext>
+					Siguiente
+				</button>
+			</mat-dialog-actions>
+		</mat-step>
 
-			<mat-step [stepControl]="myForm">
-				<ng-template matStepLabel>Valor y vigencia</ng-template>
-				<br />
+		<mat-step [stepControl]="secondStep">
+			<ng-template matStepLabel>Valor y vigencia</ng-template>
+			<br />
+			<form [formGroup]="secondStep">
 				<div class="form__group">
-					<mat-form-field appearance="outline" style="width: 15%">
+					<mat-form-field appearance="outline" style="width: 15%; min-width: 150px;">
 						<mat-label>Cantidad a emitir</mat-label>
 						<input matInput type="number" placeholder="Cantidad a emitir" formControlName="initialAmount" required />
 					</mat-form-field>
 
-					<mat-form-field appearance="outline" style="width: 25%">
+					<mat-form-field appearance="outline" style="width: 25%; min-width: 200px;">
 						<mat-label>Vigencia desde - hasta</mat-label>
 						<mat-date-range-input [rangePicker]="picker">
 							<input matStartDate placeholder="Desde" formControlName="validFrom" />
@@ -48,7 +54,7 @@
 						<mat-date-range-picker #picker></mat-date-range-picker>
 					</mat-form-field>
 
-					<mat-checkbox color="primary" style="margin: 25px 25px" formControlName="transferable">
+					<mat-checkbox  style="margin: 25px 20px" formControlName="transferable">
 						Transferible
 					</mat-checkbox>
 				</div>
@@ -63,19 +69,20 @@
 					></textarea>
 					<mat-hint align="start"><strong>(Opcional)</strong> </mat-hint>
 				</mat-form-field>
-				<br />
-				<br />
-				<mat-dialog-actions>
-					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
-					<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
-						Siguiente
-					</button>
-				</mat-dialog-actions>
-			</mat-step>
+			</form>
+			<br/>
+			<mat-dialog-actions>
+				<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+				<button type="button" mat-stroked-button  class="buttons__stepper__primary" matStepperNext>
+					Siguiente
+				</button>
+			</mat-dialog-actions>
+		</mat-step>
 
-			<mat-step [stepControl]="myForm">
-				<ng-template matStepLabel>Aplicabilidad</ng-template>
-				<br />
+		<mat-step [stepControl]="thirdStep">
+			<ng-template matStepLabel>Aplicabilidad</ng-template>
+			<br />
+			<form [formGroup]="thirdStep">
 				<mat-form-field style="width: 60%" appearance="outline">
 					<mat-label>Aplicabilidad</mat-label>
 					<mat-chip-list #chipList formControlName="applicabilities">
@@ -86,9 +93,7 @@
 							(removed)="remove(applicability)"
 						>
 							{{ applicability.name }}
-							<button type="button" matChipRemove *ngIf="removable">
-								<mat-icon class="button__cancel">cancel</mat-icon>
-							</button>
+							<mat-icon matChipRemove *ngIf="removable" class="button__cancel">cancel</mat-icon>
 						</mat-chip>
 						<input
 							placeholder="Nuevo atributo"
@@ -106,81 +111,77 @@
 						</mat-option>
 					</mat-autocomplete>
 				</mat-form-field>
+			</form>
+			<mat-dialog-actions>
+				<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+				<button type="button" mat-stroked-button  class="buttons__stepper__primary" matStepperNext>
+					Siguiente
+				</button>
+			</mat-dialog-actions>
+		</mat-step>
 
-				<br />
-				<mat-dialog-actions>
-					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
-					<button type="button" mat-stroked-button color="primary" class="buttons__stepper__primary" matStepperNext>
-						Siguiente
-					</button>
-				</mat-dialog-actions>
-			</mat-step>
+		<mat-step>
+			<ng-template matStepLabel>Confirmacion</ng-template>
+			<br />
+			<mat-card class="card_content">
+				<div>
+					<mat-card-title class="title__options">Nombre completo</mat-card-title>
+					<mat-card-subtitle class="subtitle__options">{{ firstStep.get('description')?.value }}</mat-card-subtitle>
+				</div>
+				<div>
+					<mat-card-title class="title__options">Acrónimo</mat-card-title>
+					<mat-card-subtitle class="subtitle__options">{{ firstStep.get('shortName')?.value }}</mat-card-subtitle>
+				</div>
+				<div>
+					<mat-card-title class="title__options">Sigla</mat-card-title>
+					<mat-card-subtitle class="subtitle__options">{{ firstStep.get('symbol')?.value }}</mat-card-subtitle>
+				</div>
+			</mat-card>
+			<br />
+			<mat-card class="card_content">
+				<div>
+					<mat-card-title class="title__options">Cantidad a emitir</mat-card-title>
+					<mat-card-subtitle class="subtitle__options">{{ secondStep.get('initialAmount')?.value | number }}</mat-card-subtitle>
+				</div>
+				<div style="width: 40%">
+					<mat-card-title class="title__options">Vigencia</mat-card-title>
+					<mat-card-subtitle class="subtitle__options">
+						{{ secondStep.get('validFrom')?.value | date: 'dd/MM/yyyy' }} -
+						{{ secondStep.get('validTo')?.value | date: 'dd/MM/yyyy' }}</mat-card-subtitle
+					>
+				</div>
+				<div style="width: 25%">
+					<mat-card-title class="title__options">Condición</mat-card-title>
+					<mat-card-subtitle class="subtitle__options" *ngIf="secondStep.get('transferable')?.value">
+						Transferible
+					</mat-card-subtitle>
+					<mat-card-subtitle class="subtitle__options" *ngIf="!secondStep.get('transferable')?.value">
+						No transferible
+					</mat-card-subtitle>
+				</div>
+				<div style="margin-top: 15px;">
+					<mat-card-title class="title__options">Observaciones</mat-card-title>
+					<mat-card-subtitle class="subtitle__options" *ngIf="secondStep.get('observations')?.value">{{ secondStep.get('observations')?.value }}</mat-card-subtitle>
+					<mat-card-subtitle class="subtitle__options" *ngIf="!secondStep.get('observations')?.value">Sin observaciones</mat-card-subtitle>
+				</div>
+			</mat-card>
+			<br />
 
-			<mat-step [stepControl]="myForm">
-				<ng-template matStepLabel>Confirmacion</ng-template>
-				<br />
-				<mat-card class="card_content">
-					<div>
-						<mat-card-title class="title__options">Nombre completo</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">{{ myForm.get('description')?.value }}</mat-card-subtitle>
-					</div>
-					<div>
-						<mat-card-title class="title__options">Acrónimo</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">{{ myForm.get('shortName')?.value }}</mat-card-subtitle>
-					</div>
-					<div>
-						<mat-card-title class="title__options">Sigla</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">{{ myForm.get('symbol')?.value }}</mat-card-subtitle>
-					</div>
-				</mat-card>
-				<br />
+			<mat-card class="card_content">
+				<div>
+					<mat-card-title class="title__options">Aplicabilidad</mat-card-title>
+					<mat-card-subtitle class="subtitle__options">{{ applicabilitiesResume.join(', ') }}</mat-card-subtitle>
+					<mat-card-subtitle class="subtitle__options" *ngIf="!applicabilitiesResume.toString()">Sin aplicabilidades</mat-card-subtitle>
+				</div>
+			</mat-card>
+			<br />
 
-				<mat-card class="card_content">
-					<div>
-						<mat-card-title class="title__options">Cantidad a emitir</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">{{ myForm.get('initialAmount')?.value | number }}</mat-card-subtitle>
-					</div>
-					<div style="width: 40%">
-						<mat-card-title class="title__options">Vigencia</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">
-							{{ myForm.get('validFrom')?.value | date: 'dd/MM/yyyy' }} -
-							{{ myForm.get('validTo')?.value | date: 'dd/MM/yyyy' }}</mat-card-subtitle
-						>
-					</div>
-					<div style="width: 25%">
-						<mat-card-title class="title__options">Condición</mat-card-title>
-						<mat-card-subtitle class="subtitle__options" *ngIf="myForm.get('transferable')?.value">
-							Transferible
-						</mat-card-subtitle>
-						<mat-card-subtitle class="subtitle__options" *ngIf="!myForm.get('transferable')?.value">
-							No transferible
-						</mat-card-subtitle>
-					</div>
-					<div style="margin-top: 15px;">
-						<mat-card-title class="title__options">Observaciones</mat-card-title>
-						<mat-card-subtitle class="subtitle__options" *ngIf="myForm.get('observations')?.value">{{ myForm.get('observations')?.value }}</mat-card-subtitle>
-						<mat-card-subtitle class="subtitle__options" *ngIf="!myForm.get('observations')?.value">Sin observaciones</mat-card-subtitle>
-					</div>
-				</mat-card>
-				<br />
-
-				<mat-card class="card_content">
-					<div>
-						<mat-card-title class="title__options">Aplicabilidad</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">
-							{{ applicabilitiesResume.join(', ') }}
-						</mat-card-subtitle>
-					</div>
-				</mat-card>
-				<br />
-
-				<mat-dialog-actions>
-					<button mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
-					<button mat-stroked-button class="buttons__stepper__primary" matStepperNext (click)="crearActivo()">
-						Confirmar
-					</button>
-				</mat-dialog-actions>
-			</mat-step>
-		</mat-stepper>
-	</form>
+			<mat-dialog-actions>
+				<button mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+				<button mat-stroked-button class="buttons__stepper__primary confirm__btn" matStepperNext (click)="crearActivo()">
+					Confirmar
+				</button>
+			</mat-dialog-actions>
+		</mat-step>
+	</mat-stepper>
 </div>

@@ -14,7 +14,7 @@ export interface IActivosReducersMap {
 	getAplicabilidades: IState<any>;
 }
 
-export const activosRedecuersMap: ActionReducerMap<IActivosReducersMap> = {
+export const activosReducersMap: ActionReducerMap<IActivosReducersMap> = {
 	getActivos: setGetActivosReducer,
 	getActivosById: setGetActivosByIdReducer,
 	nuevoActivo: setNuevoActivoReducer,

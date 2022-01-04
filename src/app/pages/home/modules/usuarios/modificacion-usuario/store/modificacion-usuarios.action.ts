@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
-import { IFormUser } from 'src/app/shared/models/form-user.interface';
+import { IFormUser, IUserStatus } from 'src/app/shared/models/form-user.interface';
 
 export const setModificacionUsuarios = createAction(
 	'[Usuario Component] Set Modificacion Usuarios',
-	props<{ id:string, form:IFormUser }>()
+	props<{ id:string, form:IFormUser | IUserStatus, userType: string }>()
 	);
 
 export const setModificacionUsuariosSucces = createAction(

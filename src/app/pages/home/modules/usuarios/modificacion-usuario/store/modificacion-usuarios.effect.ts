@@ -13,7 +13,7 @@ export class ModificacionUsuariosEffects {
 		this.actions$.pipe(
 			ofType(setModificacionUsuarios),
 			mergeMap((props) =>
-				this.usuariosService.modificacionUsuario(props.id, props.form).pipe(
+				this.usuariosService.modificacionUsuario(props.id, props.form, props.userType).pipe(
 					map((usuario) => setModificacionUsuariosSucces({ payload: usuario })),
 					catchError((err) => of(setModificacionUsuariosError({ payload: err })))
 				)
