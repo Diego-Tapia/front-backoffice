@@ -74,8 +74,8 @@ export class DataUsuariosComponent implements OnInit {
 	tabChanged(tabChangeEvent: MatTabChangeEvent): void {
 		if (tabChangeEvent.index === 0) {
 			this.isBackoffice = false;
-			this.store.dispatch(setGetUsuarios({ userType: 'finales' }));
-			this.location.replaceState('/home/usuarios/finales');
+			this.store.dispatch(setGetUsuarios({ userType: 'final' }));
+			this.location.replaceState('/home/usuarios/final');
 		}
 		if (tabChangeEvent.index === 1) {
 			this.isBackoffice = true;

@@ -22,39 +22,26 @@ import { setModificacionUsuarios, setModificacionUsuariosClear } from './store/m
 })
 export class ModificacionUsuarioComponent implements OnInit {
 	subscriptions: Subscription[] = [];
-	isLinear = false;
 	isBackoffice: boolean = true;
 	id!: string;
 	userType!: string;
 	public admin!: IAdmin | null;
 
 	roles: IRol[] = [
-		{ id: 'asdasd', rol: 'ADMIN' },
-		{ id: 'asdasd', rol: 'MANAGER' },
-		{ id: 'asdasd', rol: 'VIEWER' }
+		{ id: 'aa00', rol: 'ADMIN' },
+		{ id: 'aa01', rol: 'MANAGER' },
+		{ id: 'aa02', rol: 'VIEWER' }
 	];
 
-	firstStep = this.formBuilder.group({
+	editForm = this.formBuilder.group({
 		shortName: ['', [Validators.maxLength(15), Validators.required]],
-		lastName: ['', [Validators.maxLength(15), Validators.required]]
-	  })
-	
-	  secondStep = this.formBuilder.group({
+		lastName: ['', [Validators.maxLength(15), Validators.required]],
 		dni: ['', [Validators.min(1), Validators.required]],
 		cuil: ['', [Validators.min(1), Validators.required]],
-		username: ['', [Validators.required]],
-		password: ['', [Validators.required]],
-		repeat_pass: ['', [Validators.required]],
-		rol: ['']
-	  })
-	
-	  thirdStep = this.formBuilder.group({
 		email: ['', [Validators.email, Validators.required]],
 		phoneNumber: ['', [Validators.min(1), Validators.required]],
 		avatarUrl: [''],
-		customId: [''],
-		clientId: ['']
-	  })
+	})
 
 	constructor(
 		public route: ActivatedRoute,
@@ -77,9 +64,9 @@ export class ModificacionUsuarioComponent implements OnInit {
 			this.route.params.subscribe((params) => {
 				this.userType = params.type;
 				this.id = params.id;
-				if (params.type === 'final') return (this.isBackoffice = false);
-				if (params.type === 'backoffice') return (this.isBackoffice = true);
-				else return this.router.navigate(['home/usuarios/finales']);
+				if (this.userType === 'final') return (this.isBackoffice = false);
+				if (this.userType === 'backoffice') return (this.isBackoffice = true);
+				else return this.router.navigate(['home/usuarios/final']);
 			})
 		);
 	}
@@ -113,48 +100,28 @@ export class ModificacionUsuarioComponent implements OnInit {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Usuario modificado con éxito');
-			if (this.isBackoffice) this.router.navigate(['home/usuarios/backoffice']);
-			else this.router.navigate(['home/usuarios/finales']);
+			(this.userType === 'backoffice') 
+			? this.router.navigate(['home/usuarios/backoffice'])
+			: this.router.navigate(['home/usuarios/final']);
 		}
 	}
 
-	updateFormValues(usuario: IUserProfile) {		
-		this.firstStep.patchValue({
+	updateFormValues(usuario: IUserProfile) {
+		this.editForm.patchValue({
 			shortName: usuario.shortName,
 			lastName: usuario.lastName,
 			dni: usuario.dni,
 			cuil: usuario.cuil,
-		})
-		this.secondStep.patchValue({
-			rol: (usuario.rol ? usuario.rol : ''),
-			password: '',
-			repeat_pass: '',
-			username: usuario.userId.username,
 			email: usuario.email,
-		})
-		this.thirdStep.patchValue({
 			phoneNumber: usuario.phoneNumber,
-			avatarUrl: usuario.userId.clientId,
-			customId: usuario.userId.clientId,
-			clientId: usuario.userId.clientId,
-		
 		});
 	}
 
 	submit() {
-		if (!this.firstStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el primer paso de registro');
-		if (!this.secondStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el segundo paso de registro');
-		if (!this.thirdStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el tercer paso de registro');
+		if (!this.editForm.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el formulario');
 
-		const { username, password, repeat_pass, customId, ...putUser} = this.secondStep.value
-		if (password !== repeat_pass) return this.noti.error('Error', 'Las contraseñas no coinciden');
-
-		const formUser = {...this.firstStep.value, ...this.secondStep.value, ...this.thirdStep.value}
 		//TODO ASIGNAR ROL
-		formUser.rol = ''
-		formUser.clientId = this.admin?.clientId
-		
 
-		return this.store.dispatch(setModificacionUsuarios({ id: this.id, form: putUser, userType:this.userType }));
+		return this.store.dispatch(setModificacionUsuarios({ id: this.id, form: this.editForm.value, userType:this.userType }));
 	}
 }

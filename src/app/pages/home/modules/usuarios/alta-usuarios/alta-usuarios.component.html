@@ -1,3 +1,9 @@
+<div style="display: flex;">
+	<div class="back__btn__container" routerLink="..">
+		<mat-icon class="back__btn">arrow_back</mat-icon>
+	</div>
+	<h1 style="margin-left: 10px;">{{(userType === 'backoffice') ? 'Crear usuario Back Office' : 'Crear usuario final'}} </h1>
+</div>
 <h1 *ngIf="isBackoffice">Alta de usuario Back Office</h1>
 <h1 *ngIf="!isBackoffice">Alta de usuario Final</h1>
 <div class="section__stepper">
