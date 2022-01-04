@@ -1,4 +1,4 @@
-<div class="back__btn__container" routerLink="/home/usuarios">
+<div class="back__btn__container" [routerLink]="'/home/usuarios/'+userType">
 	<mat-icon class="back__btn">arrow_back</mat-icon>
 </div>
 <div class="section__container" *ngIf="usuario">
@@ -15,10 +15,12 @@
 			<mat-card-subtitle class="highlight__info" *ngIf="usuario.rol">{{ usuario.rol }}</mat-card-subtitle>
 		</div>
 		<br />
-		<button mat-raised-button class="buttons__management status__btn" *ngIf="usuario.userId" (click)="editarEstado(usuario)"> {{(usuario.userId.status === 'ACTIVE') ? 'Desactivar' : 'Activar' }}</button>
-		<button mat-stroked-button class="buttons__management" (click)="editarUsuario(usuario.id)">Editar</button>
+		<div class="btn_group">
+			<button mat-raised-button class="buttons__management status__btn" *ngIf="usuario.userId" (click)="editarEstado(usuario)"> {{(usuario.userId.status === 'ACTIVE') ? 'Desactivar' : 'Activar' }}</button>
+			<button mat-stroked-button class="buttons__management" (click)="editarUsuario(usuario.id)">Editar</button>
+		</div>
 	</div>
-	<div class="divider"></div>
+	<mat-divider vertical style="height:100px"></mat-divider>
 	<div class="user__info">
 		<table>
 			<td class="table__header">

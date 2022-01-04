@@ -114,6 +114,7 @@ export class ModificacionUsuarioComponent implements OnInit {
 			cuil: usuario.cuil,
 			email: usuario.email,
 			phoneNumber: usuario.phoneNumber,
+			avatarUrl: usuario.avatarUrl
 		});
 	}
 
