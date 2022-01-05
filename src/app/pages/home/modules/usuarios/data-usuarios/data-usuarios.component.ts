@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 import { ModalAltaUsuarioComponent } from 'src/app/features/modal-alta-usuario/modal-alta-usuario.component';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
-
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
 import { setGetUsuarios, setGetUsuariosClear } from './store/get-all/get-usuarios.action';
 

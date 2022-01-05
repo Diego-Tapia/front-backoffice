@@ -7,11 +7,11 @@ import { LoaderService } from './shared/services/loader/loader.service';
 	styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-	isLoading = false;
+	isLoading!: boolean;
 
 	constructor(private loaderService: LoaderService) {
 		this.loaderService.isLoading.subscribe((res) => {
-			this.isLoading = res;
+			setTimeout(() => this.isLoading = res, 5);
 		});
 	}
 	title = 'front-backoffice';

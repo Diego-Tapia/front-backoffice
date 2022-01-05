@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { map, startWith } from 'rxjs/operators';
@@ -15,19 +15,12 @@ import { NotificationsService } from 'angular2-notifications';
 import { IAplicabilidad } from 'src/app/shared/models/activos/aplicabilidad.interface';
 import { setGetAplicabilidades, setGetAplicabilidadesClear } from '../store/get-aplicabilidades.actions';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { IAdmin } from 'src/app/shared/models/admin.interface';
 
 @Component({
 	selector: 'app-creacion-activo',
 	templateUrl: './creacion-activo.component.html',
 	styleUrls: ['./creacion-activo.component.sass'],
-	providers: [
-		{
-		  provide: STEPPER_GLOBAL_OPTIONS,
-		  useValue: {displayDefaultIndicatorType: false},
-		},
-	],
 	encapsulation: ViewEncapsulation.None
 })
 export class CreacionActivoComponent implements OnInit, OnDestroy {
@@ -57,7 +50,7 @@ export class CreacionActivoComponent implements OnInit, OnDestroy {
 	})
 
 	secondStep = this.formBuilder.group({
-		initialAmount: ['', [Validators.required]],
+		initialAmount: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
 		validFrom: [''],
 		validTo: [''],
 		transferable: [false],

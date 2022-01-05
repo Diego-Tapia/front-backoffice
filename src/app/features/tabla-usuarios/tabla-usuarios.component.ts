@@ -21,13 +21,14 @@ export class TablaUsuariosComponent implements OnInit, OnDestroy, OnChanges, Aft
 	private subscriptions: Subscription[] = [];
 	public pageSize:number[] = [5]
 	public displayedColumns: string[] = ['cuil', 'username', 'createdAt', 'status', 'star'];
+	public idType: number = 0
 	public userType!: string;
 	public dataSource = new MatTableDataSource<IUserProfile>();
 
 	@Input() usuarios!: IUserProfile[]
 	@Output() updateValues = new EventEmitter();
 
-	@ViewChild(MatPaginator) paginator!: MatPaginator;
+	@ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
 	constructor(
 		public route: ActivatedRoute,
@@ -55,11 +56,16 @@ export class TablaUsuariosComponent implements OnInit, OnDestroy, OnChanges, Aft
 	ngOnChanges(changes: SimpleChanges) {		
 		if(changes.usuarios.previousValue != changes.usuarios.currentValue) {	
 			this.dataSource = new MatTableDataSource(this.usuarios);
+			this.dataSource.paginator = this.paginator;
 		}
 	}
 
 	ngAfterViewInit() {
 		this.dataSource.paginator = this.paginator;
+	}
+
+	alternateId(){
+		(this.idType < 2) ? this.idType++ : this.idType = 0;	
 	}
 
 	handleGetActivosById(res: IState<any>){

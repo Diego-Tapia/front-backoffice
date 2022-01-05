@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { IAdmin } from 'src/app/shared/models/admin.interface';
-import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({

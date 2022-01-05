@@ -3,5 +3,4 @@ export interface INavItem {
   route: string;
   icon: string;
   disabled: boolean;
-  soon: boolean;
 }

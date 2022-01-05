@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -57,21 +57,6 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     clientId: ['']
   })
 
-  // myForm = this.formBuilder.group({
-  //   shortName: ['', [Validators.maxLength(15), Validators.required]],
-  //   lastName: ['', [Validators.maxLength(15), Validators.required]],
-  //   dni: ['', [Validators.min(1), Validators.required]],
-  //   cuil: ['', [Validators.min(1), Validators.required]],
-  //   username: ['', [Validators.required]],
-  //   password: ['', [Validators.required]],
-  //   rol: [''],
-  //   repeat_pass: ['', [Validators.required]],
-  //   email: ['', [Validators.email, Validators.required]],
-  //   phoneNumber: ['', [Validators.min(1), Validators.required]],
-  //  avatarUrl: [' '],
-  //  customId: [' '],
-  // })
-
   constructor(
     public route: ActivatedRoute,
     public router: Router,
@@ -107,21 +92,6 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
   handleGetRoles(res: IState<IRol[]>): void {
     if (res.error) {
       this.noti.error('Error', 'Error obteniendo los roles')
-      this.roles = [
-        {
-          id: 'asdasd',
-          rol: 'ADMIN'
-        },
-        {
-          id: 'asdasd',
-          rol: 'MANAGER'
-        },
-        {
-          id: 'asdasd',
-          rol: 'VIEWER'
-        }
-      ];
-
     }
     if (res.success && res.response) {
       this.roles = res.response

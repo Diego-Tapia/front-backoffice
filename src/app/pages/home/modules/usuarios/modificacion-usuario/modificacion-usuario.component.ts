@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
@@ -10,9 +10,8 @@ import { IRol } from 'src/app/shared/models/rol.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-
-import { setGetUsuarioById, setGetUsuarioByIdClear } from '../data-usuarios/store/get-by-id/get-usuarios-by-id.action';
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
+import { setGetUsuarioById, setGetUsuarioByIdClear } from '../data-usuarios/store/get-by-id/get-usuarios-by-id.action';
 import { setModificacionUsuarios, setModificacionUsuariosClear } from './store/modificacion-usuarios.action';
 
 @Component({

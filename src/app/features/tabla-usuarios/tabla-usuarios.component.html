@@ -6,9 +6,15 @@
 
 			<!-- ID Column -->
 			<ng-container matColumnDef="cuil">
-				<th mat-header-cell *matHeaderCellDef style="width: 25%;">ID/CUIL/DNI</th>
+				<th mat-header-cell *matHeaderCellDef (click)="alternateId()" class="unselectable" style="width: 25%;">
+					<span *ngIf="idType===0">CUIL</span>
+					<span *ngIf="idType===1">DNI</span>
+					<span *ngIf="idType===2">Nombre de usuario</span>
+				</th>
 				<td mat-cell *matCellDef="let element">
-					<span class="text__id">{{ element.cuil | cuil }}</span>
+					<span class="text__id" *ngIf="idType===0">{{ element.cuil | cuil }}</span>
+					<span class="text__id" *ngIf="idType===1">{{ element.dni | number }}</span>
+					<span class="text__id" *ngIf="idType===2">{{ (element.userId) ? element.userId.username : element.username }}</span>
 				</td>
 			</ng-container>
 
@@ -67,7 +73,7 @@
 		</table>
 		<mat-paginator
 			class="paginator"
-			[pageSizeOptions]="pageSize"
+			[pageSizeOptions]="[5]"
 			showFirstLastButtons 
 		></mat-paginator>
 	</div>

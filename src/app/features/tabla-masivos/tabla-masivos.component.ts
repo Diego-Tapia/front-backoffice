@@ -106,6 +106,7 @@ export class TablaMasivosComponent implements OnInit, OnDestroy, OnChanges, Afte
 	ngOnChanges(changes: SimpleChanges) {		
 		if(changes.massive.previousValue != changes.massive.currentValue) {	
 			this.dataSource = new MatTableDataSource(this.massive);
+			this.dataSource.paginator = this.paginator;
 		}
 	}
 

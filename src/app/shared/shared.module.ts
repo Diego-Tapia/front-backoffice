@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
-import { StatusPipe } from './pipes/status.pipe';
-import { CuilPipe } from './pipes/cuil.pipe';
-import { ShortIdPipe } from './pipes/short-id.pipe';
+import { StatusPipe } from './pipes/status/status.pipe';
+import { CuilPipe } from './pipes/cuil/cuil.pipe';
+import { ShortIdPipe } from './pipes/short-id/short-id.pipe';
 
 @NgModule({
 	declarations: [

@@ -18,13 +18,17 @@
 				routerLinkActive="active"
 				[routerLinkActiveOptions]="{exact : true}"
 				*ngFor="let nav of navItems"
-				[matTooltipDisabled]="nav.soon"
-				matTooltip="Proximamente"
-				matTooltipPosition="right"
 				[ngClass]="nav.disabled == true ? 'disabled' : ''"
 			>
-				<mat-icon class="material-icons-outlined">{{ nav.icon }}</mat-icon>
-				<p class="title">{{ nav.name }}</p>
+				<div style="display: flex;"
+					[matTooltipDisabled]="!nav.disabled"
+					matTooltip="Proximamente"
+					matTooltipPosition="right">
+					<mat-icon class="material-icons-outlined">{{ nav.icon }}</mat-icon>
+					<p class="title">
+						{{ nav.name }}
+					</p>
+				</div>
 			</div>
 		</mat-nav-list>
 		<span class="legend">POWERED BY INTERCONOMY</span>
