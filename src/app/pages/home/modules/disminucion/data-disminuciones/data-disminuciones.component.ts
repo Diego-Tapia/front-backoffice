@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalNuevaOperacionDisminucionComponent } from 'src/app/features/modal-nueva-operacion-disminucion/modal-nueva-operacion-disminucion.component';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { IDataIndividual } from 'src/app/shared/models/data-individual.interface';
@@ -9,6 +8,7 @@ import { setGetDisminucionesMasivas, setGetDisminucionesMasivasClear } from './s
 import { setGetDisminuciones, setGetDisminucionesClear } from './store/get-dis.action';
 import { NotificationsService } from 'angular2-notifications';
 import { IDataMasivo } from 'src/app/shared/models/data-masivo.interface';
+import { ModalNuevaOperacionComponent } from 'src/app/features/modal-nueva-operacion/modal-nueva-operacion.component';
 @Component({
 	selector: 'app-data-disminuciones',
 	templateUrl: './data-disminuciones.component.html',
@@ -58,7 +58,8 @@ export class DataDisminucionesComponent implements OnInit {
 		this.store.dispatch(setGetDisminucionesMasivas());
 	}
 
+	
 	onCrearNuevoEvent(e: any): void {
-		this.dialog.open(ModalNuevaOperacionDisminucionComponent);
+		this.dialog.open(ModalNuevaOperacionComponent, { data: 'disminución'});
 	}
 }

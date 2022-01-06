@@ -80,13 +80,17 @@ export class TablaActivosComponent implements OnInit, OnDestroy, OnChanges, Afte
 	handlePutActivo(res: IState<IActivo>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success){
-			this.noti.success ('Éxito', 'Se ha modificado el activo con éxito');
+			this.noti.success ('Éxito', 'Se ha editado el activo con éxito');
 			this.updateValues.emit()
 		} 
 	}
 
-	modificarActivo(id: string) {
-		this.router.navigate(['/home/activos/modificar/', id])
+	applyFilter(event: any){
+		this.dataSource.filter = event.target.value.trim().toLowerCase();
+	}
+
+	editarActivo(id: string) {
+		this.router.navigate(['/home/activos/editar/', id])
 	}
 
 	actualizarEstado(activo: IActivo) {	

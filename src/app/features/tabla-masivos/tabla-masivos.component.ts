@@ -80,7 +80,7 @@ export class TablaMasivosComponent implements OnInit, OnDestroy, OnChanges, Afte
 	handleNuevoIncrementoMasivo(res: IState<IFormMasivo>): void {
 		if(res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
-			this.noti.success('Éxito', 'Se ha modificado el estado del incremento con éxito');
+			this.noti.success('Éxito', 'Se ha editado el estado del incremento con éxito');
 			this.updateValues.emit();
 		} 
 	}
@@ -88,9 +88,13 @@ export class TablaMasivosComponent implements OnInit, OnDestroy, OnChanges, Afte
 	handleNuevaDisminucionMasiva(res: IState<IFormMasivo>): void {
 		if(res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
-			this.noti.success('Éxito', 'Se ha modificado el estado de la disminución  con éxito');
+			this.noti.success('Éxito', 'Se ha editado el estado de la disminución con éxito');
 			this.updateValues.emit();
 		} 
+	}
+
+	applyFilter(event: any){
+		this.dataSource.filter = event.target.value.trim().toLowerCase();
 	}
 
 	ngOnInit(): void {		

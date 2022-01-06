@@ -3,8 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AltaUsuariosComponent } from './alta-usuarios/alta-usuarios.component';
 import { DataUsuariosComponent } from './data-usuarios/data-usuarios.component';
 import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.component';
-import { ModificacionUsuarioComponent } from './modificacion-usuario/modificacion-usuario.component';
-
+import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 
 const routes: Routes = [
   { 
@@ -20,8 +19,8 @@ const routes: Routes = [
     component: DetalleUsuarioComponent
   },
   {
-    path: 'modificar/:type/:id',
-    component: ModificacionUsuarioComponent
+    path: 'editar/:type/:id',
+    component: EditarUsuarioComponent
   }
 ];
 

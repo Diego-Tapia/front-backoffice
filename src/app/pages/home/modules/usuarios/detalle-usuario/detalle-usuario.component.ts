@@ -6,8 +6,10 @@ import { Subscription } from 'rxjs';
 import { IFormUser } from 'src/app/shared/models/form-user.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
+import { UsuariosService } from 'src/app/shared/services/usuarios/usuarios.service';
 import { setGetUsuarioById, setGetUsuarioByIdClear } from '../data-usuarios/store/get-by-id/get-usuarios-by-id.action';
-import { setModificacionUsuarios, setModificacionUsuariosClear } from '../modificacion-usuario/store/modificacion-usuarios.action';
+import { setEditarUsuario, setEditarUsuarioClear } from '../editar-usuario/store/editar-usuario.action';
+
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
 
 @Component({
@@ -22,6 +24,7 @@ export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 	userType!: string;
 
 	constructor(
+		private usuariosService: UsuariosService,
 		private router: Router,
 		private route: ActivatedRoute,
 		private noti: NotificationsService,
@@ -31,8 +34,8 @@ export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 			this.store.select('usuariosReducersMap', 'getUsuarioById').subscribe((res: IState<IUserProfile>) => {
 				this.handleGetUsuarioById(res);
 			}),
-			this.store.select('usuariosReducersMap', 'modificarUsuario').subscribe((res: IState<IFormUser>) => {
-				this.handleModificarUsuarios(res);
+			this.store.select('usuariosReducersMap', 'editarUsuario').subscribe((res: IState<IFormUser>) => {
+				this.handleEditarUsuarios(res);
 			}),
 			this.route.params.subscribe((params) => {
 				this.id = params.id;
@@ -48,31 +51,33 @@ export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.subscriptions.forEach((subscription) => subscription.unsubscribe());
 		this.store.dispatch(setGetUsuarioByIdClear());
-		this.store.dispatch(setModificacionUsuariosClear());
+		this.store.dispatch(setEditarUsuarioClear());
 	}
 
 	handleGetUsuarioById(res: IState<IUserProfile>): void {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo el usuario');
-		if (res.success && res.response) this.usuario = res.response;
+		if (res.success && res.response) {
+			this.usuario = this.usuariosService.setUsersDataTable(res.response);
+		}
 	}
 
-	handleModificarUsuarios(res: IState<IFormUser>): void {
+	handleEditarUsuarios(res: IState<IFormUser>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
-			this.noti.success('Éxito', 'Usuario modificado con éxito');
+			this.noti.success('Éxito', 'Usuario editado con éxito');
 			this.store.dispatch(setGetUsuarioById({ userType: this.userType, id: this.id }));
 		}
 	}
 
 	editarUsuario(id: string | undefined) {
 		(this.userType === 'backoffice')
-		? this.router.navigate(['/home/usuarios/modificar/backoffice', id])
-		: this.router.navigate(['/home/usuarios/modificar/final', id]);
+		? this.router.navigate(['/home/usuarios/editar/backoffice', id])
+		: this.router.navigate(['/home/usuarios/editar/final', id]);
 	}
 
 	editarEstado(usuario: IUserProfile){
 		let newStatus!: string
-		(usuario.userId.status == 'ACTIVE') ? newStatus = 'INACTIVE' : newStatus = 'ACTIVE'
-		this.store.dispatch(setModificacionUsuarios({id:usuario.userId.id, form: {status: newStatus}, userType:this.userType}))
+		(usuario.status == 'ACTIVE') ? newStatus = 'INACTIVE' : newStatus = 'ACTIVE'
+		this.store.dispatch(setEditarUsuario({id:usuario.id, form: {status: newStatus}, userType:this.userType}))
 	}
 }

@@ -11,8 +11,9 @@ import { IRol } from 'src/app/shared/models/rol.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
-import { setAltaUsuarios, setAltaUsuariosClear } from './store/alta-usuarios.action';
-import { setGetRoles, setGetRolesClear } from './store/get-roles.action';
+import { setAltaUsuarios, setAltaUsuariosClear } from './store/alta-usuario/alta-usuarios.action';
+
+import { setGetRoles, setGetRolesClear } from './store/get-roles/get-roles.action';
 
 @Component({
   selector: 'app-alta-usuarios',
@@ -22,7 +23,6 @@ import { setGetRoles, setGetRolesClear } from './store/get-roles.action';
 export class AltaUsuariosComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
-  public isBackoffice!: boolean;
   public userType!: string;
   public isLinear = true;
   public admin: IAdmin | undefined;
@@ -71,16 +71,13 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
       this.store.select('usuariosReducersMap', 'getRoles').subscribe((res: IState<IRol[]>) => {
         this.handleGetRoles(res);
       }),
-      this.route.params.subscribe(params => {
-        this.userType = params.type
-        this.userType === 'final' ? this.isBackoffice = false : this.isBackoffice = true
-      })
+      this.route.params.subscribe(params => this.userType = params.type)
     )
   }
 
   ngOnInit(): void {
 	  this.admin = this.authService.getUserData()?.admin; 
-    if (this.isBackoffice) this.store.dispatch(setGetRoles());
+    if (this.userType ===  'backoffice') this.store.dispatch(setGetRoles());
   }
 
   ngOnDestroy(): void {
@@ -102,7 +99,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     if (res.error) this.noti.error('Error', res.error.error.message)
     if (res.success) {
       this.noti.success('Éxito', 'Usuario creado con éxito')
-      if (this.isBackoffice) this.router.navigate(['home/usuarios/backoffice']);
+      if (this.userType === 'backoffice') this.router.navigate(['home/usuarios/backoffice']);
       else this.router.navigate(['home/usuarios/final']);
     }
   }

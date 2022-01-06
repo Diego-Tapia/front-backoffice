@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { ModalNuevaOperacionComponent } from 'src/app/features/modal-nueva-operacion-incremento/modal-nueva-operacion.component';
+import { ModalNuevaOperacionComponent } from 'src/app/features/modal-nueva-operacion/modal-nueva-operacion.component';
 import { IDataIndividual } from 'src/app/shared/models/data-individual.interface';
 import { IIncrementoReducersMap } from '../incremento.reducers.map';
 import { setGetIncrementos, setGetIncrementosClear } from './store/get-inc.action';
@@ -56,6 +56,6 @@ export class DataIncrementosComponent implements OnInit, OnDestroy {
 	}
 
 	onCrearNuevoEvent(e: any): void {
-		this.dialog.open(ModalNuevaOperacionComponent);
+		this.dialog.open(ModalNuevaOperacionComponent, { data: 'incremento'});
 	}
 }

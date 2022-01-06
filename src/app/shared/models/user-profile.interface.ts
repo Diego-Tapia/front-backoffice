@@ -5,8 +5,12 @@ export interface IUserProfile {
 	username: string;
 	shortName: string;
 	lastName: string;
+	fullName: string;
 	dni: number;
 	cuil: number;
+	customId: string;
+	status: string;
+	walletId: string;
 	password: string;
 	email: string;
 	phoneNumber: number;

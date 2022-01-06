@@ -33,8 +33,23 @@ export class UsuariosService {
 		else return this.http.post<any>(`${this.url}/admin/register`, form);
 	}
 
-	modificacionUsuario(id: string, form: IFormUser | IUserStatus, userType: string): Observable<IFormUser> {
+	editarUsuario(id: string, form: IFormUser | IUserStatus, userType: string): Observable<IFormUser> {
 		if (userType === 'finales' || userType === 'final') return this.http.put<any>(`${this.url}/user/${id}`, form);
 		else return this.http.put<any>(`${this.url}/admin/${id}`, form);
+	}
+
+	//UNIFICO DATOS DE USUARIOS FINALES Y ADMIN PARA MOSTRAR EN PANTALLA
+	setUsersDataTable(usuario: IUserProfile): IUserProfile{
+		let updatedUser: IUserProfile = {...usuario}
+		updatedUser.fullName= updatedUser.shortName+' '+updatedUser.lastName;
+		//AGREGO FULLNAME PARA FUNCIONAMIENTO DE FILTRO
+		if(updatedUser.userId){
+			updatedUser.clientId= updatedUser.userId.clientId;
+			updatedUser.customId= updatedUser.userId.customId;
+			updatedUser.status= updatedUser.userId.status;
+			updatedUser.username= updatedUser.userId.username;
+			updatedUser.walletId= updatedUser.userId.walletId;
+		}
+		return updatedUser;
 	}
 }

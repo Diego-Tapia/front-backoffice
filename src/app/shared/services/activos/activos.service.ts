@@ -26,7 +26,7 @@ export class ActivosService {
 		return this.http.post<IActivo>(`${this.url}/token`, activo);
 	}
 
-	modificarActivo(id: string, activo: IActivo): Observable<IActivo> {
+	editarActivo(id: string, activo: IActivo): Observable<IActivo> {
 		return this.http.put<IActivo>(`${this.url}/token/${id}`, activo);
 	}
 

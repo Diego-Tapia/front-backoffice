@@ -10,18 +10,17 @@ import { IRol } from 'src/app/shared/models/rol.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { IUsuariosReducersMap } from '../usuarios.reducers.map';
 import { setGetUsuarioById, setGetUsuarioByIdClear } from '../data-usuarios/store/get-by-id/get-usuarios-by-id.action';
-import { setModificacionUsuarios, setModificacionUsuariosClear } from './store/modificacion-usuarios.action';
+import { IUsuariosReducersMap } from '../usuarios.reducers.map';
+import { setEditarUsuario, setEditarUsuarioClear } from './store/editar-usuario.action';
 
 @Component({
-	selector: 'app-modificacion-usuario',
-	templateUrl: './modificacion-usuario.component.html',
-	styleUrls: ['./modificacion-usuario.component.sass']
+  selector: 'app-editar-usuario',
+  templateUrl: './editar-usuario.component.html',
+  styleUrls: ['./editar-usuario.component.sass']
 })
-export class ModificacionUsuarioComponent implements OnInit {
-	subscriptions: Subscription[] = [];
-	isBackoffice: boolean = true;
+export class EditarUsuarioComponent implements OnInit {
+  subscriptions: Subscription[] = [];
 	id!: string;
 	userType!: string;
 	public admin!: IAdmin | null;
@@ -57,15 +56,12 @@ export class ModificacionUsuarioComponent implements OnInit {
 			this.store.select('usuariosReducersMap', 'getRoles').subscribe((res: IState<IRol[]>) => {
 				this.handleGetRoles(res);
 			}),
-			this.store.select('usuariosReducersMap', 'modificarUsuario').subscribe((res: IState<IFormUser>) => {
-				this.handleModificarUsuarios(res);
+			this.store.select('usuariosReducersMap', 'editarUsuario').subscribe((res: IState<IFormUser>) => {
+				this.handleEditarUsuarios(res);
 			}),
 			this.route.params.subscribe((params) => {
 				this.userType = params.type;
 				this.id = params.id;
-				if (this.userType === 'final') return (this.isBackoffice = false);
-				if (this.userType === 'backoffice') return (this.isBackoffice = true);
-				else return this.router.navigate(['home/usuarios/final']);
 			})
 		);
 	}
@@ -78,7 +74,7 @@ export class ModificacionUsuarioComponent implements OnInit {
 	ngOnDestroy(): void {
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
 		this.store.dispatch(setGetUsuarioByIdClear());
-		this.store.dispatch(setModificacionUsuariosClear());
+		this.store.dispatch(setEditarUsuarioClear());
 	}
 
 	handleGetUsuarioById(res: IState<IUserProfile>): void {
@@ -95,10 +91,10 @@ export class ModificacionUsuarioComponent implements OnInit {
 		}
 	}
 
-	handleModificarUsuarios(res: IState<IFormUser>): void {
+	handleEditarUsuarios(res: IState<IFormUser>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
-			this.noti.success('Éxito', 'Usuario modificado con éxito');
+			this.noti.success('Éxito', 'Usuario editado con éxito');
 			(this.userType === 'backoffice') 
 			? this.router.navigate(['home/usuarios/backoffice'])
 			: this.router.navigate(['home/usuarios/final']);
@@ -122,6 +118,6 @@ export class ModificacionUsuarioComponent implements OnInit {
 
 		//TODO ASIGNAR ROL
 
-		return this.store.dispatch(setModificacionUsuarios({ id: this.id, form: this.editForm.value, userType:this.userType }));
+		return this.store.dispatch(setEditarUsuario({ id: this.id, form: this.editForm.value, userType:this.userType }));
 	}
 }

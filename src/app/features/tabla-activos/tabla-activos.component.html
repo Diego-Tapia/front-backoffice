@@ -1,4 +1,13 @@
 <div class="section__table">
+	<form class="filter__form">
+		<mat-form-field class="search__input" appearance="outline">
+			<mat-label class="mat__label__search">
+				<mat-icon class="search__icon">search</mat-icon>
+				<span>Buscar</span> 
+			</mat-label>
+			<input matInput type="text" placeholder="Buscar" (keyup)="applyFilter($event)">
+		</mat-form-field>
+	</form>
 	<div class="section__subtable">
 		<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 			<!--- Note that these columns can be defined in any order.
@@ -49,7 +58,7 @@
 						<button mat-menu-item (click)="openDetalle(element)">
 							<span>Ver detalle</span>
 						</button>
-						<button mat-menu-item (click)="modificarActivo(element.id)">
+						<button mat-menu-item (click)="editarActivo(element.id)">
 							<span>Editar</span>
 						</button>
 						<div >

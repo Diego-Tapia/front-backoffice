@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
-import { setModificacionUsuarios, setModificacionUsuariosClear } from 'src/app/pages/home/modules/usuarios/modificacion-usuario/store/modificacion-usuarios.action';
+import { setEditarUsuario, setEditarUsuarioClear } from 'src/app/pages/home/modules/usuarios/editar-usuario/store/editar-usuario.action';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { IFeaturesReducersMap } from '../features.reducers.map';
@@ -38,18 +38,18 @@ export class TablaUsuariosComponent implements OnInit, OnDestroy, OnChanges, Aft
 	) {
 		this.route.params.subscribe(params => this.userType = params.type)
 		this.subscriptions.push(
-			this.store.select('featuresReducersMap', 'modificarUsuario').subscribe((res: IState<any>) => {
+			this.store.select('featuresReducersMap', 'editarUsuario').subscribe((res: IState<any>) => {
 				this.handleGetActivosById(res);
 			}),
 		);
 	}
 
-	ngOnInit(): void {
+	ngOnInit(): void {		
 		this.dataSource = new MatTableDataSource(this.usuarios);
 	}
 
 	ngOnDestroy():void {
-		this.store.dispatch(setModificacionUsuariosClear());
+		this.store.dispatch(setEditarUsuarioClear());
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
 	}
 
@@ -64,6 +64,10 @@ export class TablaUsuariosComponent implements OnInit, OnDestroy, OnChanges, Aft
 		this.dataSource.paginator = this.paginator;
 	}
 
+	applyFilter(event: any){
+		this.dataSource.filter = event.target.value.trim().toLowerCase();
+	}
+
 	alternateId(){
 		(this.idType < 2) ? this.idType++ : this.idType = 0;	
 	}
@@ -71,7 +75,7 @@ export class TablaUsuariosComponent implements OnInit, OnDestroy, OnChanges, Aft
 	handleGetActivosById(res: IState<any>){
 		if(res.error) this.noti.error('Error', res.error.error.message);
 		if(res.success) {
-			this.noti.success('Éxito','El estado del usuario se modificó con éxito');
+			this.noti.success('Éxito','El estado del usuario se editó con éxito');
 			this.updateValues.emit();
 		} 
 	}
@@ -82,15 +86,15 @@ export class TablaUsuariosComponent implements OnInit, OnDestroy, OnChanges, Aft
 		: this.router.navigate(['/home/usuarios/detalle/backoffice', usuario.id]);
 	}
 	
-	modificarUsuario(usuario: IUserProfile) {		
-		if(usuario.userId) this.router.navigate(['/home/usuarios/modificar/final', usuario.id])
-		else this.router.navigate(['/home/usuarios/modificar/backoffice', usuario.id]);
+	editarUsuario(usuario: IUserProfile) {		
+		if(usuario.userId) this.router.navigate(['/home/usuarios/editar/final', usuario.id])
+		else this.router.navigate(['/home/usuarios/editar/backoffice', usuario.id]);
 	}
 
-	modificarEstado(usuario: IUserProfile){
+	editarEstado(usuario: IUserProfile){
 	(usuario.userId) ? 	this.userType = 'final' : this.userType = 'backoffice'
 		let newStatus!: string;
-		(usuario.userId.status == 'ACTIVE') ? newStatus = 'INACTIVE' : newStatus = 'ACTIVE';
-		this.store.dispatch(setModificacionUsuarios({id:usuario.userId.id, form: {status: newStatus}, userType:this.userType}));
+		(usuario.status == 'ACTIVE') ? newStatus = 'INACTIVE' : newStatus = 'ACTIVE';
+		this.store.dispatch(setEditarUsuario({id:usuario.id, form: {status: newStatus}, userType:this.userType}));
 	}
 }

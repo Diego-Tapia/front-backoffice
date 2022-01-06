@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { ActivosRoutingModule } from './activos-routing.module';
 import { FeaturesModule } from '../../../../features/features.module';
-import { CreacionActivoComponent } from './creacion-activo/creacion-activo.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -22,15 +21,16 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { activosReducersMap } from './activos.reducers.map';
 import { GetActivosEffects } from './data-activos/store/activos.effects';
-import { NuevoActivoEffects } from './creacion-activo/store/nuevo-activo.effects';
 import { DataActivosComponent } from './data-activos/data-activos.component';
-import { ModificacionActivoComponent } from './modificacion-activo/modificacion-activo.component';
-import { ModificarActivoEffects } from './modificacion-activo/store/modificacion-activo.effects';
 import { GetActivosByIdEffects } from './data-activos/store/activos-by-id.effects';
 import { GetAplicabilidadesEffects } from './store/get-aplicabilidades.effects';
+import { NuevoActivoComponent } from './nuevo-activo/nuevo-activo.component';
+import { NuevoActivoEffects } from './nuevo-activo/store/nuevo-activo.effects';
+import { EditarActivoComponent } from './editar-activo/editar-activo.component';
+import { EditarActivoEffects } from './editar-activo/store/editar-activo.effects';
 
 @NgModule({
-	declarations: [CreacionActivoComponent, DataActivosComponent, ModificacionActivoComponent],
+	declarations: [DataActivosComponent, NuevoActivoComponent, EditarActivoComponent],
 	imports: [
 		CommonModule,
 		ActivosRoutingModule,
@@ -51,7 +51,7 @@ import { GetAplicabilidadesEffects } from './store/get-aplicabilidades.effects';
 		MatIconModule,
 		MatNativeDateModule,
 		StoreModule.forFeature('activosReducersMap', activosReducersMap),
-		EffectsModule.forFeature([GetActivosEffects, GetActivosByIdEffects, NuevoActivoEffects, ModificarActivoEffects, GetAplicabilidadesEffects])
+		EffectsModule.forFeature([GetActivosEffects, GetActivosByIdEffects, NuevoActivoEffects, EditarActivoEffects, GetAplicabilidadesEffects])
 	]
 })
 export class ActivosModule { }

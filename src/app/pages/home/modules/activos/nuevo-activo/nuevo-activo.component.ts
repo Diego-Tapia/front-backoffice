@@ -1,34 +1,36 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IAplicabilidad } from 'src/app/shared/models/activos/aplicabilidad.interface';
+import { IAdmin } from 'src/app/shared/models/admin.interface';
 import { IState } from 'src/app/shared/models/state.interface';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { IActivosReducersMap } from '../activos.reducers.map';
-import { setGetActivosById, setGetActivosByIdClear } from '../data-activos/store/activos-by-id.actions';
+import { setNuevoActivo, setNuevoActivoClear } from './store/nuevo-activo.actions';
 import { setGetAplicabilidades, setGetAplicabilidadesClear } from '../store/get-aplicabilidades.actions';
-import { setModificarActivo, setModificarActivoClear } from './store/modificacion-activo.actions';
 
 @Component({
-	selector: 'app-modificacion-activo',
-	templateUrl: './modificacion-activo.component.html',
-	styleUrls: ['./modificacion-activo.component.sass']
+  selector: 'app-nuevo-activo',
+  templateUrl: './nuevo-activo.component.html',
+  styleUrls: ['./nuevo-activo.component.sass'],
+	encapsulation: ViewEncapsulation.None
 })
-export class ModificacionActivoComponent implements OnInit, OnDestroy {
+export class NuevoActivoComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
-	isLinear = false;
-	activo!: IActivo;
-	id!: string;
-	oldAppNames: string[] = []
 
-	//FORM DATA
+	isLinear = true;
+
+	startDate = Date.now();
+
+	//Filtro Aplicabilidad
 	selectable = true;
 	removable = true;
 	separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -37,42 +39,41 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 	applicabilitiesResume: string[] = []
 	applicabilityCtrl = new FormControl();
 	allApplicabilities: IAplicabilidad[] = [];
+	public admin!: IAdmin | undefined;
 
 	@ViewChild('applicabilityInput') applicabilityInput!: ElementRef<HTMLInputElement>;
 
-	myForm = this.formBuilder.group({
+	firstStep = this.formBuilder.group({
 		description: ['', [Validators.required]],
-		shortName: [{ value: '', disabled: true }],
-		symbol: [{ value: '', disabled: true }],
-		initialAmount: [{ value: '', disabled: true }],
-		money: ['ARS'],
-		price: [1],
-		emited: [''],
-		status: [''],
-		applicabilities: [''],
+		shortName: ['', [Validators.required]],
+		symbol: ['', [Validators.required]],
+	})
+
+	secondStep = this.formBuilder.group({
+		initialAmount: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
 		validFrom: [''],
 		validTo: [''],
-		transferable: [''],
-		observations: [''],
-		clientId: [''],
-	});
+		transferable: [false],
+		observations: ['']
+	})
+
+	thirdStep = this.formBuilder.group({
+		applicabilities: [this.applicabilities],
+	})
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router,
-		private route: ActivatedRoute,
 		private noti: NotificationsService,
+		private authService: AuthService,
 		private store: Store<{ activosReducersMap: IActivosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('activosReducersMap', 'getActivosById').subscribe((res: IState<IActivo>) => {
-				this.handleGetActivosById(res);
+			this.store.select('activosReducersMap', 'nuevoActivo').subscribe((res: IState<IActivo>) => {
+				this.handleNuevoActivo(res);
 			}),
 			this.store.select('activosReducersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[]>) => {
 				this.handleGetAplicabilidades(res);
-			}),
-			this.store.select('activosReducersMap', 'modificarActivo').subscribe((res: IState<IActivo>) => {
-				this.handleModificarActivo(res);
 			})
 		);
 
@@ -85,24 +86,32 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.subscriptions.push(this.route.params.subscribe((params) => (this.id = params.id)));
-		this.store.dispatch(setGetActivosById({ id: this.id }));
+		this.admin = this.authService.getUserData()?.admin
 		this.store.dispatch(setGetAplicabilidades());
-
 	}
 
 	ngOnDestroy(): void {
 		this.subscriptions.forEach((subs) => subs.unsubscribe());
-		this.store.dispatch(setGetActivosByIdClear());
+		this.store.dispatch(setNuevoActivoClear());
 		this.store.dispatch(setGetAplicabilidadesClear());
-		this.store.dispatch(setModificarActivoClear());
 	}
 
-	handleGetActivosById(res: IState<IActivo>): void {
-		if (res.success && res.response) {
-			this.activo = res.response;
-			this.updateFormValues();
-		}
+	crearActivo() {
+		
+		if (!this.firstStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el primer paso de creación de activos');
+		if (!this.secondStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el segundo paso de creación de activos');
+		if (!this.thirdStep.valid) return this.noti.error('Error', 'Hay errores o faltan datos en el tercer paso de creación de activos');		
+		
+		const formActivo: IActivo = {...this.firstStep.value, ...this.secondStep.value}
+		formActivo.applicabilities = []
+		this.thirdStep.value.applicabilities.forEach((app: IAplicabilidad) => formActivo.applicabilities?.push(app.id));
+		if(this.admin) formActivo.clientId = this.admin.clientId;
+		formActivo.money = 'ARS';
+		formActivo.price = 1;
+		formActivo.emited = false;
+		formActivo.status = 'PENDING_APPROVE';
+
+		return this.store.dispatch(setNuevoActivo({ form: formActivo }));
 	}
 
 	handleGetAplicabilidades(res: IState<IAplicabilidad[]>): void {
@@ -110,55 +119,14 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 		if (res.success && res.response) this.allApplicabilities = res.response
 	}
 
-	modificarActivo() {
-		if (!this.myForm.valid) 
-			return this.noti.error('Error', 'Hay errores o faltan datos en el formulario de modificación de activos');
-
-		let appIds: string[] = [];
-		this.applicabilities.forEach(app => appIds.push(app.id))
-		this.myForm.patchValue({applicabilities: appIds})
-
-		const { shortName, symbol, ...resto } = this.myForm.value
-
-		return this.store.dispatch(setModificarActivo({ id: this.id, form: resto }));
-	}
-
-	handleModificarActivo(res: IState<IActivo>): void {
+	handleNuevoActivo(res: IState<IActivo>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
-			this.noti.success('Éxito', 'Se ha modificado el activo con éxito');
+			this.noti.success('Éxito', 'Se ha creado el activo con éxito');
 			this.router.navigateByUrl('home/activos');
 		}
 	}
 
-	updateFormValues() {
-
-		if (this.activo.applicabilities) {
-			this.activo.applicabilities.forEach((app:any) => {
-				this.applicabilities.push(app);
-				this.applicabilitiesResume.push(app.name);
-			})
-		}
-		
-		this.myForm.patchValue({
-			description: this.activo.description,
-			shortName: this.activo.shortName,
-			symbol: this.activo.symbol,
-			initialAmount: this.activo.initialAmount,
-			money: this.activo.money,
-			price: this.activo.price,
-			emited: this.activo.emited,
-			status: this.activo.status,
-			applicabilities: this.activo.applicabilities,
-			validFrom: this.activo.validFrom,
-			validTo: this.activo.validTo,
-			transferable: this.activo.transferable,
-			observations: this.activo.observations,
-			clientId: this.activo.clientId
-		})
-	}
-
-	//APPLICABILITY FILTER
 	//Filtro aplicabilidad
 	add(event: MatChipInputEvent): void {
 		const value = (event.value || '').trim();
@@ -179,7 +147,6 @@ export class ModificacionActivoComponent implements OnInit, OnDestroy {
 	}
 
 	selected(event: MatAutocompleteSelectedEvent): void {
-
 		if (!this.applicabilities.find(app => app.id === event.option.value.id)) {
 			this.applicabilitiesResume.push(event.option.value.name)
 			this.applicabilities.push(event.option.value);

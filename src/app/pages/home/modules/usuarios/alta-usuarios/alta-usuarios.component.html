@@ -2,7 +2,7 @@
 	<div class="back__btn__container" routerLink="..">
 		<mat-icon class="back__btn">arrow_back</mat-icon>
 	</div>
-	<h1 style="margin-left: 10px;">{{(userType === 'backoffice') ? 'Crear usuario Back Office' : 'Crear usuario final'}} </h1>
+	<h1 style="margin-left: 10px;">{{(userType === 'backoffice') ? 'Alta de usuario Back Office' : 'Alta de usuario final'}} </h1>
 </div>
 <div class="section__stepper">
 	<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
@@ -50,7 +50,7 @@
 						<input matInput placeholder="Usuario" formControlName="username" required />
 					</mat-form-field>
 
-					<mat-form-field appareance="outline" *ngIf="isBackoffice">
+					<mat-form-field appareance="outline" *ngIf="userType === 'backoffice'">
 						<mat-label>Rol</mat-label>
 						<mat-select>
 							<mat-option *ngFor="let rol of roles" [value]="rol">
@@ -137,7 +137,7 @@
 
 			<br />
 
-			<div *ngIf="isBackoffice">
+			<div *ngIf="userType === 'backoffice'">
 				<mat-card class="card_content">
 					<div style="float: left; width: 50%">
 						<ul>
@@ -172,7 +172,7 @@
 				<br />
 			</div>
 
-			<div *ngIf="!isBackoffice">
+			<div *ngIf="userType === 'final'">
 				<mat-card class="card_content">
 					<div style="float: left; width: 30%">
 						<ul>

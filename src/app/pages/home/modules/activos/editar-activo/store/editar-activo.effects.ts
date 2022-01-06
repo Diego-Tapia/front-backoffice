@@ -3,19 +3,19 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ActivosService } from 'src/app/shared/services/activos/activos.service';
-import { setModificarActivo, setModificarActivoError, setModificarActivoSucces } from './modificacion-activo.actions';
+import { setEditarActivo, setEditarActivoError, setEditarActivoSucces } from './editar-activo.actions';
 
 @Injectable()
-export class ModificarActivoEffects {
+export class EditarActivoEffects {
 	constructor(private actions$: Actions, private activosService: ActivosService) { }
 
-	setModificarActivo$ = createEffect(() =>
+	setEditarActivo$ = createEffect(() =>
 		this.actions$.pipe(
-			ofType(setModificarActivo),
+			ofType(setEditarActivo),
 			mergeMap((props) =>
-				this.activosService.modificarActivo(props.id, props.form).pipe(
-					map((activo) => setModificarActivoSucces({ payload: activo })),
-					catchError((err) => of(setModificarActivoError({ payload: err })))
+				this.activosService.editarActivo(props.id, props.form).pipe(
+					map((activo) => setEditarActivoSucces({ payload: activo })),
+					catchError((err) => of(setEditarActivoError({ payload: err })))
 				)
 			)
 		)

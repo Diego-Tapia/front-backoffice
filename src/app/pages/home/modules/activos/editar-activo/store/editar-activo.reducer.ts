@@ -2,11 +2,11 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import {
-	setModificarActivo,
-	setModificarActivoClear,
-	setModificarActivoError,
-	setModificarActivoSucces
-} from './modificacion-activo.actions';
+	setEditarActivo,
+	setEditarActivoClear,
+	setEditarActivoError,
+	setEditarActivoSucces
+} from './editar-activo.actions';
 
 export const initialState: IState<IActivo | null> = {
 	response: null,
@@ -15,10 +15,10 @@ export const initialState: IState<IActivo | null> = {
 	error: null
 };
 
-const mySetModificarActivoReducer = createReducer(
+const mySetEditarActivoReducer = createReducer(
 	initialState,
 
-	on(setModificarActivo, (state, props) => ({
+	on(setEditarActivo, (state, props) => ({
 		...state,
 		response: null,
 		pending: true,
@@ -26,7 +26,7 @@ const mySetModificarActivoReducer = createReducer(
 		error: null
 	})),
 
-	on(setModificarActivoSucces, (state, props) => ({
+	on(setEditarActivoSucces, (state, props) => ({
 		...state,
 		response: props.payload,
 		pending: false,
@@ -34,7 +34,7 @@ const mySetModificarActivoReducer = createReducer(
 		error: null
 	})),
 
-	on(setModificarActivoError, (state, props) => ({
+	on(setEditarActivoError, (state, props) => ({
 		...state,
 		response: null,
 		pending: false,
@@ -42,11 +42,11 @@ const mySetModificarActivoReducer = createReducer(
 		error: props.payload
 	})),
 
-	on(setModificarActivoClear, (state) => {
+	on(setEditarActivoClear, (state) => {
 		return initialState;
 	})
 );
 
-export function setModificarActivoReducer(state: IState<IActivo> | undefined, action: Action) {
-	return mySetModificarActivoReducer(state, action);
+export function setEditarActivoReducer(state: IState<IActivo> | undefined, action: Action) {
+	return mySetEditarActivoReducer(state, action);
 }

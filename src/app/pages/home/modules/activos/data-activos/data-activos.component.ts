@@ -38,7 +38,7 @@ export class DataActivosComponent implements OnInit, OnDestroy {
 	}
 
 	onCrearNuevoEvent(e: any){
-		this.router.navigate(['home/activos/crear']);
+		this.router.navigate(['home/activos/nuevo']);
 	}
 
 	updateValues(): void {

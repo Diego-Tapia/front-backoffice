@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CreacionActivoComponent } from './creacion-activo/creacion-activo.component';
 import { DataActivosComponent } from './data-activos/data-activos.component';
-import { ModificacionActivoComponent } from './modificacion-activo/modificacion-activo.component';
+import { EditarActivoComponent } from './editar-activo/editar-activo.component';
+import { NuevoActivoComponent } from './nuevo-activo/nuevo-activo.component';
 
 const routes: Routes = [
 	{
@@ -10,12 +10,12 @@ const routes: Routes = [
 		component: DataActivosComponent
 	},
 	{
-		path: 'crear',
-		component: CreacionActivoComponent
+		path: 'nuevo',
+		component: NuevoActivoComponent
 	},
 	{
-		path: 'modificar/:id',
-		component: ModificacionActivoComponent
+		path: 'editar/:id',
+		component: EditarActivoComponent
 	},
 ];
 

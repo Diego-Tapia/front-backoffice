@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { IFormUser } from 'src/app/shared/models/form-user.interface';
 import { IState } from 'src/app/shared/models/state.interface';
-import { setModificacionUsuarios,  setModificacionUsuariosClear,  setModificacionUsuariosError, setModificacionUsuariosSucces } from './modificacion-usuarios.action';
+import { setEditarUsuario,  setEditarUsuarioClear,  setEditarUsuarioError, setEditarUsuarioSucces } from './editar-usuario.action';
 
 
 
@@ -12,10 +12,10 @@ export const initialState: IState<IFormUser | null> = {
 	error: null
 };
 
-const mySetModificacionUsuariosReducer = createReducer(
+const mySetEditarUsuarioReducer = createReducer(
 	initialState,
 
-	on(setModificacionUsuarios, (state, props) => ({
+	on(setEditarUsuario, (state, props) => ({
 		...state,
 		response: null,
 		pending: true,
@@ -23,7 +23,7 @@ const mySetModificacionUsuariosReducer = createReducer(
 		error: null
 	})),
 
-	on(setModificacionUsuariosSucces, (state, props) => ({
+	on(setEditarUsuarioSucces, (state, props) => ({
 		...state,
 		response: props.payload,
 		pending: false,
@@ -31,7 +31,7 @@ const mySetModificacionUsuariosReducer = createReducer(
 		error: null
 	})),
 
-	on(setModificacionUsuariosError, (state, props) => ({
+	on(setEditarUsuarioError, (state, props) => ({
 		...state,
 		response: null,
 		pending: false,
@@ -39,11 +39,11 @@ const mySetModificacionUsuariosReducer = createReducer(
 		error: props.payload
 	})),
 
-	on(setModificacionUsuariosClear, (state) => {
+	on(setEditarUsuarioClear, (state) => {
 		return initialState;
 	})
 );
 
-export function SetModificacionUsuariosReducer(state: IState<IFormUser> | undefined, action: Action) {
-	return mySetModificacionUsuariosReducer(state, action);
+export function SetEditarUsuarioReducer(state: IState<IFormUser> | undefined, action: Action) {
+	return mySetEditarUsuarioReducer(state, action);
 }

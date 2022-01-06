@@ -1,13 +1,13 @@
 <div class="section__modal">
 	<div class="section__data-modal">
 		<div class="title_modal" align="left">
-			<h2 class="title">Seleccione un tipo de disminución</h2>
+			<h2 class="title">Seleccione un tipo de {{data}}</h2>
 		</div>
-		<div class="types__increment">
-			<mat-dialog-actions class="increments">
+		<div class="operation__types">
+			<mat-dialog-actions class="operations">
 				<button
 					mat-button
-					class="button__increments spacing-one button_colors"
+					class="operation__btn spacing-one button_colors"
 					(click)="diferentColor($event, 1)"
 					[ngClass]="{ tabActivate: cambioColor === 'tab1' }"
 				>
@@ -15,14 +15,14 @@
 					<mat-icon class="check">done</mat-icon>
 				</button>
 			</mat-dialog-actions>
-			<mat-dialog-actions class="increments">
+			<mat-dialog-actions class="operations">
 				<button
 					mat-button
-					class="button__increments spacing button_colors"
+					class="operation__btn spacing button_colors"
 					(click)="diferentColor($event, 2)"
 					[ngClass]="{ tabActivate: cambioColor === 'tab2' }"
 				>
-					<mat-icon>people</mat-icon> Masiva
+					<mat-icon>people</mat-icon> {{ (data === 'incremento') ? 'Masivo' : 'Masiva'}}
 					<mat-icon class="check">done</mat-icon>
 				</button>
 			</mat-dialog-actions>
