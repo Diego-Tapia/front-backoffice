@@ -38,8 +38,8 @@ export class TablaUsuariosComponent implements OnInit, OnDestroy, OnChanges, Aft
 	) {
 		this.route.params.subscribe(params => this.userType = params.type)
 		this.subscriptions.push(
-			this.store.select('featuresReducersMap', 'editarUsuario').subscribe((res: IState<any>) => {
-				this.handleGetActivosById(res);
+			this.store.select('featuresReducersMap', 'editarUsuario').subscribe((res: IState<IUserProfile | null>) => {
+				this.handleEditarUsuario(res);
 			}),
 		);
 	}
@@ -72,7 +72,7 @@ export class TablaUsuariosComponent implements OnInit, OnDestroy, OnChanges, Aft
 		(this.idType < 2) ? this.idType++ : this.idType = 0;	
 	}
 
-	handleGetActivosById(res: IState<any>){
+	handleEditarUsuario(res:IState<IUserProfile | null>){
 		if(res.error) this.noti.error('Error', res.error.error.message);
 		if(res.success) {
 			this.noti.success('Éxito','El estado del usuario se editó con éxito');
@@ -82,13 +82,13 @@ export class TablaUsuariosComponent implements OnInit, OnDestroy, OnChanges, Aft
 
 	verDetalle(usuario: IUserProfile) {
 	(usuario.userId)
-		? this.router.navigate(['/home/usuarios/detalle/final', usuario.id])
-		: this.router.navigate(['/home/usuarios/detalle/backoffice', usuario.id]);
+		? this.router.navigate(['/home/usuarios/final/detalle', usuario.id])
+		: this.router.navigate(['/home/usuarios/backoffice/detalle', usuario.id]);
 	}
 	
 	editarUsuario(usuario: IUserProfile) {		
-		if(usuario.userId) this.router.navigate(['/home/usuarios/editar/final', usuario.id])
-		else this.router.navigate(['/home/usuarios/editar/backoffice', usuario.id]);
+		if(usuario.userId) this.router.navigate(['/home/usuarios/final/editar', usuario.id])
+		else this.router.navigate(['/home/usuarios/backoffice/editar', usuario.id]);
 	}
 
 	editarEstado(usuario: IUserProfile){

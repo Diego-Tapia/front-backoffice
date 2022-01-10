@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 
 export const setGetIncrementos = createAction('[Incremento Component] Set Get Incremento');
@@ -9,7 +10,7 @@ export const setGetIncrementosSucces = createAction(
 
 export const setGetIncrementosError = createAction(
 	'[Incremento Component] Set Get Incremento Error',
-	props<{ payload: any }>()
+	props<{ payload: HttpErrorResponse }>()
 );
 
 export const setGetIncrementosClear = createAction('[Incremento Component] Set Get Incremento Clear');

@@ -18,7 +18,7 @@ export class NuevaDisminucionMasivaEffects {
 			ofType(setNuevaDisminucionMasiva),
 			mergeMap((props) =>
 				this.disminucionesService.nuevaDisminucionMasiva(props.form).pipe(
-					map((activos) => setNuevaDisminucionMasivaSucces({ payload: activos })),
+					map((res) => setNuevaDisminucionMasivaSucces({ payload: res })),
 					catchError((err) => of(setNuevaDisminucionMasivaError({ payload: err })))
 				)
 			)

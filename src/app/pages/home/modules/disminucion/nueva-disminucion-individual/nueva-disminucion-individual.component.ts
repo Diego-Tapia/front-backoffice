@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -7,16 +7,18 @@ import { setNuevaDisminucion, setNuevaDisminucionClear } from './store/nueva-dis
 import { IState } from '../../../../../shared/models/state.interface';
 import { NotificationsService } from 'angular2-notifications';
 import { IActivo } from 'src/app/shared/models/activos/activo.interface';
-import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
+import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/get-activos/activos.actions';
 import { Router } from '@angular/router';
-import { IFormMasivo } from 'src/app/shared/models/form-masivo.interface';
+import { IReqMasivo } from 'src/app/shared/models/req-masivo.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { setVerifyUsuario } from '../../usuarios/data-usuarios/store/verify/verify-usuarios.action';
+import { IResMasivo } from 'src/app/shared/models/res-masivo.interface';
 
 @Component({
 	selector: 'app-nueva-disminucion-individual',
 	templateUrl: './nueva-disminucion-individual.component.html',
-	styleUrls: ['./nueva-disminucion-individual.component.sass']
+	styleUrls: ['./nueva-disminucion-individual.component.sass'],
+	encapsulation: ViewEncapsulation.None
 })
 export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 	isLinear = true;
@@ -46,13 +48,13 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 		private store: Store<{ disminucionReducersMap: IDisminucionReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('disminucionReducersMap', 'nuevaDisminucion').subscribe((res) => {
+			this.store.select('disminucionReducersMap', 'nuevaDisminucion').subscribe((res: IState<IResMasivo |  null>) => {
 				this.handleNuevaDisminucion(res);
 			}),
-			this.store.select('disminucionReducersMap', 'getActivos').subscribe((res) => {
+			this.store.select('disminucionReducersMap', 'getActivos').subscribe((res: IState<IActivo[] | null>) => {
 				this.handleGetActivos(res);
 			}),
-			this.store.select('disminucionReducersMap', 'verifyUsuario').subscribe((res: IState<IUserProfile>) => {
+			this.store.select('disminucionReducersMap', 'verifyUsuario').subscribe((res: IState<IUserProfile | null>) => {
 				this.handleVerifyUsuario(res);
 			})
 		);
@@ -83,7 +85,7 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 		return this.store.dispatch(setNuevaDisminucion({ form: disminucionIndividual }));
 	}
 
-	handleGetActivos(res: IState<IActivo[]>) {
+	handleGetActivos(res: IState<IActivo[] | null>) {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema listando los activos');
 		if (res.success && res.response) {
 			res.response.forEach(activo => {
@@ -93,7 +95,7 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 		} 
 	}
 
-	handleVerifyUsuario(res: IState<IUserProfile>) {	
+	handleVerifyUsuario(res: IState<IUserProfile | null>) {	
 		if (res.error) {
 			if(res.error.status === 404) this.noti.error('Error', 'No se encontró ningun usuario con esa identificación');
 			else this.noti.error('Error', res.error.error.message);
@@ -107,7 +109,7 @@ export class NuevaDisminucionIndividualComponent implements OnInit, OnDestroy {
 		} 
 	}
 
-	handleNuevaDisminucion(res: IState<IFormMasivo>) {
+	handleNuevaDisminucion(res: IState<IResMasivo |  null>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'La disminución individual se ha creado con éxito');

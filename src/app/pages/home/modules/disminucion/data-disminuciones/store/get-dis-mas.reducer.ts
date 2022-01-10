@@ -1,4 +1,5 @@
 import { Action, createReducer, on, props } from '@ngrx/store';
+import { IResMasivo } from 'src/app/shared/models/res-masivo.interface';
 import { IState } from '../../../../../../shared/models/state.interface';
 import {
 	setGetDisminucionesMasivas,
@@ -7,7 +8,7 @@ import {
 	setGetDisminucionesMasivasError
 } from './get-dis-mas.action';
 
-export const initialState: IState<any> = {
+export const initialState: IState<IResMasivo[] | null> = {
 	response: null,
 	pending: false,
 	success: false,
@@ -44,6 +45,6 @@ const mySetGetDisminucionesMasivasReducer = createReducer(
 	})
 );
 
-export function setGetDisminucionesMasivasReducer(state: IState<any> | undefined, action: Action) {
+export function setGetDisminucionesMasivasReducer(state: IState<IResMasivo[] | null> | undefined, action: Action) {
 	return mySetGetDisminucionesMasivasReducer(state, action);
 }

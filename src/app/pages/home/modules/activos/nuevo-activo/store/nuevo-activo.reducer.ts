@@ -47,6 +47,6 @@ const mySetNuevoActivoReducer = createReducer(
 	})
 );
 
-export function setNuevoActivoReducer(state: IState<IActivo> | undefined, action: Action) {
+export function setNuevoActivoReducer(state: IState<IActivo | null> | undefined, action: Action) {
 	return mySetNuevoActivoReducer(state, action);
 }

@@ -7,7 +7,6 @@
 <div class="section__edit">
 	<form [formGroup]="editForm">
 		<h2 class="subtitle">Datos personales</h2>
-		<br />
 		<div class="form__group">
 			<mat-form-field appearance="outline">
 				<mat-label>Nombre</mat-label>
@@ -31,9 +30,7 @@
 				<input matInput placeholder="CUIL" formControlName="cuil" required readonly/>
 			</mat-form-field>
 		</div>
-		<br />
 		<h2 class="subtitle">Datos de contacto</h2>
-		<br />
 		<div class="form__group">
 			<mat-form-field appearance="outline">
 				<mat-label>E-mail</mat-label>
@@ -46,12 +43,11 @@
 			</mat-form-field>
 		</div>
 	</form>
-	<br />
 	<div class="btn_group">
-		<button mat-stroked-button class="buttons__stepper" [routerLink]="'/home/usuarios/'+userType">
+		<button mat-stroked-button class="edit__btn" [routerLink]="'/home/usuarios/'+userType">
 			Descartar
 		</button>
-		<button mat-raised-button class="buttons__stepper__primary" (click)="submit()">
+		<button mat-raised-button class="edit__btn__primary" (click)="submit()">
 			Confirmar
 		</button>
 	</div>

@@ -18,7 +18,7 @@ export class NuevoIncrementoMasivoEffects {
 			ofType(setNuevoIncrementoMasivo),
 			mergeMap((props) =>
 				this.incrementos.nuevoIncrementoMasivo(props.form).pipe(
-					map((activos) => setNuevoIncrementoMasivoSuccess({ payload: activos })),
+					map((res) => setNuevoIncrementoMasivoSuccess({ payload: res })),
 					catchError((err) => of(setNuevoIncrementoMasivoError({ payload: err })))
 				)
 			)

@@ -14,7 +14,7 @@ export class NuevoIncrementoEffects {
 			ofType(setNuevoIncremento),
 			mergeMap((props) =>
 				this.incrementoService.nuevoIncremento(props.form).pipe(
-					map((activos) => setNuevoIncrementoSucces({ payload: activos })),
+					map((res) => setNuevoIncrementoSucces({payload: res})),
 					catchError((err) => of(setNuevoIncrementoError({ payload: err })))
 				)
 			)

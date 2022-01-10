@@ -1,5 +1,5 @@
 <div style="display: flex;">
-	<div class="back__btn__container" routerLink="..">
+	<div class="back__btn__container" [routerLink]="'/home/usuarios/'+userType">
 		<mat-icon class="back__btn">arrow_back</mat-icon>
 	</div>
 	<h1 style="margin-left: 10px;">{{(userType === 'backoffice') ? 'Alta de usuario Back Office' : 'Alta de usuario final'}} </h1>
@@ -8,33 +8,31 @@
 	<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
 		<mat-step [stepControl]="firstStep">
 			<ng-template matStepLabel>Datos personales</ng-template>
-			<br />
 			<form [formGroup]="firstStep">
 				<div class="form__group">
 					<mat-form-field appearance="outline">
 						<mat-label>Nombre</mat-label>
-						<input matInput placeholder="Nombre" formControlName="shortName" required />
+						<input matInput type="text" placeholder="Nombre" formControlName="shortName" required />
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>Apellido</mat-label>
-						<input matInput placeholder="Apellido" formControlName="lastName" required />
+						<input matInput type="text" placeholder="Apellido" formControlName="lastName" required />
 					</mat-form-field>
 				</div>
 
 				<div class="form__group">
 					<mat-form-field appearance="outline">
 						<mat-label>DNI</mat-label>
-						<input matInput placeholder="DNI" formControlName="dni" required />
+						<input matInput type="number" placeholder="DNI" formControlName="dni" required />
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>CUIL</mat-label>
-						<input matInput placeholder="CUIL" formControlName="cuil" required />
+						<input matInput type="number" placeholder="CUIL" formControlName="cuil" required />
 					</mat-form-field>
 				</div>
 			</form>
-			<br />
 			<mat-dialog-actions>
 				<button mat-stroked-button  class="buttons__stepper__primary" matStepperNext>Siguiente</button>
 			</mat-dialog-actions>
@@ -42,7 +40,6 @@
 
 		<mat-step [stepControl]="secondStep">
 			<ng-template matStepLabel>Credenciales</ng-template>
-			<br />
 			<form [formGroup]="secondStep">
 				<div class="form__group">
 					<mat-form-field appearance="outline">
@@ -50,30 +47,39 @@
 						<input matInput placeholder="Usuario" formControlName="username" required />
 					</mat-form-field>
 
-					<mat-form-field appareance="outline" *ngIf="userType === 'backoffice'">
-						<mat-label>Rol</mat-label>
-						<mat-select>
-							<mat-option *ngFor="let rol of roles" [value]="rol">
-								{{ rol }}
-							</mat-option>
-						</mat-select>
-					</mat-form-field>
+					<!-- TODO IMPLEMENTAR ROLES -->
+					<ng-container *ngIf="userType === '123'">
+						<mat-form-field appearance="outline">
+							<mat-label>Rol</mat-label>
+							<mat-select>
+								<mat-option *ngFor="let rol of roles" [value]="rol">
+									{{ rol.rol }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</ng-container>
 				</div>
 
 				<div class="form__group">
 					<mat-form-field appearance="outline">
 						<mat-label>Contraseña</mat-label>
-						<input matInput placeholder="Contraseña" formControlName="password" type="password" />
-						<mat-hint align="start"><strong>La contraseña debe contener mayúsculas, minúsculas, números y carácteres especiales</strong> </mat-hint>
+						<input
+							matInput
+							[type]="hide ? 'password' : 'text'"
+							placeholder="Contraseña"
+							formControlName="password"
+							required
+						/>
+						<mat-icon matSuffix (click)="hide = !hide">{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+						<mat-hint class="hint" align="start">Debe incluir mayúsculas, minúsculas, números y carácteres especiales</mat-hint>
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>Repetir contraseña</mat-label>
-						<input matInput placeholder="Repetir contraseña" formControlName="repeat_pass" type="password" />
+						<input matInput placeholder="Repetir contraseña" formControlName="repeat_pass" [type]="hide ? 'password' : 'text'"/>
 					</mat-form-field>
 				</div>
 			</form>
-			<br />
 			<mat-dialog-actions>
 				<button mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
 				<button mat-stroked-button  class="buttons__stepper__primary" (click)="verifyPassword()">Siguiente</button>
@@ -82,22 +88,19 @@
 
 		<mat-step [stepControl]="thirdStep">
 			<ng-template matStepLabel>Datos de contacto</ng-template>
-			<br />
 			<form [formGroup]="thirdStep">
 				<div class="form__group">
 					<mat-form-field appearance="outline">
 						<mat-label>E-mail</mat-label>
-						<input matInput placeholder="E-mail" formControlName="email" required />
+						<input matInput placeholder="E-mail" type="email" formControlName="email" required />
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>Teléfono</mat-label>
-						<input matInput placeholder="Teléfono" formControlName="phoneNumber" required />
+						<input matInput placeholder="Teléfono" type="number" formControlName="phoneNumber" required />
 					</mat-form-field>
 				</div>
 			</form>
-
-			<br />
 			<mat-dialog-actions>
 				<button mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
 				<button mat-stroked-button  class="buttons__stepper__primary" matStepperNext>Siguiente</button>
@@ -106,94 +109,65 @@
 
 		<mat-step>
 			<ng-template matStepLabel>Confirmacion</ng-template>
-			<br />
 
 			<mat-card class="card_content">
-				<div style="float: left; width: 25%">
-					<ul>
-						<mat-card-title class="title__options">Nombre</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">{{ firstStep.get('shortName')?.value }}</mat-card-subtitle>
-					</ul>
+				<div style="width: 25%">
+					<mat-card-title class="title__options">Nombre</mat-card-title>
+					<mat-card-subtitle class="subtitle__options">{{ firstStep.get('shortName')?.value }}</mat-card-subtitle>
 				</div>
-				<div style="float: left; width: 25%">
-					<ul>
-						<mat-card-title class="title__options">Apellido</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">{{ firstStep.get('lastName')?.value }}</mat-card-subtitle>
-					</ul>
+				<div style="width: 25%">
+					<mat-card-title class="title__options">Apellido</mat-card-title>
+					<mat-card-subtitle class="subtitle__options">{{ firstStep.get('lastName')?.value }}</mat-card-subtitle>
 				</div>
-				<div style="float: left; width: 25%">
-					<ul>
-						<mat-card-title class="title__options">DNI</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">{{ firstStep.get('dni')?.value }}</mat-card-subtitle>
-					</ul>
+				<div style="width: 25%">
+					<mat-card-title class="title__options">DNI</mat-card-title>
+					<mat-card-subtitle class="subtitle__options">{{ firstStep.get('dni')?.value }}</mat-card-subtitle>
 				</div>
-				<div style="float: left; width: 25%">
-					<ul>
-						<mat-card-title class="title__options">CUIL</mat-card-title>
-						<mat-card-subtitle class="subtitle__options">{{ firstStep.get('cuil')?.value }}</mat-card-subtitle>
-					</ul>
+				<div style="width: 25%">
+					<mat-card-title class="title__options">CUIL</mat-card-title>
+					<mat-card-subtitle class="subtitle__options">{{ firstStep.get('cuil')?.value }}</mat-card-subtitle>
 				</div>
 			</mat-card>
 
-			<br />
-
 			<div *ngIf="userType === 'backoffice'">
 				<mat-card class="card_content">
-					<div style="float: left; width: 50%">
-						<ul>
-							<mat-card-title class="title__options">Usuario</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ secondStep.get('userName')?.value }}</mat-card-subtitle>
-						</ul>
+					<div style="width: 50%">
+						<mat-card-title class="title__options">Usuario</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ secondStep.get('userName')?.value }}</mat-card-subtitle>
 					</div>
-					<div style="float: left; width: 50%">
-						<ul>
-							<mat-card-title class="title__options">Rol asignado</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ secondStep.get('rol')?.value }}</mat-card-subtitle>
-						</ul>
+					<div style="width: 50%">
+						<mat-card-title class="title__options">Rol asignado</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ secondStep.get('rol')?.value }}</mat-card-subtitle>
 					</div>
 				</mat-card>
-
-				<br />
 
 				<mat-card class="card_content">
-					<div style="float: left; width: 50%">
-						<ul>
-							<mat-card-title class="title__options">E-mail</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ thirdStep.get('email')?.value }}</mat-card-subtitle>
-						</ul>
+					<div style="width: 50%">
+						<mat-card-title class="title__options">E-mail</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ thirdStep.get('email')?.value }}</mat-card-subtitle>
 					</div>
-					<div style="float: left; width: 50%">
-						<ul>
-							<mat-card-title class="title__options">Teléfono</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ thirdStep.get('phoneNumber')?.value }}</mat-card-subtitle>
-						</ul>
+					<div style="width: 50%">
+						<mat-card-title class="title__options">Teléfono</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ thirdStep.get('phoneNumber')?.value }}</mat-card-subtitle>
 					</div>
 				</mat-card>
-				<br />
 			</div>
 
 			<div *ngIf="userType === 'final'">
 				<mat-card class="card_content">
-					<div style="float: left; width: 30%">
-						<ul>
-							<mat-card-title class="title__options">Usuario</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ secondStep.get('username')?.value }}</mat-card-subtitle>
-						</ul>
+					<div style="width: 25%">
+						<mat-card-title class="title__options">Usuario</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ secondStep.get('username')?.value }}</mat-card-subtitle>
 					</div>
-					<div style="float: left; width: 40%">
-						<ul>
-							<mat-card-title class="title__options">E-mail</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ thirdStep.get('email')?.value }}</mat-card-subtitle>
-						</ul>
+					<div style="width: 40%">
+						<mat-card-title class="title__options">E-mail</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ thirdStep.get('email')?.value }}</mat-card-subtitle>
 					</div>
-					<div style="float: left; width: 30%">
-						<ul>
-							<mat-card-title class="title__options">Teléfono</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ thirdStep.get('phoneNumber')?.value }}</mat-card-subtitle>
-						</ul>
+					<div style="width: 30%">
+						<mat-card-title class="title__options">Teléfono</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ thirdStep.get('phoneNumber')?.value }}</mat-card-subtitle>
 					</div>
 				</mat-card>
-				<br />
 			</div>
 
 			<mat-dialog-actions>

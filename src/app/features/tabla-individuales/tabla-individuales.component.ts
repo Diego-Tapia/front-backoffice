@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IDataIndividual } from 'src/app/shared/models/data-individual.interface';
+import { IResIndividual } from 'src/app/shared/models/res-individual.interface';
 
 @Component({
 	selector: 'app-tabla-individuales',
@@ -10,9 +10,9 @@ import { IDataIndividual } from 'src/app/shared/models/data-individual.interface
 export class TablaIndividualesComponent implements OnInit {
 	displayedColumns: string[] = ['id', 'tipo', 'concepto', 'estado', 'creacion', 'actualizacion', 'star'];
 
-	@Input() individual!: IDataIndividual[];
+	@Input() individual!: IResIndividual[];
 
-	public dataSource: IDataIndividual[] = [];
+	public dataSource: IResIndividual[] = [];
 
 	constructor(private router: Router) { }
 

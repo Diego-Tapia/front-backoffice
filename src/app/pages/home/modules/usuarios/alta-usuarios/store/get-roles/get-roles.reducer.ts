@@ -3,7 +3,7 @@ import { IRol } from 'src/app/shared/models/rol.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { setGetRoles, setGetRolesClear, setGetRolesError, setGetRolesSucces } from './get-roles.action';
 
-export const initialState: IState<IRol | null> = {
+export const initialState: IState<IRol[] | null> = {
 	response: null,
 	pending: false,
 	success: false,
@@ -42,6 +42,6 @@ const mySetGetRolesReducer = createReducer(
 	})
 );
 
-export function SetGetRolesReducer(state: IState<IRol> | undefined, action: Action) {
+export function SetGetRolesReducer(state: IState<IRol[] | null> | undefined, action: Action) {
 	return mySetGetRolesReducer(state, action);
 }

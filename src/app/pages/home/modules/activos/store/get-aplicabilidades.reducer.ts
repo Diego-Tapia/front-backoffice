@@ -43,6 +43,6 @@ const mySetGetAplicabilidadesReducer = createReducer(
 	})
 );
 
-export function setGetAplicabilidadesReducer(state: IState<IAplicabilidad[]> | undefined, action: Action) {
+export function setGetAplicabilidadesReducer(state: IState<IAplicabilidad[] | null> | undefined, action: Action) {
 	return mySetGetAplicabilidadesReducer(state, action);
 }

@@ -24,7 +24,7 @@ export class ModalEmisionActivoComponent implements OnInit, OnDestroy {
 		private store: Store<{ featuresReducersMap: IFeaturesReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('featuresReducersMap', 'emitirActivo').subscribe((res: IState<ITransaccion>) => {
+			this.store.select('featuresReducersMap', 'emitirActivo').subscribe((res: IState<ITransaccion | null>) => {
 				this.handleEmitirActivo(res);
 			})
 		);
@@ -34,7 +34,7 @@ export class ModalEmisionActivoComponent implements OnInit, OnDestroy {
 		this.store.dispatch(setEmitirActivos({ id: this.data.id }));
 	}
 
-	handleEmitirActivo(res: IState<ITransaccion>): void {
+	handleEmitirActivo(res: IState<ITransaccion | null>): void {
 		if (res.error) {
 			this.noti.error('Error', res.error.error.message);
 			this.dialogRef.close();

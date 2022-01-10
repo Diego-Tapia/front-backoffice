@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -7,22 +7,22 @@ import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { setNuevaDisminucionMasiva, setNuevaDisminucionMasivaClear } from 'src/app/pages/home/modules/disminucion/nueva-disminucion-masiva/store/nueva-dis-mas.action';
 import { setNuevoIncrementoMasivo, setNuevoIncrementoMasivoClear } from 'src/app/pages/home/modules/incremento/nuevo-incremento-masivo/store/nuevo-inc-mas.action';
-import { IDataMasivo } from 'src/app/shared/models/data-masivo.interface';
-import { IFormMasivo } from 'src/app/shared/models/form-masivo.interface';
+import { IResMasivo } from 'src/app/shared/models/res-masivo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IFeaturesReducersMap } from '../features.reducers.map';
 @Component({
 	selector: 'app-tabla-masivos',
 	templateUrl: './tabla-masivos.component.html',
-	styleUrls: ['./tabla-masivos.component.sass']
+	styleUrls: ['./tabla-masivos.component.sass'],
+	encapsulation: ViewEncapsulation.None
 })
 export class TablaMasivosComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
 	private subscriptions: Subscription[] = [];
 	public pageSize:number[] = [5]
 	displayedColumns: string[] = ['id', 'concepto', 'estado', 'creacion', 'actualizacion', 'star'];
-	public dataSource = new MatTableDataSource<IDataMasivo>();
+	public dataSource = new MatTableDataSource<IResMasivo>();
 	
-	@Input() massive!: IDataMasivo[];
+	@Input() massive!: IResMasivo[];
 	@Output() updateValues = new EventEmitter();
 
 	
@@ -34,16 +34,16 @@ export class TablaMasivosComponent implements OnInit, OnDestroy, OnChanges, Afte
 		private store: Store<{ featuresReducersMap: IFeaturesReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('featuresReducersMap', 'nuevoIncrementoMasivo').subscribe((res) => {
+			this.store.select('featuresReducersMap', 'nuevoIncrementoMasivo').subscribe((res: IState<IResMasivo | null>) => {
 				this.handleNuevoIncrementoMasivo(res);
 			}),
-			this.store.select('featuresReducersMap', 'nuevaDisminucionMasiva').subscribe((res) => {
+			this.store.select('featuresReducersMap', 'nuevaDisminucionMasiva').subscribe((res: IState<IResMasivo | null>) => {
 				this.handleNuevaDisminucionMasiva(res);
 			}),
 		)
 	}
 
-	procesarMasivo(element: IDataMasivo) {
+	procesarMasivo(element: IResMasivo) {
 		const formData = new FormData();
 		formData.append('tokenId', element.tokenId);
 		formData.append('name', element.name);
@@ -60,7 +60,7 @@ export class TablaMasivosComponent implements OnInit, OnDestroy, OnChanges, Afte
 		}
 	}
 	
-	cancelarMasivo(element: IDataMasivo) {
+	cancelarMasivo(element: IResMasivo) {
 		const formData = new FormData();
 		formData.append('tokenId', element.tokenId);
 		formData.append('name', element.name);
@@ -77,7 +77,7 @@ export class TablaMasivosComponent implements OnInit, OnDestroy, OnChanges, Afte
 		}
 	}
 
-	handleNuevoIncrementoMasivo(res: IState<IFormMasivo>): void {
+	handleNuevoIncrementoMasivo(res: IState<IResMasivo | null>): void {
 		if(res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Se ha editado el estado del incremento con éxito');
@@ -85,7 +85,7 @@ export class TablaMasivosComponent implements OnInit, OnDestroy, OnChanges, Afte
 		} 
 	}
 	
-	handleNuevaDisminucionMasiva(res: IState<IFormMasivo>): void {
+	handleNuevaDisminucionMasiva(res: IState<IResMasivo | null>): void {
 		if(res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Se ha editado el estado de la disminución con éxito');

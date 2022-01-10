@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 
@@ -12,7 +13,7 @@ export const setGetUsuariosSucces = createAction(
 
 export const setGetUsuariosError = createAction(
 	'[Usuario Component] Set Get Usuario Error',
-	props<{ payload: any }>()
+	props<{ payload: HttpErrorResponse }>()
 );
 
 export const setGetUsuariosClear = createAction('[Usuario Component] Set Get Usuario Clear');

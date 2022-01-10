@@ -1,11 +1,11 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { IFormUser } from 'src/app/shared/models/form-user.interface';
 import { IState } from 'src/app/shared/models/state.interface';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { setAltaUsuarios,  setAltaUsuariosClear,  setAltaUsuariosError, setAltaUsuariosSucces } from './alta-usuarios.action';
 
 
 
-export const initialState: IState<IFormUser | null> = {
+export const initialState: IState<IUserProfile | null> = {
 	response: null,
 	pending: false,
 	success: false,
@@ -44,6 +44,6 @@ const mySetAltaUsuariosReducer = createReducer(
 	})
 );
 
-export function SetAltaUsuariosReducer(state: IState<IFormUser> | undefined, action: Action) {
+export function SetAltaUsuariosReducer(state: IState<IUserProfile | null> | undefined, action: Action) {
 	return mySetAltaUsuariosReducer(state, action);
 }

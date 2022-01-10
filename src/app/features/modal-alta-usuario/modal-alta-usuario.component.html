@@ -1,8 +1,5 @@
 <div class="section__modal">
 	<div class="section__data-modal">
-		<div align="end">
-			<img src="../../../assets/images/modal/close_black_24dp.svg" class="btn_close" mat-dialog-close />
-		</div>
 		<div class="title_modal" align="left">
 			<h2 class="title">Seleccione un tipo de usuario</h2>
 		</div>
@@ -11,7 +8,7 @@
 				<button
 					mat-button
 					class="button__registration__type spacing-one button_colors"
-					(click)="diferentColor($event, 1)"
+					(click)="diferentColor(1)"
 					[ngClass]="{ tabActivate: cambioColor === 'tab1' }"
 				>
 					<mat-icon>supervised_user_circle</mat-icon> Final
@@ -22,7 +19,7 @@
 				<button
 					mat-button
 					class="button__registration__type spacing button_colors"
-					(click)="diferentColor($event, 2)"
+					(click)="diferentColor(2)"
 					[ngClass]="{ tabActivate: cambioColor === 'tab2' }"
 				>
 					<mat-icon>verified_user</mat-icon> Back Office

@@ -23,7 +23,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { GetIncrementosMasivosEffects } from './data-incrementos/store/get-inc.mas.effect';
 import { NuevoIncrementoMasivoEffects } from './nuevo-incremento-masivo/store/nuevo-inc-mas.effects';
-import { GetActivosEffects } from '../activos/data-activos/store/activos.effects';
+import { GetActivosEffects } from '../activos/data-activos/store/get-activos/activos.effects';
 import { VerifyUsuarioEffects } from '../usuarios/data-usuarios/store/verify/verify-usuarios.effect';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';

@@ -18,17 +18,17 @@ import { setNuevoActivo, setNuevoActivoClear } from './store/nuevo-activo.action
 import { setGetAplicabilidades, setGetAplicabilidadesClear } from '../store/get-aplicabilidades.actions';
 
 @Component({
-  selector: 'app-nuevo-activo',
-  templateUrl: './nuevo-activo.component.html',
-  styleUrls: ['./nuevo-activo.component.sass'],
+  	selector: 'app-nuevo-activo',
+	templateUrl: './nuevo-activo.component.html',
+	styleUrls: ['./nuevo-activo.component.sass'],
 	encapsulation: ViewEncapsulation.None
 })
 export class NuevoActivoComponent implements OnInit, OnDestroy {
-	subscriptions: Subscription[] = [];
-
-	isLinear = true;
-
-	startDate = Date.now();
+	
+	private subscriptions: Subscription[] = [];
+	public isLinear = true;
+	public admin!: IAdmin | undefined;
+	public startDate = Date.now();
 
 	//Filtro Aplicabilidad
 	selectable = true;
@@ -38,8 +38,7 @@ export class NuevoActivoComponent implements OnInit, OnDestroy {
 	applicabilities: any[] = [];
 	applicabilitiesResume: string[] = []
 	applicabilityCtrl = new FormControl();
-	allApplicabilities: IAplicabilidad[] = [];
-	public admin!: IAdmin | undefined;
+	allApplicabilities: IAplicabilidad[] = [];	
 
 	@ViewChild('applicabilityInput') applicabilityInput!: ElementRef<HTMLInputElement>;
 
@@ -69,10 +68,10 @@ export class NuevoActivoComponent implements OnInit, OnDestroy {
 		private store: Store<{ activosReducersMap: IActivosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('activosReducersMap', 'nuevoActivo').subscribe((res: IState<IActivo>) => {
+			this.store.select('activosReducersMap', 'nuevoActivo').subscribe((res: IState<IActivo | null>) => {
 				this.handleNuevoActivo(res);
 			}),
-			this.store.select('activosReducersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[]>) => {
+			this.store.select('activosReducersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[] | null>) => {
 				this.handleGetAplicabilidades(res);
 			})
 		);
@@ -114,12 +113,12 @@ export class NuevoActivoComponent implements OnInit, OnDestroy {
 		return this.store.dispatch(setNuevoActivo({ form: formActivo }));
 	}
 
-	handleGetAplicabilidades(res: IState<IAplicabilidad[]>): void {
+	handleGetAplicabilidades(res: IState<IAplicabilidad[] | null>): void {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las aplicabilidades');
 		if (res.success && res.response) this.allApplicabilities = res.response
 	}
 
-	handleNuevoActivo(res: IState<IActivo>): void {
+	handleNuevoActivo(res: IState<IActivo | null>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Se ha creado el activo con éxito');

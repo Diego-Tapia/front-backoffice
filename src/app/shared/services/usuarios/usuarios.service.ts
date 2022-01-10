@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IFormUser, IUserStatus } from '../../models/form-user.interface';
+import { IReqUser, IUserStatus } from '../../models/req-user.interface';
 import { IUserProfile } from '../../models/user-profile.interface';
 
 
@@ -15,30 +15,30 @@ export class UsuariosService {
 	constructor(private http: HttpClient) { }
 
 	getUsuarios(userType: string): Observable<IUserProfile[]> {
-		if (userType === 'finales' || userType === 'final') return this.http.get<any>(`${this.url}/user`);
-		else return this.http.get<any>(`${this.url}/admin`);
+		if (userType === 'final') return this.http.get<IUserProfile[]>(`${this.url}/user`);
+		else return this.http.get<IUserProfile[]>(`${this.url}/admin`);
 	}
 
 	getUsuariosById(userType: string, id: string): Observable<IUserProfile> {
-		if (userType === 'finales' || userType === 'final') return this.http.get<any>(`${this.url}/user/${id}`);
-		else return this.http.get<any>(`${this.url}/admin/${id}`);
+		if (userType === 'final') return this.http.get<IUserProfile>(`${this.url}/user/${id}`);
+		else return this.http.get<IUserProfile>(`${this.url}/admin/${id}`);
 	}
 
 	verifyUsuario(userIdentifier: string): Observable<IUserProfile> {
-		return this.http.get<any>(`${this.url}/user/verify-user/${userIdentifier}`);
+		return this.http.get<IUserProfile>(`${this.url}/user/verify-user/${userIdentifier}`);
 	}
 
-	altaUsuario(form: IFormUser, userType: string): Observable<IFormUser> {
-		if (userType === 'finales' || userType === 'final') return this.http.post<any>(`${this.url}/user/register`, form);
-		else return this.http.post<any>(`${this.url}/admin/register`, form);
+	altaUsuario(form: IReqUser, userType: string): Observable<IUserProfile> {
+		if (userType === 'final') return this.http.post<IUserProfile>(`${this.url}/user/register`, form);
+		else return this.http.post<IUserProfile>(`${this.url}/admin/register`, form);
 	}
 
-	editarUsuario(id: string, form: IFormUser | IUserStatus, userType: string): Observable<IFormUser> {
-		if (userType === 'finales' || userType === 'final') return this.http.put<any>(`${this.url}/user/${id}`, form);
-		else return this.http.put<any>(`${this.url}/admin/${id}`, form);
+	editarUsuario(id: string, form: IReqUser | IUserStatus, userType: string): Observable<IUserProfile> {
+		if (userType === 'final') return this.http.put<IUserProfile>(`${this.url}/user/${id}`, form);
+		else return this.http.put<IUserProfile>(`${this.url}/admin/${id}`, form);
 	}
 
-	//UNIFICO DATOS DE USUARIOS FINALES Y ADMIN PARA MOSTRAR EN PANTALLA
+	//UNIFICO DATOS DE USUARIOS FINALES Y ADMIN PARA MOSTRAR EN TABLA
 	setUsersDataTable(usuario: IUserProfile): IUserProfile{
 		let updatedUser: IUserProfile = {...usuario}
 		updatedUser.fullName= updatedUser.shortName+' '+updatedUser.lastName;

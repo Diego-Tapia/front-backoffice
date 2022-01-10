@@ -6,6 +6,11 @@ import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.compo
 import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'final',
+  },
   { 
     path: ':type', 
     component: DataUsuariosComponent 
@@ -15,11 +20,11 @@ const routes: Routes = [
     component: AltaUsuariosComponent
   },
   {
-    path: 'detalle/:type/:id',
+    path: ':type/detalle/:id',
     component: DetalleUsuarioComponent
   },
   {
-    path: 'editar/:type/:id',
+    path: ':type/editar/:id',
     component: EditarUsuarioComponent
   }
 ];

@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
-import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
+import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/get-activos/activos.actions';
 import { setVerifyUsuario, setVerifyUsuarioClear } from '../../usuarios/data-usuarios/store/verify/verify-usuarios.action';
 import { IIncrementoReducersMap } from '../incremento.reducers.map';
 import { setNuevoIncremento, setNuevoIncrementoClear } from './store/nuevo-inc.actions';
@@ -45,13 +45,13 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 		private store: Store<{ incrementoReducersMap: IIncrementoReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('incrementoReducersMap', 'nuevoIncremento').subscribe((res: IState<any>) => {
+			this.store.select('incrementoReducersMap', 'nuevoIncremento').subscribe((res: IState<null>) => {
 				this.handleNuevoIncremento(res);
 			}),
-			this.store.select('incrementoReducersMap', 'getActivos').subscribe((res: IState<IActivo[]>) => {
+			this.store.select('incrementoReducersMap', 'getActivos').subscribe((res: IState<IActivo[] | null>) => {
 				this.handleGetActivos(res);
 			}),
-			this.store.select('incrementoReducersMap', 'verifyUsuario').subscribe((res: IState<IUserProfile>) => {
+			this.store.select('incrementoReducersMap', 'verifyUsuario').subscribe((res: IState<IUserProfile |null>) => {
 				this.handleVerifyUsuario(res);
 			})
 		);
@@ -83,7 +83,7 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 		return this.store.dispatch(setNuevoIncremento({ form: incrementoIndividual }));
 	}
 
-	handleGetActivos(res: IState<IActivo[]>) {
+	handleGetActivos(res: IState<IActivo[] | null>) {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema listando los activos');
 		if (res.success && res.response) {
 			res.response.forEach(activo => {
@@ -93,7 +93,7 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 		} 
 	}
 
-	handleVerifyUsuario(res: IState<IUserProfile>) {	
+	handleVerifyUsuario(res: IState<IUserProfile | null>) {	
 		if (res.error) {
 			if(res.error.status === 404) this.noti.error('Error', 'No se encontró ningun usuario con esa identificación');
 			else this.noti.error('Error', res.error.error.message);
@@ -107,7 +107,7 @@ export class NuevoIncrementoIndividualComponent implements OnInit, OnDestroy {
 		} 
 	}
 
-	handleNuevoIncremento(res: IState<any>) {
+	handleNuevoIncremento(res: IState<null>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'El incremento individual se ha creado con éxito');

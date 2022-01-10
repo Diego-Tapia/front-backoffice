@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { IAdmin } from 'src/app/shared/models/admin.interface';
-import { IFormUser } from 'src/app/shared/models/form-user.interface';
 import { IRol } from 'src/app/shared/models/rol.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
@@ -17,9 +16,10 @@ import { setEditarUsuario, setEditarUsuarioClear } from './store/editar-usuario.
 @Component({
   selector: 'app-editar-usuario',
   templateUrl: './editar-usuario.component.html',
-  styleUrls: ['./editar-usuario.component.sass']
+  styleUrls: ['./editar-usuario.component.sass'],
+  encapsulation: ViewEncapsulation.None
 })
-export class EditarUsuarioComponent implements OnInit {
+export class EditarUsuarioComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 	id!: string;
 	userType!: string;
@@ -34,8 +34,8 @@ export class EditarUsuarioComponent implements OnInit {
 	editForm = this.formBuilder.group({
 		shortName: ['', [Validators.maxLength(15), Validators.required]],
 		lastName: ['', [Validators.maxLength(15), Validators.required]],
-		dni: ['', [Validators.min(1), Validators.required]],
-		cuil: ['', [Validators.min(1), Validators.required]],
+		dni: ['', [Validators.min(1), Validators.minLength(7), Validators.maxLength(9), Validators.required]],
+		cuil: ['', [Validators.min(1), Validators.minLength(11), Validators.maxLength(11), Validators.required]],
 		email: ['', [Validators.email, Validators.required]],
 		phoneNumber: ['', [Validators.min(1), Validators.required]],
 		avatarUrl: [''],
@@ -50,13 +50,13 @@ export class EditarUsuarioComponent implements OnInit {
 		private store: Store<{ usuariosReducersMap: IUsuariosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('usuariosReducersMap', 'getUsuarioById').subscribe((res: IState<IUserProfile>) => {
+			this.store.select('usuariosReducersMap', 'getUsuarioById').subscribe((res: IState<IUserProfile | null>) => {
 				this.handleGetUsuarioById(res);
 			}),
-			this.store.select('usuariosReducersMap', 'getRoles').subscribe((res: IState<IRol[]>) => {
+			this.store.select('usuariosReducersMap', 'getRoles').subscribe((res: IState<IRol[] | null>) => {
 				this.handleGetRoles(res);
 			}),
-			this.store.select('usuariosReducersMap', 'editarUsuario').subscribe((res: IState<IFormUser>) => {
+			this.store.select('usuariosReducersMap', 'editarUsuario').subscribe((res: IState<IUserProfile | null>) => {
 				this.handleEditarUsuarios(res);
 			}),
 			this.route.params.subscribe((params) => {
@@ -77,12 +77,12 @@ export class EditarUsuarioComponent implements OnInit {
 		this.store.dispatch(setEditarUsuarioClear());
 	}
 
-	handleGetUsuarioById(res: IState<IUserProfile>): void {
+	handleGetUsuarioById(res: IState<IUserProfile | null>): void {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo el usuario');
 		if (res.success && res.response) this.updateFormValues(res.response);
 	}
 
-	handleGetRoles(res: IState<IRol[]>): void {
+	handleGetRoles(res: IState<IRol[] | null>): void {
 		if (res.error) {
 			this.noti.error('Error', 'Error obteniendo los roles')
 			if (res.success && res.response) {
@@ -91,7 +91,7 @@ export class EditarUsuarioComponent implements OnInit {
 		}
 	}
 
-	handleEditarUsuarios(res: IState<IFormUser>): void {
+	handleEditarUsuarios(res: IState<IUserProfile | null>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Usuario editado con éxito');

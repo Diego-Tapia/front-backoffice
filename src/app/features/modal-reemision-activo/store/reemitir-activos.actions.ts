@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { IReemisionActivo } from 'src/app/shared/models/activos/reemision-activo.interface';
 import { ITransaccion } from 'src/app/shared/models/transaccion.interface';
@@ -13,7 +14,7 @@ export const setReemitirActivosSucces = createAction(
 
 export const setReemitirActivosError = createAction(
 	'[Activos Component] Set Reemitir Activos Error',
-	props<{ payload: any }>());
+	props<{ payload: HttpErrorResponse }>());
 
 export const setReemitirActivosClear = createAction(
 	'[Activos Component] Set Reemitir Activos Clear');

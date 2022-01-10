@@ -1,14 +1,15 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { IAdmin } from 'src/app/shared/models/admin.interface';
-import { IFormUser } from 'src/app/shared/models/form-user.interface';
+import { IReqUser } from 'src/app/shared/models/req-user.interface';
 import { IRol } from 'src/app/shared/models/rol.interface';
 import { IState } from 'src/app/shared/models/state.interface';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { IUsuariosReducersMap } from '../usuarios.reducers.map';
 import { setAltaUsuarios, setAltaUsuariosClear } from './store/alta-usuario/alta-usuarios.action';
@@ -18,7 +19,8 @@ import { setGetRoles, setGetRolesClear } from './store/get-roles/get-roles.actio
 @Component({
   selector: 'app-alta-usuarios',
   templateUrl: './alta-usuarios.component.html',
-  styleUrls: ['./alta-usuarios.component.sass']
+  styleUrls: ['./alta-usuarios.component.sass'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AltaUsuariosComponent implements OnInit, OnDestroy {
 
@@ -26,7 +28,8 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
   public userType!: string;
   public isLinear = true;
   public admin: IAdmin | undefined;
-
+  public hide: boolean = true;
+  
   @ViewChild('stepper') private stepper!: MatStepper;
 
   roles: IRol[] = [
@@ -35,23 +38,23 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     { id: 'asdasd', rol: 'VIEWER' }
   ];
 
-  firstStep = this.formBuilder.group({
-    shortName: ['', [Validators.maxLength(15), Validators.required]],
-    lastName: ['', [Validators.maxLength(15), Validators.required]],
-    dni: ['', [Validators.min(1), Validators.required]],
-    cuil: ['', [Validators.min(1), Validators.required]],
+  firstStep: FormGroup = this.formBuilder.group({
+    shortName: ['', [Validators.required, Validators.maxLength(30)]],
+    lastName: ['', [Validators.required, Validators.maxLength(30)]],
+    dni: ['', [Validators.required, Validators.min(999999)]],
+    cuil: ['', [Validators.required, Validators.min(19999999999), Validators.max(30000000000)]],  
   })
 
-  secondStep = this.formBuilder.group({
+  secondStep: FormGroup = this.formBuilder.group({
     username: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\^$*.\[\]{}\(\)?\-\"!@#%&\/,><\':;|_~`])\S{8,99}$/)]],
     repeat_pass: ['', [Validators.required]],
     rol: ['']
   })
 
-  thirdStep = this.formBuilder.group({
+  thirdStep: FormGroup = this.formBuilder.group({
     email: ['', [Validators.email, Validators.required]],
-    phoneNumber: ['', [Validators.min(1), Validators.required]],
+    phoneNumber: ['', [Validators.required, Validators.min(1)]],
     avatarUrl: [' '],
     customId: [' '],
     clientId: ['']
@@ -65,10 +68,10 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     private noti: NotificationsService,
     private store: Store<{ usuariosReducersMap: IUsuariosReducersMap }>) {
     this.subscriptions.push(
-      this.store.select('usuariosReducersMap', 'altaUsuarios').subscribe((res: IState<IFormUser>) => {
+      this.store.select('usuariosReducersMap', 'altaUsuarios').subscribe((res: IState<IUserProfile | null>) => {
         this.handleAltaUsuarios(res);
       }),
-      this.store.select('usuariosReducersMap', 'getRoles').subscribe((res: IState<IRol[]>) => {
+      this.store.select('usuariosReducersMap', 'getRoles').subscribe((res: IState<IRol[] | null>) => {
         this.handleGetRoles(res);
       }),
       this.route.params.subscribe(params => this.userType = params.type)
@@ -77,7 +80,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 	  this.admin = this.authService.getUserData()?.admin; 
-    if (this.userType ===  'backoffice') this.store.dispatch(setGetRoles());
+    // if (this.userType ===  'backoffice') this.store.dispatch(setGetRoles());
   }
 
   ngOnDestroy(): void {
@@ -86,7 +89,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     this.store.dispatch(setGetRolesClear());
   }
 
-  handleGetRoles(res: IState<IRol[]>): void {
+  handleGetRoles(res: IState<IRol[] | null>): void {
     if (res.error) {
       this.noti.error('Error', 'Error obteniendo los roles')
     }
@@ -95,7 +98,7 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleAltaUsuarios(res: IState<IFormUser>): void {
+  handleAltaUsuarios(res: IState<IUserProfile | null>): void {
     if (res.error) this.noti.error('Error', res.error.error.message)
     if (res.success) {
       this.noti.success('Éxito', 'Usuario creado con éxito')
@@ -104,15 +107,18 @@ export class AltaUsuariosComponent implements OnInit, OnDestroy {
     }
   }
 
-  verifyPassword() {
+  verifyPassword() {    
     const { username, password, repeat_pass } = this.secondStep.value
-    if(password !== repeat_pass) this.noti.error('Error', 'Las contraseñas no coinciden');
+    if(!username) this.noti.error('Error', 'Debe completar el nombre de usuario');
     if(password.length < 8) this.noti.error('Error', 'La contraseña debe contener al menos 8 carácteres');
     if(!password.match(/[0-9]/)) this.noti.error('Error', 'La contraseña debe contener al menos un número');
     if(!password.match(/[\^$*.\[\]{}\(\)?\-\"!@#%&\/,><\':;|_~`]/)) this.noti.error('Error', 'La contraseña debe contener al menos un carácter especial');
     if(!password.match(/[A-Z]/)) this.noti.error('Error', 'La contraseña debe contener al menos una letra mayúscula');
     if(!password.match(/[a-z]/)) this.noti.error('Error', 'La contraseña debe contener al menos una letra minúscula');
-    if(!username) this.noti.error('Error', 'Debe completar el nombre de usuario');
+    if(password !== repeat_pass) {
+      this.secondStep.patchValue({password: '', repeat_pass: ''})
+      this.noti.error('Error', 'Las contraseñas no coinciden');
+    } 
     else this.stepper.next()
   }
 

@@ -1,28 +1,49 @@
 @import '../../../../../../assets/style-variables/variables'
 
 .section__stepper
-    background-color: white
+    background-color: #ffffff
     margin-top: 2vh
-    padding: 30px
-.buttons__stepper__primary
-    border-color: $primary
-    color: $primary
-.buttons__stepper
-    margin-right: 12px
-    color: $light-grey
+    border-radius: 3px
+    padding: 24px
+.mat-vertical-stepper-header
+    padding: 20px
+.mat-vertical-content
+    padding-top: 4px !important
 .card_content
-    display: flex
+    display: flex !important
     flex-wrap: wrap
-    width: 70%
+    width: 50vw
     border: 0.5px solid $primary
     background-color: $primary-purple
+    margin-bottom: 24px
+    margin-left: 16px
     padding: 24px
+    div
+        width: 30%
+.mat-dialog-actions
+    padding: 0
+    margin-bottom: 0
+.buttons__stepper__primary
+    margin-left: 16px !important
+    border-color: $primary !important
+    color: $primary !important
+.buttons__stepper
+    margin-left: 16px !important
+    color: $medium-gray !important
+    border-color: $medium-gray !important
 .form__group
     display: flex
 .form__group>.mat-form-field
-    margin: 10px
-    width: 20%
+    width: 20vw
+    margin-left: 16px
+.mat-form-field-appearance-outline .mat-form-field-wrapper
+    margin: 0 !important
+    padding-bottom: 24px !important
+.mat-form-field-subscript-wrapper
+    margin: 0 !important
+    padding: 0 !important
 .title__options
+    font-weight: 400
     font-size: 12px
     color:$dark-purple
 .subtitle__options
@@ -32,6 +53,11 @@
 .textarea__options
     height: 100px
     resize: none
-.button__cancel
-    margin-left: -11px
-    margin-top: -6px
+.confirm__btn
+    margin-left: 16px !important
+    color: #ffffff !important
+    background-color: $primary  
+.mat-form-field-hint-wrapper
+    width: 40vw !important
+.mat-form-field-subscript-wrapper
+    width: 40vw !important

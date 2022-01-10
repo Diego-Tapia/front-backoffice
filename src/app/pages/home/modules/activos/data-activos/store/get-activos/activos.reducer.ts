@@ -42,6 +42,6 @@ const mySetGetActivosReducer = createReducer(
 	})
 );
 
-export function setGetActivosReducer(state: IState<IActivo[]> | undefined, action: Action) {
+export function setGetActivosReducer(state: IState<IActivo[] | null> | undefined, action: Action) {
 	return mySetGetActivosReducer(state, action);
 }

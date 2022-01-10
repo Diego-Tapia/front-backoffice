@@ -1,4 +1,4 @@
-export interface IFormIndividual {
+export interface IReqIndividual {
     tokenId: string;
     userIdentifier: string;
     amount: number;

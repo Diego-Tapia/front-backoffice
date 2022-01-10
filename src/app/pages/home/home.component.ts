@@ -14,12 +14,12 @@ export class HomeComponent implements OnInit {
 	navItems: INavItem[] = [
 		{ name: 'INICIO', route: '/home/inicio', icon: 'home_outlined', disabled: false},
 		{ name: 'ACTIVOS', route: '/home/activos', icon: 'monetization_on', disabled: false},
-		{ name: 'BILLETERAS', route: '/home', icon: 'account_balance_wallet', disabled: true},
-		{ name: 'GESTIÓN DE USUARIOS', route: '/home/usuarios/final', icon: 'group', disabled: false},
+		{ name: 'BILLETERAS', route: '/billetera', icon: 'account_balance_wallet', disabled: true},
+		{ name: 'GESTIÓN DE USUARIOS', route: '/home/usuarios', icon: 'group', disabled: false},
 		{ name: 'INCREMENTAR', route: '/home/incremento', icon: 'trending_up', disabled: false},
 		{ name: 'DISMINUIR', route: '/home/disminucion', icon: 'trending_down', disabled: false},
-		{ name: 'NOTIFICACIONES', route: '/home', icon: 'notifications', disabled: true},
-		{ name: 'REPORTES', route: '/home', icon: 'summarize', disabled: true}
+		{ name: 'NOTIFICACIONES', route: '/notificaciones', icon: 'notifications', disabled: true},
+		{ name: 'REPORTES', route: '/reportes', icon: 'summarize', disabled: true}
 	];
 	ngOnInit(): void {
 	}

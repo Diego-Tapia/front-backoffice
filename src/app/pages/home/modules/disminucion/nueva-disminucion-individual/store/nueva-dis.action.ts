@@ -1,19 +1,20 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
-import { IFormIndividual } from 'src/app/shared/models/form-individual.interface';
+import { IReqIndividual } from 'src/app/shared/models/req-individual.interface';
 
 export const setNuevaDisminucion = createAction(
 	'[Nueva Disminucion Component] Set Nueva Disminucion ',
-	props<{ form: IFormIndividual }>()
+	props<{ form: IReqIndividual }>()
 );
 
 export const setNuevaDisminucionSucces = createAction(
 	'[Nueva Disminucion Component] Set Nueva Disminucion Success',
-	props<{ payload: any }>()
+	props<{ payload: null }>()
 );
 
 export const setNuevaDisminucionError = createAction(
 	'[Nueva Disminucion Component] Set Nueva Disminucion Error',
-	props<{ payload: any }>()
+	props<{ payload: HttpErrorResponse }>()
 );
 
 export const setNuevaDisminucionClear = createAction('[Nueva Disminucion Component] Set Nueva Disminucion Clear');

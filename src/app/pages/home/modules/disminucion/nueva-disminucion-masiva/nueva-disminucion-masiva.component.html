@@ -10,23 +10,24 @@
 			<mat-step [stepControl]="firstStep">
 				<ng-template matStepLabel>Nombre del incremento</ng-template>
 				<form [formGroup]="firstStep">
-					<mat-form-field appearance="outline" style="width: 35%">
-						<mat-label>Nombre</mat-label>
-						<input matInput placeholder="Nombre" formControlName="name" required />
-					</mat-form-field>
-					<br />
-					<mat-dialog-actions>
-						<button type="button" mat-stroked-button class="buttons__stepper__primary" matStepperNext>
-							Siguiente
-						</button>
-					</mat-dialog-actions>
+					<div class="form__group">
+						<mat-form-field appearance="outline" style="width: 35%">
+							<mat-label>Nombre</mat-label>
+							<input matInput placeholder="Nombre" formControlName="name" required />
+						</mat-form-field>
+					</div>
 				</form>
+				<mat-dialog-actions>
+					<button type="button" mat-stroked-button class="buttons__stepper__primary" matStepperNext>
+						Siguiente
+					</button>
+				</mat-dialog-actions>
 			</mat-step>
 
 			<mat-step [stepControl]="secondStep">
 				<ng-template matStepLabel>Activos</ng-template>
 				<form [formGroup]="secondStep">
-					<br />
+				<div class="form__group">
 					<mat-form-field appearance="outline" style="width: 35%">
 						<mat-label>Activo</mat-label>
 						<mat-select formControlName="tokenId">
@@ -35,38 +36,39 @@
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
-					<br />
-					<mat-dialog-actions>
-						<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
-						<button type="button" mat-stroked-button class="buttons__stepper__primary" matStepperNext>
-							Siguiente
-						</button>
-					</mat-dialog-actions>
+				</div>
 				</form>
+				<mat-dialog-actions>
+					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
+					<button type="button" mat-stroked-button class="buttons__stepper__primary" matStepperNext>
+						Siguiente
+					</button>
+				</mat-dialog-actions>
 			</mat-step>
 
 			<mat-step [stepControl]="thirdStep">
 				<ng-template matStepLabel>Cargar usuarios</ng-template>
 				<form [formGroup]="thirdStep">
-					<br />
-					<mat-form-field appearance="outline" style="width: 35%" class="file__input__form">
-						<input
-							type="file"
-							accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-							class="custom__file__input"
-							id="inputGroupFile01"
-							#file
-							(change)="fileSelected($event)"
-						/>
-
-						<mat-label class="file__input__label">
-							<img src="assets/images/arrow_circle_up-24px.svg" />
-							<span class="file__input__label__text">
-								Cargar usuarios
-							</span>
-						</mat-label>
-						<input matInput formControlName="excelFile" class="disabled__input" placeholder="Cargar usuarios" readonly="readonly" required/>
-					</mat-form-field>
+					<div class="form__group">
+						<mat-form-field appearance="outline" style="width: 35%" class="file__input__form">
+							<input
+								type="file"
+								accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+								class="custom__file__input"
+								id="inputGroupFile01"
+								#file
+								(change)="fileSelected($event)"
+							/>
+							<mat-label class="file__input__label">
+								<img src="assets/images/arrow_circle_up-24px.svg" />
+								<span class="file__input__label__text">
+									Cargar usuarios
+								</span>
+							</mat-label>
+							<input matInput formControlName="excelFile" class="disabled__input" placeholder="Cargar usuarios" readonly="readonly"/>
+							<mat-hint align="start">Ej.: ".xls"; ".xlsx"</mat-hint>
+						</mat-form-field>
+					</div>
 				</form>
 				<mat-dialog-actions>
 					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>
@@ -80,30 +82,22 @@
 
 			<mat-step>
 				<ng-template matStepLabel>Confirmacion</ng-template>
-				<br />
 				<mat-card class="card_content">
-					<div id="div1" style="width: 35%">
-						<ul>
-							<mat-card-title class="title__options">Nombre</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ firstStep.get('name')?.value }} </mat-card-subtitle>
-						</ul>
+					<div style="width: 35%">
+						<mat-card-title class="title__options">Nombre</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ firstStep.get('name')?.value }} </mat-card-subtitle>
 					</div>
-					<div id="div2" style="width: 15%">
-						<ul>
-							<mat-card-title class="title__options">Activos</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">
-								{{ (secondStep.get('tokenId')?.value).symbol | uppercase }}
-							</mat-card-subtitle>
-						</ul>
+					<div style="width: 15%">
+						<mat-card-title class="title__options">Activos</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">
+							{{ (secondStep.get('tokenId')?.value).symbol | uppercase }}
+						</mat-card-subtitle>
 					</div>
-					<div id="div3" style="width: 50%">
-						<ul>
-							<mat-card-title class="title__options">Usuarios</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ fileName }} </mat-card-subtitle>
-						</ul>
+					<div style="width: 50%">
+						<mat-card-title class="title__options">Usuarios</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ fileName }} </mat-card-subtitle>
 					</div>
 				</mat-card>
-				<br />
 				<mat-dialog-actions>
 					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
 					<button (click)="submit()" mat-stroked-button class="buttons__stepper__primary" matStepperNext>Confirmar</button>

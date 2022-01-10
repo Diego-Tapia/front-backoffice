@@ -47,6 +47,6 @@ const mySetVerifyUsuarioReducer = createReducer(
 	})
 );
 
-export function setVerifyUsuarioReducer(state: IState<IUserProfile> | undefined, action: Action) {
+export function setVerifyUsuarioReducer(state: IState<IUserProfile | null> | undefined, action: Action) {
 	return mySetVerifyUsuarioReducer(state, action);
 }

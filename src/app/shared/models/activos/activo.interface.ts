@@ -9,13 +9,13 @@ export interface IActivo {
 	id: string;
 	emited: boolean;
 	transferable: boolean;
-	bcItemId?: number;
-	operations?: string[];
-	applicabilities?: string[];
+	bcItemId: number;
+	operations: string[];
+	applicabilities: string[];
 	clientId: string;
-	validFrom?: Date;
-	validTo?: Date;
-	observations?: string;
+	validFrom: Date;
+	validTo: Date;
+	observations: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

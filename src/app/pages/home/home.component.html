@@ -14,11 +14,11 @@
 			<div
 				class="nav__item"
 				mat-list-item
-				routerLink="{{nav.route}}"
+				[routerLink]="nav.route"
 				routerLinkActive="active"
-				[routerLinkActiveOptions]="{exact : true}"
+				[routerLinkActiveOptions]="{exact: false}"
 				*ngFor="let nav of navItems"
-				[ngClass]="nav.disabled == true ? 'disabled' : ''"
+				[ngClass]="nav.disabled === true ? 'disabled' : ''"
 			>
 				<div style="display: flex;"
 					[matTooltipDisabled]="!nav.disabled"

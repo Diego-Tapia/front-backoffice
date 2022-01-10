@@ -31,7 +31,7 @@ import { ReemitirActivosEffects } from './modal-reemision-activo/store/reemitir-
 import localeEsAr from '@angular/common/locales/es-AR';
 import { ModalDetalleActivoComponent } from './modal-detalle-activo/modal-detalle-activo.component';
 import { featuresReducersMap } from './features.reducers.map';
-import { GetActivosByIdEffects } from '../pages/home/modules/activos/data-activos/store/activos-by-id.effects';
+import { GetActivosByIdEffects } from '../pages/home/modules/activos/data-activos/store/get-by-id/activos-by-id.effects';
 import { MatDividerModule } from '@angular/material/divider';
 import { PutActivoEffects } from './tabla-activos/store/put-activo.effects';
 import { NuevoIncrementoMasivoEffects } from '../pages/home/modules/incremento/nuevo-incremento-masivo/store/nuevo-inc-mas.effects';
@@ -41,6 +41,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { TablaUsuariosComponent } from './tabla-usuarios/tabla-usuarios.component';
 import { ModalNuevaOperacionComponent } from './modal-nueva-operacion/modal-nueva-operacion.component';
 import { EditarUsuarioEffects } from '../pages/home/modules/usuarios/editar-usuario/store/editar-usuario.effect';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -77,6 +78,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
 		MatInputModule,
 		ReactiveFormsModule,
 		SharedModule,
+		MatTooltipModule,
 		StoreModule.forFeature('featuresReducersMap', featuresReducersMap),
 		EffectsModule.forFeature([
 			EmitirActivosEffects, 

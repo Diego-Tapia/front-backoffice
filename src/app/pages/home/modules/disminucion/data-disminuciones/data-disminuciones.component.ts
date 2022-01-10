@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { IDataIndividual } from 'src/app/shared/models/data-individual.interface';
+import { IResIndividual } from 'src/app/shared/models/res-individual.interface';
 import { IDisminucionReducersMap } from '../disminuciones.reducers.map';
 import { setGetDisminucionesMasivas, setGetDisminucionesMasivasClear } from './store/get-dis-mas.action';
 import { setGetDisminuciones, setGetDisminucionesClear } from './store/get-dis.action';
 import { NotificationsService } from 'angular2-notifications';
-import { IDataMasivo } from 'src/app/shared/models/data-masivo.interface';
+import { IResMasivo } from 'src/app/shared/models/res-masivo.interface';
 import { ModalNuevaOperacionComponent } from 'src/app/features/modal-nueva-operacion/modal-nueva-operacion.component';
 @Component({
 	selector: 'app-data-disminuciones',
 	templateUrl: './data-disminuciones.component.html',
 	styleUrls: ['./data-disminuciones.component.sass']
 })
-export class DataDisminucionesComponent implements OnInit {
+export class DataDisminucionesComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
 
-	individualDec!: IDataIndividual[];
-	massiveDec!: IDataMasivo[];
+	individualDec!: IResIndividual[];
+	massiveDec!: IResMasivo[];
 
 	constructor(
 		public dialog: MatDialog,

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 
@@ -13,7 +14,7 @@ export const setGetActivosByIdSucces = createAction(
 
 export const setGetActivosByIdError = createAction(
 	'[Activos Component] Set Get Activos By Id Error',
-	props<{ payload: any }>());
+	props<{ payload: HttpErrorResponse }>());
 
 export const setGetActivosByIdClear = createAction(
 	'[Activos Component] Set Get Activos By Id Clear'

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -14,7 +14,7 @@ import { setNuevaNotificacion, setNuevaNotificacionClear } from './store/nueva-n
 	templateUrl: './nueva-notificacion-masiva.component.html',
 	styleUrls: ['./nueva-notificacion-masiva.component.sass']
 })
-export class NuevaNotificacionMasivaComponent implements OnInit {
+export class NuevaNotificacionMasivaComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
 	isLinear = false;
 

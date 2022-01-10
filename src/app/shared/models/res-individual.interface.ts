@@ -1,4 +1,4 @@
-export interface IDataIndividual {
+export interface IResIndividual {
 	id: string;
 	tipo: string;
 	concepto: string;

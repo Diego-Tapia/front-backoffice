@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 
 export const setGetNotificaciones = createAction('[Notificaciones Component] Set Get Notificaciones');
@@ -9,7 +10,7 @@ export const setGetNotificacionesSucces = createAction(
 
 export const setGetNotificacionesError = createAction(
 	'[Notificaciones Component] Set Get Notificaciones Error', 
-	props<{ payload: any }>()
+	props<{ payload: HttpErrorResponse }>()
 );
 
 export const setGetNotificacionesClear = createAction(

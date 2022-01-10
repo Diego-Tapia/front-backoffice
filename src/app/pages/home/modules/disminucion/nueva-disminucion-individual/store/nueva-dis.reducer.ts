@@ -7,7 +7,7 @@ import {
 	setNuevaDisminucionClear
 } from './nueva-dis.action';
 
-export const initialState: IState<any> = {
+export const initialState: IState<null> = {
 	response: null,
 	pending: false,
 	success: false,
@@ -46,6 +46,6 @@ const mySetNuevaDisminucionReducer = createReducer(
 	})
 );
 
-export function setNuevaDisminucionReducer(state: IState<any> | undefined, action: Action) {
+export function setNuevaDisminucionReducer(state: IState<null> | undefined, action: Action) {
 	return mySetNuevaDisminucionReducer(state, action);
 }

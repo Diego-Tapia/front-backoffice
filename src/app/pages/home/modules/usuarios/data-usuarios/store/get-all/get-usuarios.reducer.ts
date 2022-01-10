@@ -48,6 +48,6 @@ const mySetGetUsuariosReducer = createReducer(
 	})
 );
 
-export function setGetUsuariosReducer(state: IState<IUserProfile[]> | undefined, action: Action) {
+export function setGetUsuariosReducer(state: IState<IUserProfile[] | null> | undefined, action: Action) {
 	return mySetGetUsuariosReducer(state, action);
 }

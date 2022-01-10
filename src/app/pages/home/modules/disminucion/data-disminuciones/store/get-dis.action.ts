@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 
 export const setGetDisminuciones = createAction('[Disminucion Component] Set Get Disminucion');
@@ -9,7 +10,7 @@ export const setGetDisminucionesSuccess = createAction(
 
 export const setGetDisminucionesError = createAction(
 	'[Disminucion Component] Set Get Disminucion Error',
-	props<{ payload: any }>()
+	props<{ payload: HttpErrorResponse }>()
 );
 
 export const setGetDisminucionesClear = createAction('[Disminucion Component] Set Get Disminucion Clear');

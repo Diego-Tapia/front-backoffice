@@ -1,28 +1,45 @@
 @import '../../../../../../assets/style-variables/variables'
 
 .section__stepper
-    background-color: white
+    background-color: #ffffff
     margin-top: 2vh
+    border-radius: 3px
+    padding: 24px
+.mat-vertical-stepper-header
+    padding: 20px
+.mat-vertical-content
+    padding-top: 4px !important
 .card_content
     display: flex !important
     flex-wrap: wrap
     width: 70%
     border: 0.5px solid $primary
     background-color: $primary-purple
+    margin-bottom: 24px
+    margin-left: 16px
     padding: 24px
     div
         width: 30%
 .buttons__stepper__primary
-    border-color: $primary
-    color: $primary
+    margin-left: 16px !important
+    border-color: $primary !important
+    color: $primary !important
 .buttons__stepper
-    margin-right: 12px
-    color: $light-grey
+    margin-left: 16px !important
+    color: $medium-gray !important
+    border-color: $medium-gray !important
 .form__group
     display: flex
 .form__group>.mat-form-field
-    margin: 10px
+    margin-left: 16px
+.mat-form-field-appearance-outline .mat-form-field-wrapper
+    margin: 0 !important
+    padding-bottom: 24px !important
+.mat-form-field-subscript-wrapper
+    margin: 0 !important
+    padding: 0 !important
 .title__options
+    font-weight: 400
     font-size: 12px
     color:$dark-purple
 .subtitle__options
@@ -36,5 +53,17 @@
     opacity: 1 !important
     color: #00000099 !important
 .confirm__btn
-    color: #ffffff
-    background-color: $primary 
+    margin-left: 16px !important
+    color: #ffffff !important
+    background-color: $primary  
+
+//CHECKBOX
+.mat-checkbox-checked.mat-primary .mat-checkbox-background, .mat-calendar-body-selected
+  background-color: $primary !important
+//DATEPICKER
+.mat-datepicker-toggle-active
+  color: $primary !important
+.mat-checkbox-checked.mat-primary .mat-checkbox-background, .mat-calendar-body-selected
+  background-color: $primary !important
+.mat-calendar-body-in-range::before, .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical)
+  background-color: $primary-faded !important

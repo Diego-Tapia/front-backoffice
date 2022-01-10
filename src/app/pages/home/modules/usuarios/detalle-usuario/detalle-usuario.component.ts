@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
-import { IFormUser } from 'src/app/shared/models/form-user.interface';
+import { IReqUser } from 'src/app/shared/models/req-user.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { UsuariosService } from 'src/app/shared/services/usuarios/usuarios.service';
@@ -31,10 +31,10 @@ export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 		private store: Store<{ usuariosReducersMap: IUsuariosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('usuariosReducersMap', 'getUsuarioById').subscribe((res: IState<IUserProfile>) => {
+			this.store.select('usuariosReducersMap', 'getUsuarioById').subscribe((res: IState<IUserProfile | null>) => {
 				this.handleGetUsuarioById(res);
 			}),
-			this.store.select('usuariosReducersMap', 'editarUsuario').subscribe((res: IState<IFormUser>) => {
+			this.store.select('usuariosReducersMap', 'editarUsuario').subscribe((res: IState<IUserProfile | null>) => {
 				this.handleEditarUsuarios(res);
 			}),
 			this.route.params.subscribe((params) => {
@@ -54,14 +54,14 @@ export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 		this.store.dispatch(setEditarUsuarioClear());
 	}
 
-	handleGetUsuarioById(res: IState<IUserProfile>): void {
+	handleGetUsuarioById(res: IState<IUserProfile | null>): void {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo el usuario');
 		if (res.success && res.response) {
 			this.usuario = this.usuariosService.setUsersDataTable(res.response);
 		}
 	}
 
-	handleEditarUsuarios(res: IState<IFormUser>): void {
+	handleEditarUsuarios(res: IState<IUserProfile | null>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Usuario editado con éxito');
@@ -71,8 +71,8 @@ export class DetalleUsuarioComponent implements OnInit, OnDestroy {
 
 	editarUsuario(id: string | undefined) {
 		(this.userType === 'backoffice')
-		? this.router.navigate(['/home/usuarios/editar/backoffice', id])
-		: this.router.navigate(['/home/usuarios/editar/final', id]);
+		? this.router.navigate(['/home/usuarios/backoffice/editar', id])
+		: this.router.navigate(['/home/usuarios/final/editar', id]);
 	}
 
 	editarEstado(usuario: IUserProfile){

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
-import { setGetActivosById, setGetActivosByIdClear } from 'src/app/pages/home/modules/activos/data-activos/store/activos-by-id.actions';
+import { setGetActivosById, setGetActivosByIdClear } from 'src/app/pages/home/modules/activos/data-activos/store/get-by-id/activos-by-id.actions';
 import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IFeaturesReducersMap } from '../features.reducers.map';
@@ -19,7 +19,8 @@ import { setPutActivo, setPutActivoClear } from './store/put-activo.actions';
 @Component({
 	selector: 'app-tabla-activos',
 	templateUrl: './tabla-activos.component.html',
-	styleUrls: ['./tabla-activos.component.sass']
+	styleUrls: ['./tabla-activos.component.sass'],
+	encapsulation: ViewEncapsulation.None
 })
 export class TablaActivosComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
 
@@ -40,10 +41,10 @@ export class TablaActivosComponent implements OnInit, OnDestroy, OnChanges, Afte
 		private store: Store<{ featuresReducersMap: IFeaturesReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('featuresReducersMap', 'putActivo').subscribe((res: IState<IActivo>) => {
+			this.store.select('featuresReducersMap', 'putActivo').subscribe((res: IState<IActivo | null>) => {
 				this.handlePutActivo(res);
 			}),
-			this.store.select('featuresReducersMap', 'getActivosById').subscribe((res: IState<IActivo>) => {
+			this.store.select('featuresReducersMap', 'getActivosById').subscribe((res: IState<IActivo | null>) => {
 				this.handleGetActivosById(res);
 			})
 		);
@@ -70,14 +71,14 @@ export class TablaActivosComponent implements OnInit, OnDestroy, OnChanges, Afte
 		this.subscriptions.forEach((subs) => subs.unsubscribe())
 	}
 
-	handleGetActivosById(res: IState<IActivo>): void {
+	handleGetActivosById(res: IState<IActivo | null>): void {
 		if (res.error) this.noti.error('Error', 'Error obteniendo los detalles del activo')
 		if (res.success && res.response) {
 			this.dialog.open(ModalDetalleActivoComponent, { data: res.response });
 		} 
 	}
 
-	handlePutActivo(res: IState<IActivo>): void {
+	handlePutActivo(res: IState<IActivo | null>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success){
 			this.noti.success ('Éxito', 'Se ha editado el activo con éxito');

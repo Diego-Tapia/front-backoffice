@@ -42,6 +42,6 @@ const mySetEmitirActivosReducer = createReducer(
 	})
 );
 
-export function setEmitirActivosReducer(state: IState<ITransaccion> | undefined, action: Action) {
+export function setEmitirActivosReducer(state: IState<ITransaccion | null> | undefined, action: Action) {
 	return mySetEmitirActivosReducer(state, action);
 }

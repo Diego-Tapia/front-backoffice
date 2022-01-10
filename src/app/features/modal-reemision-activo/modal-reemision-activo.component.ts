@@ -32,7 +32,7 @@ export class ModalReemisionActivoComponent implements OnInit, OnDestroy {
 		private store: Store<{ featuresReducersMap: IFeaturesReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('featuresReducersMap', 'reemitirActivo').subscribe((res: IState<ITransaccion>) => {
+			this.store.select('featuresReducersMap', 'reemitirActivo').subscribe((res: IState<ITransaccion | null>) => {
 				this.handleReemitirActivo(res);
 			})
 		);
@@ -43,7 +43,7 @@ export class ModalReemisionActivoComponent implements OnInit, OnDestroy {
 		return this.store.dispatch(setReemitirActivos({ form: this.reemitForm.value }));
 	}
 
-	handleReemitirActivo(res: IState<ITransaccion>): void {
+	handleReemitirActivo(res: IState<ITransaccion | null>): void {
 		if (res.error) {
 			this.noti.error('Error', res.error.error.message);
 			this.dialogRef.close();

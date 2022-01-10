@@ -19,7 +19,7 @@ export class ModalAltaUsuarioComponent implements OnInit {
     	this.router.navigate(['home/usuarios/alta', this.type]);
 	}
 
-	diferentColor(event: any, type: number): void {
+	diferentColor(type: number): void {
 		if (type == 1) {
 			this.cambioColor = 'tab1';
 			this.type = 'final';

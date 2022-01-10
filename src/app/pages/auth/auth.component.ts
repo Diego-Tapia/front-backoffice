@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
@@ -11,7 +11,8 @@ import { setAuth, setAuthClear } from './store/auth.actions';
 @Component({
 	selector: 'app-auth',
 	templateUrl: './auth.component.html',
-	styleUrls: ['./auth.component.sass']
+	styleUrls: ['./auth.component.sass'],
+	encapsulation: ViewEncapsulation.None
 })
 export class AuthComponent implements OnInit, OnDestroy {
 	public hide: boolean = true;

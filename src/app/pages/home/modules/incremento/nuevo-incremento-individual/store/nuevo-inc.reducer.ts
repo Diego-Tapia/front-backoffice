@@ -7,7 +7,7 @@ import {
 	setNuevoIncrementoSucces
 } from './nuevo-inc.actions';
 
-export const initialState: IState<any> = {
+export const initialState: IState<null> = {
 	response: null,
 	pending: false,
 	success: false,
@@ -46,6 +46,6 @@ const mySetNuevoIncrementoReducer = createReducer(
 	})
 );
 
-export function setNuevoIncrementoReducer(state: IState<any> | undefined, action: Action) {
+export function setNuevoIncrementoReducer(state: IState<null> | undefined, action: Action) {
 	return mySetNuevoIncrementoReducer(state, action);
 }

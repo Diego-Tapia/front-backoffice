@@ -47,6 +47,6 @@ const mySetPutActivoReducer = createReducer(
 	})
 );
 
-export function setPutActivoReducer(state: IState<IActivo> | undefined, action: Action) {
+export function setPutActivoReducer(state: IState<IActivo | null> | undefined, action: Action) {
 	return mySetPutActivoReducer(state, action);
 }

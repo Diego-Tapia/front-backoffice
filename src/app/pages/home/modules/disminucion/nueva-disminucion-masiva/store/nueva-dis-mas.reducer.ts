@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { IResMasivo } from 'src/app/shared/models/res-masivo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import {
 	setNuevaDisminucionMasiva,
@@ -7,7 +8,7 @@ import {
 	setNuevaDisminucionMasivaClear
 } from './nueva-dis-mas.action';
 
-export const initialState: IState<any> = {
+export const initialState: IState<IResMasivo | null> = {
 	response: null,
 	pending: false,
 	success: false,
@@ -46,6 +47,6 @@ const mySetNuevaDisminucionMasivaReducer = createReducer(
 	})
 );
 
-export function setNuevaDisminucionMasivaReducer(state: IState<any> | undefined, action: Action) {
+export function setNuevaDisminucionMasivaReducer(state: IState<IResMasivo | null> | undefined, action: Action) {
 	return mySetNuevaDisminucionMasivaReducer(state, action);
 }

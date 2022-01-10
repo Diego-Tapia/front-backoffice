@@ -1,4 +1,4 @@
-export interface IFormUser {
+export interface IReqUser {
 	shortName: string;
 	lastName: string;
 	username: string;
@@ -9,10 +9,10 @@ export interface IFormUser {
 	phoneNumber: number;
 	customId: string;
 	clientId: string;
-	rol?: string;
-	avatarUrl?: string;
-	createdAt?: Date;
-	id?: string;
+	rol: string;
+	avatarUrl: string;
+	createdAt: Date;
+	id: string;
 }
 
 export interface IUserStatus {

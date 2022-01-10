@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -12,14 +12,15 @@ import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { IAplicabilidad } from 'src/app/shared/models/activos/aplicabilidad.interface';
 import { IState } from 'src/app/shared/models/state.interface';
 import { IActivosReducersMap } from '../activos.reducers.map';
-import { setGetActivosById, setGetActivosByIdClear } from '../data-activos/store/activos-by-id.actions';
+import { setGetActivosById, setGetActivosByIdClear } from '../data-activos/store/get-by-id/activos-by-id.actions';
 import { setGetAplicabilidades, setGetAplicabilidadesClear } from '../store/get-aplicabilidades.actions';
 import { setEditarActivo, setEditarActivoClear } from './store/editar-activo.actions';
 
 @Component({
   selector: 'app-editar-activo',
   templateUrl: './editar-activo.component.html',
-  styleUrls: ['./editar-activo.component.sass']
+  styleUrls: ['./editar-activo.component.sass'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EditarActivoComponent implements OnInit, OnDestroy{
 	subscriptions: Subscription[] = [];
@@ -65,13 +66,13 @@ export class EditarActivoComponent implements OnInit, OnDestroy{
 		private store: Store<{ activosReducersMap: IActivosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('activosReducersMap', 'getActivosById').subscribe((res: IState<IActivo>) => {
+			this.store.select('activosReducersMap', 'getActivosById').subscribe((res: IState<IActivo | null>) => {
 				this.handleGetActivosById(res);
 			}),
-			this.store.select('activosReducersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[]>) => {
+			this.store.select('activosReducersMap', 'getAplicabilidades').subscribe((res: IState<IAplicabilidad[] | null>) => {
 				this.handleGetAplicabilidades(res);
 			}),
-			this.store.select('activosReducersMap', 'editarActivo').subscribe((res: IState<IActivo>) => {
+			this.store.select('activosReducersMap', 'editarActivo').subscribe((res: IState<IActivo | null>) => {
 				this.handleEditarActivo(res);
 			})
 		);
@@ -98,14 +99,14 @@ export class EditarActivoComponent implements OnInit, OnDestroy{
 		this.store.dispatch(setEditarActivoClear());
 	}
 
-	handleGetActivosById(res: IState<IActivo>): void {
+	handleGetActivosById(res: IState<IActivo | null>): void {
 		if (res.success && res.response) {
 			this.activo = res.response;
 			this.updateFormValues();
 		}
 	}
 
-	handleGetAplicabilidades(res: IState<IAplicabilidad[]>): void {
+	handleGetAplicabilidades(res: IState<IAplicabilidad[] | null>): void {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo las aplicabilidades');
 		if (res.success && res.response) this.allApplicabilities = res.response
 	}
@@ -123,7 +124,7 @@ export class EditarActivoComponent implements OnInit, OnDestroy{
 		return this.store.dispatch(setEditarActivo({ id: this.id, form: resto }));
 	}
 
-	handleEditarActivo(res: IState<IActivo>): void {
+	handleEditarActivo(res: IState<IActivo | null>): void {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'Se ha editado el activo con éxito');

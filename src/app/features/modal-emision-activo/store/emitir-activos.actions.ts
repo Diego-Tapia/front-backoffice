@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { ITransaccion } from 'src/app/shared/models/transaccion.interface';
 
@@ -12,6 +13,6 @@ export const setEmitirActivosSucces = createAction(
 
 export const setEmitirActivosError = createAction(
 	'[Activos Component] Set Emitir Activos Error',
-	props<{ payload: any }>());
+	props<{ payload: HttpErrorResponse }>());
 
 export const setEmitirActivosClear = createAction('[Activos Component] Set Emitir Activos Clear');

@@ -1,20 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NotificationsService } from 'angular2-notifications';
 import { Subscription } from 'rxjs';
 import { IActivo } from 'src/app/shared/models/activos/activo.interface';
-import { IFormMasivo } from 'src/app/shared/models/form-masivo.interface';
+import { IReqMasivo } from 'src/app/shared/models/req-masivo.interface';
+import { IResMasivo } from 'src/app/shared/models/res-masivo.interface';
 import { IState } from 'src/app/shared/models/state.interface';
-import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
+import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/get-activos/activos.actions';
 import { IIncrementoReducersMap } from '../incremento.reducers.map';
 import { setNuevoIncrementoMasivo, setNuevoIncrementoMasivoClear } from './store/nuevo-inc-mas.action';
 
 @Component({
 	selector: 'app-nuevo-incremento-masivo',
 	templateUrl: './nuevo-incremento-masivo.component.html',
-	styleUrls: ['./nuevo-incremento-masivo.component.sass']
+	styleUrls: ['./nuevo-incremento-masivo.component.sass'],
+	encapsulation: ViewEncapsulation.None
 })
 export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
 	private subscriptions: Subscription[] = [];
@@ -32,7 +34,9 @@ export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
 	})
 
 	thirdStep = this.formBuilder.group({
-		excelFile: ['', [Validators.required]]
+		excelFile: [''],
+		validated: ['', Validators.required]
+		
 	})
 
 	constructor(
@@ -42,10 +46,10 @@ export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
 		private store: Store<{ incrementoReducersMap: IIncrementoReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('incrementoReducersMap', 'nuevoIncrementoMasivo').subscribe((res) => {
+			this.store.select('incrementoReducersMap', 'nuevoIncrementoMasivo').subscribe((res: IState<IResMasivo | null>) => {
 				this.handleNuevoIncrementoMasivo(res);
 			}),
-			this.store.select('incrementoReducersMap', 'getActivos').subscribe((res) => {
+			this.store.select('incrementoReducersMap', 'getActivos').subscribe((res: IState<IActivo[] | null>) => {
 				this.handleGetActivos(res);
 			})
 		);
@@ -56,10 +60,13 @@ export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
 			this.file = event.target.files[0];
 			this.fileName = event.target.files[0].name;
 		}
-		this.thirdStep.patchValue({ excelFile: this.fileName });
+		this.thirdStep.patchValue({ 
+			excelFile: this.fileName,
+			validated: true
+		});
 	}
 
-	handleGetActivos(res: IState<IActivo[]>) {
+	handleGetActivos(res: IState<IActivo[] | null>) {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema listando los activos');
 		if (res.success && res.response) {
 			res.response.forEach(activo => {
@@ -69,7 +76,7 @@ export class NuevoIncrementoMasivoComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	handleNuevoIncrementoMasivo(res: IState<IFormMasivo>) {
+	handleNuevoIncrementoMasivo(res: IState<IResMasivo | null>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'El incremento masivo se ha creado con éxito');

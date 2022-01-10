@@ -22,7 +22,7 @@ import { GetDisminucionesMasivasEffects } from './data-disminuciones/store/get-d
 import { NuevaDisminucionEffects } from './nueva-disminucion-individual/store/nueva-dis.effects';
 import { NuevaDisminucionMasivaEffects } from './nueva-disminucion-masiva/store/nueva-dis-mas.effects';
 import { MatOptionModule } from '@angular/material/core';
-import { GetActivosEffects } from '../activos/data-activos/store/activos.effects';
+import { GetActivosEffects } from '../activos/data-activos/store/get-activos/activos.effects';
 import { MatSelectModule } from '@angular/material/select';
 import { VerifyUsuarioEffects } from '../usuarios/data-usuarios/store/verify/verify-usuarios.effect';
 import { SharedModule } from 'src/app/shared/shared.module';

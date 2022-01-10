@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
@@ -16,9 +16,9 @@ import { setGetUsuarios, setGetUsuariosClear } from './store/get-all/get-usuario
 @Component({
 	selector: 'app-data-usuarios',
 	templateUrl: './data-usuarios.component.html',
-	styleUrls: ['./data-usuarios.component.sass']
+	styleUrls: ['./data-usuarios.component.sass'],
 })
-export class DataUsuariosComponent implements OnInit {
+export class DataUsuariosComponent implements OnInit, OnDestroy {
 	subscriptions: Subscription[] = [];
 	dataUsuarios: IUserProfile[] = [];
 	usuariosFinales!: IUserProfile[];
@@ -36,7 +36,7 @@ export class DataUsuariosComponent implements OnInit {
 		private store: Store<{ usuariosReducersMap: IUsuariosReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('usuariosReducersMap', 'getUsuarios').subscribe((res: IState<IUserProfile[]>) => {
+			this.store.select('usuariosReducersMap', 'getUsuarios').subscribe((res: IState<IUserProfile[] | null>) => {
 				this.handleGetUsuarios(res);
 			}),
 			this.route.params.subscribe((params) => (this.userType = params.type))
@@ -44,7 +44,7 @@ export class DataUsuariosComponent implements OnInit {
 	}
 
 
-	ngOnInit(): void {
+	ngOnInit(): void {	
 		if (this.userType === 'backoffice') this.selectedIndex = 1;
 		this.store.dispatch(setGetUsuarios({ userType: this.userType }));
 	}
@@ -58,7 +58,7 @@ export class DataUsuariosComponent implements OnInit {
 		this.store.dispatch(setGetUsuarios({ userType: this.userType }));
 	}
 
-	handleGetUsuarios(res: IState<IUserProfile[]>): void {
+	handleGetUsuarios(res: IState<IUserProfile[] | null>): void {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema obteniendo los usuarios');
 		if (res.success && res.response) {
 			this.dataUsuarios = [];

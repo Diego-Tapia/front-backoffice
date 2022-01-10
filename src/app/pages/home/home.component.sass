@@ -49,5 +49,12 @@
   font-size: 12px
   margin: 25px
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick
+// INPUT
+::ng-deep.mat-form-field-appearance-outline .mat-form-field-outline-thick
+  color: $primary !important
+::ng-deep.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick
+  color: #f44336 !important
+::ng-deep.file__input__form>.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick 
+  color: #00000099 !important
+::ng-deep.mat-form-field.mat-focused .mat-form-field-label
   color: $primary !important

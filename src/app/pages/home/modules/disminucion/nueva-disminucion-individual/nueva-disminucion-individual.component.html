@@ -11,11 +11,13 @@
 				<form [formGroup]="verifyForm">	
 					<ng-template matStepLabel>Destinatario</ng-template>
 					<div class="container__user__info">
-						<mat-form-field appearance="outline" style="width: 40%; margin-bottom: 15px;">
-							<mat-label>DNI / CUIL / Nombre de usuario</mat-label>
-							<input matInput type="text" placeholder="ID usuario" formControlName="unassignedUser" required />
-							<mat-hint align="start"><strong>(CUIL y DNI sin espacios, puntos o guiones)</strong> </mat-hint>
-						</mat-form-field>
+						<div class="form__group">
+							<mat-form-field appearance="outline">
+								<mat-label>DNI / CUIL / Nombre de usuario</mat-label>
+								<input matInput type="text" placeholder="ID usuario" formControlName="unassignedUser" required />
+								<mat-hint align="start">CUIL y DNI sin espacios, puntos o guiones</mat-hint>
+							</mat-form-field>
+						</div>
 						<mat-card [ngClass]="secondStep.value.userIdentifier ? 'card_content_user' : 'hidden'" >
 							<div>
 								<mat-card-title class="title__options">Nombre</mat-card-title>
@@ -38,7 +40,6 @@
 						</mat-card>
 					</div>
 				</form>
-				<br />
 				<mat-dialog-actions>
 					<button type="button" mat-stroked-button  class="buttons__stepper" (click)="verifyUsuario()">
 						Verificar
@@ -52,22 +53,23 @@
 			<mat-step [stepControl]="secondStep">
 				<ng-template matStepLabel>Activo y cantidad</ng-template>
 				<form [formGroup]="secondStep">
-					<mat-form-field appearance="outline" style="width: 25%;">
-						<mat-label>Cantidad</mat-label>
-						<input matInput type="number" formControlName="amount" placeholder="Cantidad de BEN" required />
-						<mat-hint align="start"><strong>(Sin decimales)</strong> </mat-hint>
-					</mat-form-field>
-	
-					<mat-form-field appearance="outline" style="width: 13% ;margin-left: 15px">
-						<mat-label>Activo</mat-label>
-						<mat-select formControlName="tokenId">
-							<mat-option *ngFor="let activo of activos" [value]="activo">
-								{{ activo.symbol | uppercase }}
-							</mat-option>
-						</mat-select>
-					</mat-form-field>
+					<div class="form__group">
+						<mat-form-field appearance="outline" style="width: 25%;">
+							<mat-label>Cantidad</mat-label>
+							<input matInput type="number" formControlName="amount" placeholder="Cantidad de BEN" required />
+							<mat-hint align="start">Sin decimales</mat-hint>
+						</mat-form-field>
+		
+						<mat-form-field appearance="outline" style="width: 13% ;margin-left: 16px">
+							<mat-label>Activo</mat-label>
+							<mat-select formControlName="tokenId">
+								<mat-option *ngFor="let activo of activos" [value]="activo">
+									{{ activo.symbol | uppercase }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
 				</form>
-				<br />
 				<mat-dialog-actions>
 					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>
 						Anterior
@@ -81,14 +83,14 @@
 			<mat-step [stepControl]="thirdStep">
 				<ng-template matStepLabel>Observaciones</ng-template>
 				<form [formGroup]="thirdStep">
+				<div class="form__group">
 					<mat-form-field appearance="outline" style="width: 40%;">
 						<mat-label>Observaciones</mat-label>
 						<input matInput type="text" formControlName="notes" placeholder="Escribe algo" />
-						<mat-hint align="start"><strong>(Opcional)</strong> </mat-hint>
+						<mat-hint align="start">(Opcional)</mat-hint>
 					</mat-form-field>
+				</div>
 				</form>
-				<br />
-				<br />
 				<mat-dialog-actions>
 					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>
 						Anterior
@@ -102,28 +104,22 @@
 			<mat-step>
 				<ng-template matStepLabel>Confirmacion</ng-template>
 				<mat-card class="card_content">
-					<div id="div1" style="float: left; width: 33.3%">
-						<ul>
-							<mat-card-title class="title__options">Destinatario</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ secondStep.get('userIdentifier')?.value }} </mat-card-subtitle>
-						</ul>
+					<div style="width: 33.3%">
+						<mat-card-title class="title__options">Destinatario</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">{{ secondStep.get('userIdentifier')?.value }} </mat-card-subtitle>
 					</div>
-					<div id="div2" style="float: left; width: 25.3%">
-						<ul>
-							<mat-card-title class="title__options">Activos</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">
-								{{ secondStep.get('amount')?.value }} {{ (secondStep.get('tokenId')?.value).symbol | uppercase}}
-							</mat-card-subtitle>
-						</ul>
+					<div style="width: 25.3%">
+						<mat-card-title class="title__options">Activos</mat-card-title>
+						<mat-card-subtitle class="subtitle__options">
+							{{ secondStep.get('amount')?.value }} {{ (secondStep.get('tokenId')?.value).symbol | uppercase}}
+						</mat-card-subtitle>
 					</div>
-					<div id="div3" style="float: left; width: 33.3%">
-						<ul>
-							<mat-card-title class="title__options">Observaciones</mat-card-title>
-							<mat-card-subtitle class="subtitle__options">{{ thirdStep.get('notes')?.value }}</mat-card-subtitle>
-						</ul>
+					<div style="width: 33.3%">
+						<mat-card-title class="title__options">Observaciones</mat-card-title>
+						<mat-card-subtitle class="subtitle__options" *ngIf="thirdStep.get('notes')?.value">{{ thirdStep.get('observations')?.value }}</mat-card-subtitle>
+						<mat-card-subtitle class="subtitle__options" *ngIf="!thirdStep.get('notes')?.value">Sin observaciones</mat-card-subtitle>
 					</div>
 				</mat-card>
-				<br />
 				<mat-dialog-actions>
 					<button type="button" mat-stroked-button class="buttons__stepper" matStepperPrevious>Anterior</button>
 					<button type="submit" mat-stroked-button class="buttons__stepper__primary" (click)="submit()" matStepperNext>

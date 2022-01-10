@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { IAuthResponse } from 'src/app/shared/models/auth-response.interface';
 
@@ -5,6 +6,6 @@ export const setAuth = createAction('[Auth Component] Set Auth', props<{ usernam
 
 export const setAuthSucces = createAction('[Auth Component] Set Auth Success', props<{ payload: IAuthResponse }>());
 
-export const setAuthError = createAction('[Auth Component] Set Auth Error', props<{ payload: any }>());
+export const setAuthError = createAction('[Auth Component] Set Auth Error', props<{ payload: HttpErrorResponse }>());
 
 export const setAuthClear = createAction('[Auth Component] Set Auth Clear');

@@ -8,7 +8,7 @@ import {
 	setEditarActivoSucces
 } from './editar-activo.actions';
 
-export const initialState: IState<IActivo | null> = {
+export const initialState: IState<IActivo | null | null> = {
 	response: null,
 	pending: false,
 	success: false,
@@ -47,6 +47,6 @@ const mySetEditarActivoReducer = createReducer(
 	})
 );
 
-export function setEditarActivoReducer(state: IState<IActivo> | undefined, action: Action) {
+export function setEditarActivoReducer(state: IState<IActivo | null> | undefined, action: Action) {
 	return mySetEditarActivoReducer(state, action);
 }

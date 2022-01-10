@@ -6,15 +6,17 @@ import { setVerifyUsuarioReducer } from './data-usuarios/store/verify/verify-usu
 import { SetAltaUsuariosReducer } from './alta-usuarios/store/alta-usuario/alta-usuarios.reducer';
 import { SetGetRolesReducer } from './alta-usuarios/store/get-roles/get-roles.reducer';
 import { SetEditarUsuarioReducer } from './editar-usuario/store/editar-usuario.reducer';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
+import { IRol } from 'src/app/shared/models/rol.interface';
 
 
 export interface IUsuariosReducersMap {
-	getUsuarios: IState<any>;
-	getUsuarioById: IState<any>;
-	altaUsuarios: IState<any>;
-	editarUsuario: IState<any>;
-	verifyUsuario: IState<any>;
-	getRoles: IState<any>;
+	getUsuarios: IState<IUserProfile[] | null>;
+	getUsuarioById: IState<IUserProfile | null>;
+	altaUsuarios: IState<IUserProfile | null>;
+	editarUsuario: IState<IUserProfile | null>;
+	verifyUsuario: IState<IUserProfile | null>;
+	getRoles: IState<IRol[] | null>;
 }
 
 export const usuariosReducersMap: ActionReducerMap<IUsuariosReducersMap> = {

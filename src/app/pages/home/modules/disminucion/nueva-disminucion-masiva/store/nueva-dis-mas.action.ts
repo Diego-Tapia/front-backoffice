@@ -1,4 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
+import { IResMasivo } from 'src/app/shared/models/res-masivo.interface';
 
 export const setNuevaDisminucionMasiva = createAction(
 	'[Nueva Disminucion Masiva Component] Set Nueva Disminucion Masiva',
@@ -7,12 +9,12 @@ export const setNuevaDisminucionMasiva = createAction(
 
 export const setNuevaDisminucionMasivaSucces = createAction(
 	'[Nueva Disminucion Masiva Component] Set Nueva Disminucion Masiva Success',
-	props<{ payload: any }>()
+	props<{ payload: IResMasivo }>()
 );
 
 export const setNuevaDisminucionMasivaError = createAction(
 	'[Nueva Disminucion Masiva Component] Set Nueva Disminucion Masiva Error',
-	props<{ payload: any }>()
+	props<{ payload: HttpErrorResponse }>()
 );
 
 export const setNuevaDisminucionMasivaClear = createAction(

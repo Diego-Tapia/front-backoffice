@@ -1,11 +1,11 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { IFormUser } from 'src/app/shared/models/form-user.interface';
 import { IState } from 'src/app/shared/models/state.interface';
+import { IUserProfile } from 'src/app/shared/models/user-profile.interface';
 import { setEditarUsuario,  setEditarUsuarioClear,  setEditarUsuarioError, setEditarUsuarioSucces } from './editar-usuario.action';
 
 
 
-export const initialState: IState<IFormUser | null> = {
+export const initialState: IState<IUserProfile | null> = {
 	response: null,
 	pending: false,
 	success: false,
@@ -44,6 +44,6 @@ const mySetEditarUsuarioReducer = createReducer(
 	})
 );
 
-export function SetEditarUsuarioReducer(state: IState<IFormUser> | undefined, action: Action) {
+export function SetEditarUsuarioReducer(state: IState<IUserProfile | null> | undefined, action: Action) {
 	return mySetEditarUsuarioReducer(state, action);
 }

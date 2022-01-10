@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 
 export const setNuevoIncrementoMasivo = createAction(
@@ -12,7 +13,7 @@ export const setNuevoIncrementoMasivoSuccess = createAction(
 
 export const setNuevoIncrementoMasivoError = createAction(
 	'[Nuevo Incremento Masivo Component] Set Nuevo Incremento Masivo Error',
-	props<{ payload: any }>()
+	props<{ payload: HttpErrorResponse }>()
 );
 
 export const setNuevoIncrementoMasivoClear = createAction(

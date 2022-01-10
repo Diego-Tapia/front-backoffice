@@ -6,9 +6,10 @@ import { IState } from 'src/app/shared/models/state.interface';
 import { IDisminucionReducersMap } from '../disminuciones.reducers.map';
 import { setNuevaDisminucionMasiva, setNuevaDisminucionMasivaClear } from './store/nueva-dis-mas.action';
 import { NotificationsService } from 'angular2-notifications';
-import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/activos.actions';
+import { setGetActivos, setGetActivosClear } from '../../activos/data-activos/store/get-activos/activos.actions';
 import { IActivo } from 'src/app/shared/models/activos/activo.interface';
 import { Router } from '@angular/router';
+import { IResMasivo } from 'src/app/shared/models/res-masivo.interface';
 
 @Component({
 	selector: 'app-nueva-disminucion-masiva',
@@ -32,7 +33,8 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 	})
 
 	thirdStep = this.formBuilder.group({
-		excelFile: ['', [Validators.required]]
+		excelFile: [''],
+		validated: ['', Validators.required]
 	})
 
 	constructor(
@@ -42,10 +44,10 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 		private store: Store<{ disminucionReducersMap: IDisminucionReducersMap }>
 	) {
 		this.subscriptions.push(
-			this.store.select('disminucionReducersMap', 'nuevaDisminucionMasiva').subscribe((res) => {
+			this.store.select('disminucionReducersMap', 'nuevaDisminucionMasiva').subscribe((res: IState<IResMasivo | null>) => {
 				this.handleNuevaDisminucionMasiva(res);
 			}),
-			this.store.select('disminucionReducersMap', 'getActivos').subscribe((res) => {
+			this.store.select('disminucionReducersMap', 'getActivos').subscribe((res: IState<IActivo[] | null>) => {
 				this.handleGetActivos(res);
 			})
 		);
@@ -56,10 +58,13 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 			this.file = event.target.files[0];
 			this.fileName = event.target.files[0].name;
 		}
-		this.thirdStep.patchValue({ excelFile: this.fileName });
+		this.thirdStep.patchValue({ 
+			excelFile: this.fileName,
+			validated: true
+		});
 	}
 
-	handleGetActivos(res: IState<IActivo[]>) {
+	handleGetActivos(res: IState<IActivo[] | null>) {
 		if (res.error) this.noti.error('Error', 'Ocurrió un problema listando los activos');
 		if (res.success && res.response) {
 			res.response.forEach(activo => {
@@ -69,7 +74,7 @@ export class NuevaDisminucionMasivaComponent implements OnInit, OnDestroy {
 		} 
 	}
 
-	handleNuevaDisminucionMasiva(res: IState<any>) {
+	handleNuevaDisminucionMasiva(res: IState<IResMasivo | null>) {
 		if (res.error) this.noti.error('Error', res.error.error.message);
 		if (res.success) {
 			this.noti.success('Éxito', 'La disminución masiva se ha creado con éxito');
